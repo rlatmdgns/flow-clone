@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-// import withReduxSaga from 'next-redux-saga';
-// import wrapper from '../store/confiureStore';
+import withReduxSaga from 'next-redux-saga';
+import wrapper from '../store/confiureStore';
 import {GlobalStyle} from '../styles/global-styles'
 
 const App = ({ Component }) => (
@@ -20,4 +20,4 @@ App.propTypes = {
   Component: PropTypes.elementType.isRequired, // elementType  = jsx
 };
 
-export default App
+export default wrapper.withRedux(withReduxSaga(App));
