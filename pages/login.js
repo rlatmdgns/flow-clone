@@ -1,11 +1,10 @@
 import React from 'react'
+import LoginFrom from '../components/loginForm';
 
-cosnt Login() {
+const Login = () => {
   return (
-    <div>
-      
-    </div>
+    <LoginFrom/> 
   )
 }
 
-export default Login
+export default Login;
