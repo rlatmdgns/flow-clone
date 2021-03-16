@@ -1,11 +1,15 @@
 import React from "react";
-import AppLayout from "../components/layout/AppLayout";
-
+import Link from 'next/link'
 const Home = () => {
   return (
-      <AppLayout>
-      <div>프로젝트 홈</div>
-      </AppLayout>
+      <div>
+        <Link href="/login">
+          <a>로그인</a>
+        </Link>
+        <Link href="/signup">
+          <a>회원가입</a>
+        </Link>
+      </div>
   );
 };
 
