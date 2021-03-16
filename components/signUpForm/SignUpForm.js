@@ -8,7 +8,6 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [term, setTerm] = useState(false);
-  const [inputState, setInputState] = useState(false)
   const nameHandler = (e) => {
     setName(e.target.value)
   }
@@ -21,7 +20,6 @@ const SignUpForm = () => {
   const passwordCheckHandler = (e) => {
     setPasswordCheck(e.target.value)
   }
-
   const termHandler = (e) => {
     setTerm(e.target.checked)
   }
@@ -79,7 +77,7 @@ const SignUpForm = () => {
           </InputBox>
           <InputBox>
             <Label htmlFor="">이메일</Label>
-            <Input type="email" placeholder="example@gmail.com" onChange={emailHandler} value={email} state={inputState}/>
+            <Input type="email" placeholder="example@gmail.com" onChange={emailHandler} value={email}/>
           </InputBox>
           <InputBox>
             <Label htmlFor="">비밀번호</Label>
