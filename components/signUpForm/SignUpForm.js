@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
 import PropTypes from 'prop-types';
 import {SignUpContent, Form, SignUpTitle, FormTitle, SignUpText, Label,Blind, InputBox,Input,Termcheck,SignUpButton} from './styles';
+import { useDispatch } from 'react-redux';
+import { SIGN_UP_REQUEST } from '../../reducers/user';
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -8,6 +10,8 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
   const [term, setTerm] = useState(false);
+  const dispatch = useDispatch();
+
   const nameHandler = (e) => {
     setName(e.target.value)
   }
@@ -56,7 +60,10 @@ const SignUpForm = () => {
       alert("서비스 이용약관, 개인정보취급방침에 동의하세요.")
       return;
     }
-    console.log("가입");
+    dispatch({
+      type : SIGN_UP_REQUEST,
+      data : {email, password, name}
+    })
   }
 
   return (
