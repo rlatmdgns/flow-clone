@@ -1,12 +1,12 @@
 import React from "react";
 import AppLayout from "../components/layout/AppLayout";
-
+import { ProjectGroup } from '../components/ProjectGroup/ProjectGroup';
 const Main = () => {
   return (
       <AppLayout>
-      <div>프로젝트 홈</div>
+        <ProjectGroup/>
       </AppLayout>
   );
 };
 
-export default Home;
+export default Main;

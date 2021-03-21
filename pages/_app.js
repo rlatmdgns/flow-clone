@@ -5,14 +5,14 @@ import withReduxSaga from 'next-redux-saga';
 import wrapper from '../store/confiureStore';
 import {GlobalStyle} from '../styles/global-styles'
 
-const App = ({ Component }) => (
+const App = ({ Component, pageProps}) => (
   <>
     <Head>
       <meta charSet="utf-8" />
       <title>flow</title>
     </Head>
     <GlobalStyle/>
-    <Component/>
+    <Component {...pageProps}/>
   </>
 );
 

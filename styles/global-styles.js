@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
       Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
       -ms-text-size-adjust: 100%; /* 2 */ 
       -webkit-text-size-adjust: 100%; /* 2 */
+    font-size:13px;
   }
 
 article,
