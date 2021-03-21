@@ -1,0 +1,1 @@
+export {UserHeader as default} from './UserHeader'
