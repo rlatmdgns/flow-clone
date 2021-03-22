@@ -19,15 +19,11 @@ const Content = styled.div`
 `
 
 const AppLayout = ({children}) => {
-  const[currentPageTitle, setCurrentPageTitle] = useState("프로젝트 홈");
-  const changePageTitle = (title) => {
-    setCurrentPageTitle(title);
-  }
   return (
     <Wrap>
-      <LeftMenu changePageTitle={changePageTitle}/>
+      <LeftMenu/>
       <Container>
-        <UserHeader currentPageTitle={currentPageTitle}/>
+        <UserHeader/>
         <Content>{children}</Content>
       </Container>
     </Wrap>
