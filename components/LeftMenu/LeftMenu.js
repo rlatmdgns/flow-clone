@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 import { LeftMenuWrap, ProjectAddButton, Logo, Gnb, GnbItem } from './styles';
-const LeftMenu = ({changePageTitle}) => {
+import { useDispatch } from 'react-redux';
+const LeftMenu = () => {
   const router = useRouter();
   const menuData = [
     {
@@ -55,9 +56,6 @@ const LeftMenu = ({changePageTitle}) => {
     },
   ];
 
-  const test = (e) =>{
-    changePageTitle(e.target.text)
-  }
   return (
     <LeftMenuWrap>
       <Logo>
@@ -83,7 +81,7 @@ const LeftMenu = ({changePageTitle}) => {
           }
             return (
               <li key={i}>
-                <GnbItem img={v.img} hover={v.hover} onClick={test}>
+                <GnbItem img={v.img} hover={v.hover}>
                   <Link href={v.link}>
                     <a>{v.title}</a>
                   </Link>
