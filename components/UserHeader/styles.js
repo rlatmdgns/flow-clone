@@ -19,8 +19,3 @@ export const PageTitle = styled.h3`
   font-weight :700;
   color: #333;
 `
-
-export const UserMenu = styled.ul`
-  margin :0;
-  list-style:none;
-`

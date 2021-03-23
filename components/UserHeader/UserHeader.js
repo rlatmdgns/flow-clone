@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useRouter } from 'next/router'
 import PropTypes from 'prop-types';
-import {UserHeaderWrap, PageTitle, UserMenu} from './styles';
+import {UserHeaderWrap, PageTitle} from './styles';
 import { useSelector,useDispatch } from 'react-redux';
 import { CHANGE_PAGE_TITLE } from '../../reducers/user';
 
@@ -31,11 +31,6 @@ const UserHeader = () => {
   return (
     <UserHeaderWrap>
       <PageTitle>{pageTitle}</PageTitle>
-      <UserMenu>
-        <li>메뉴1</li>
-        <li>메뉴2</li>
-        <li>메뉴3</li>
-      </UserMenu>
     </UserHeaderWrap>
   );
 };

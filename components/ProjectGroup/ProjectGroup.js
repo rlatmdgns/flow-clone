@@ -1,109 +1,53 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ProjectWrap, ProjectList, ProjectItem,ProjectColor,ProjectItemContent} from './styles';
+import {
+  ProjectWrap,
+  ProjectList,
+  ProjectItem,
+  ProjectColor,
+  ProjectItemContent,
+  ProjectButtonArea,
+  TypeButton,
+  FilterButton,
+  ProjectSetButton,
+  ProjectTitle,
+  People,
+  ProjectStatus,
+  ProJectStarButton,
+} from './styles';
 
 const ProjectGroup = () => {
   return (
     <ProjectWrap>
-      <div>
+      <ProjectButtonArea>
         <div>
-          <button>바둑형</button>
-          <button>리스트형</button>
+          <TypeButton type="button" buttonType="card" active></TypeButton>
+          <TypeButton type="button" buttonType="list"></TypeButton>
+          <FilterButton type="button" active></FilterButton>
         </div>
-        <div>설정</div>
-      </div>
+        <ProjectSetButton type="button"></ProjectSetButton>
+      </ProjectButtonArea>
       <div>
-        <h4>즐겨찾기</h4>
+        <ProjectTitle>즐겨찾기</ProjectTitle>
         <ProjectList>
           <li>
             <ProjectItem>
               <ProjectColor></ProjectColor>
               <ProjectItemContent>
-                <button type="button">즐겨찾기</button>
-                <p>프로젝트 명</p>
-                <div>
-                  <span>878</span>
-                </div>
+                <ProJectStarButton type="button" active></ProJectStarButton>
+                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+                <ProjectStatus>
+                  <People>878</People>
+                </ProjectStatus>
               </ProjectItemContent>
             </ProjectItem>
           </li>
         </ProjectList>
       </div>
       <div>
-        <h4>참여중</h4>
+        <ProjectTitle>참여중</ProjectTitle>
         <ProjectList>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <button type="button">즐겨찾기</button>
-                <p>프로젝트 명</p>
-                <div>
-                  <span>878</span>
-                </div>
-              </ProjectItemContent>
-            </ProjectItem>
-          </li>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <button type="button">즐겨찾기</button>
-                <p>프로젝트 명</p>
-                <div>
-                  <span>878</span>
-                </div>
-              </ProjectItemContent>
-            </ProjectItem>
-          </li>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <button type="button">즐겨찾기</button>
-                <p>프로젝트 명</p>
-                <div>
-                  <span>878</span>
-                </div>
-              </ProjectItemContent>
-            </ProjectItem>
-          </li>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <button type="button">즐겨찾기</button>
-                <p>프로젝트 명</p>
-                <div>
-                  <span>878</span>
-                </div>
-              </ProjectItemContent>
-            </ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
-          <li>
-            <ProjectItem></ProjectItem>
-          </li>
+
         </ProjectList>
       </div>
     </ProjectWrap>

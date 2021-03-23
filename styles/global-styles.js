@@ -165,6 +165,8 @@ textarea {
   color: inherit; /* 1 */
   font: inherit; /* 2 */
   margin: 0; /* 3 */
+  padding:0;
+  background:none;
 }
 
 
