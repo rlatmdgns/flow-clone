@@ -14,6 +14,9 @@ import {
   People,
   ProjectStatus,
   ProJectStarButton,
+  StatusArea,
+  StatusItem,
+  ProjectAlarmCount,
 } from './styles';
 
 const ProjectGroup = () => {
@@ -47,7 +50,40 @@ const ProjectGroup = () => {
       <div>
         <ProjectTitle>참여중</ProjectTitle>
         <ProjectList>
-
+          <li>
+            <ProjectItem>
+              <ProjectColor></ProjectColor>
+              <ProjectItemContent>
+                <ProJectStarButton type="button"></ProJectStarButton>
+                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+                <StatusArea>
+                  <People>878</People>
+                  <ProjectStatus>
+                    <StatusItem status="lock"></StatusItem>
+                    <StatusItem status="alarm_off"></StatusItem>
+                  </ProjectStatus>
+                </StatusArea>
+              </ProjectItemContent>
+              <ProjectAlarmCount>999</ProjectAlarmCount>
+            </ProjectItem>
+          </li>
+          <li>
+            <ProjectItem>
+              <ProjectColor></ProjectColor>
+              <ProjectItemContent>
+                <ProJectStarButton type="button"></ProJectStarButton>
+                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+                <StatusArea>
+                  <People>878</People>
+                  <ProjectStatus>
+                    <StatusItem status="lock"></StatusItem>
+                    <StatusItem status="alarm_off"></StatusItem>
+                  </ProjectStatus>
+                </StatusArea>
+              </ProjectItemContent>
+              <ProjectAlarmCount>999</ProjectAlarmCount>
+            </ProjectItem>
+          </li>
         </ProjectList>
       </div>
     </ProjectWrap>

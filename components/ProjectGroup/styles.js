@@ -15,6 +15,7 @@ export const ProjectList = styled.ul`
   }
 `;
 export const ProjectItem = styled.div`
+  position: relative;
   width: 248px;
   height: 178px;
   background: #fafafa;
@@ -126,4 +127,42 @@ export const ProJectStarButton = styled.button`
         `}
   background-repeat:no-repeat;
 `;
-export const People = styled.span``;
+export const People = styled.span`
+  font-size: 14px;
+  color: #999;
+  &:before {
+    display: inline-block;
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin: 3px 3px 0 0;
+    background-image: url('/images/icons/icon_people.png');
+    vertical-align: top;
+  }
+`;
+
+export const StatusArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+export const StatusItem = styled.i`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: top;
+  background: url(${(props) => props.status && `/images/icons/icon_${props.status}.png`});
+  & + & {
+    margin-left: 6px;
+  }
+`;
+
+export const ProjectAlarmCount = styled.span`
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  padding: 6px 8px;
+  background: #ff3532;
+  border-radius: 200px;
+  font-size: 14px;
+  color: #fff;
+`;
