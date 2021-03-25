@@ -9,7 +9,8 @@ function signUpAPI(data) {
 
 function* signUp(action) {
   try {
-    yield call(signUpAPI, action.data); 
+    const result = yield call(signUpAPI, action.data);
+    console.log("result",result);
     // yield call(
     //   [authService, authService.createUserWithEmailAndPassword],
     //   action.data.email,
