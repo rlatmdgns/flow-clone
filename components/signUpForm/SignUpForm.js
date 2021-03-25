@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {SignUpContent, Form, SignUpTitle, FormTitle, SignUpText, Label,Blind, InputBox,Input,Termcheck,SignUpButton} from './styles';
 import { useDispatch } from 'react-redux';
 import { SIGN_UP_REQUEST } from '../../reducers/user';
+import { authService } from '../../pages/firebase';
+import { useRouter } from 'next/dist/client/router';
 
 const SignUpForm = () => {
   const [name, setName] = useState("");
@@ -11,6 +13,7 @@ const SignUpForm = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [term, setTerm] = useState(false);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const nameHandler = (e) => {
     setName(e.target.value)
@@ -36,34 +39,44 @@ const SignUpForm = () => {
   //   }
   //   return;
   // }
-  const onSubmit = () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; 
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if(!nameRegex.test(name)){ 
-      setName("")
-      return;
+   
+    // if(!nameRegex.test(name)){ 
+    //   setName("")
+    //   return;
+    // }
+    // if(!emailRegex.test(email)){ 
+    //   setEmail("")
+    //   return;
+    // }
+    // if(!passwordRegex.test(password)){ 
+    //   setPassword("")
+    //   return;
+    // }
+    // if(password !== passwordCheck){ 
+    //   setPasswordCheck("")
+    //   return;
+    // }
+    // if(term === false){
+    //   alert("서비스 이용약관, 개인정보취급방침에 동의하세요.")
+    //   return;
+    // }
+    // dispatch({
+    //   type : SIGN_UP_REQUEST,
+    //   data : {email, password, name}
+    // })
+
+    try{
+      await authService.createUserWithEmailAndPassword(email, password);
+      alert('회원가입 완료!');
+      router.push('./login')
+    }catch(error){
+      alert(error);
     }
-    if(!emailRegex.test(email)){ 
-      setEmail("")
-      return;
-    }
-    if(!passwordRegex.test(password)){ 
-      setPassword("")
-      return;
-    }
-    if(password !== passwordCheck){ 
-      setPasswordCheck("")
-      return;
-    }
-    if(term === false){
-      alert("서비스 이용약관, 개인정보취급방침에 동의하세요.")
-      return;
-    }
-    dispatch({
-      type : SIGN_UP_REQUEST,
-      data : {email, password, name}
-    })
   }
 
   return (
