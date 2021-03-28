@@ -40,26 +40,26 @@ const SignUpForm = () => {
     const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/; 
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
-    if(!nameRegex.test(name)){ 
-      setName("")
-      return;
-    }
-    if(!emailRegex.test(email)){ 
-      setEmail("")
-      return;
-    }
-    if(!passwordRegex.test(password)){ 
-      setPassword("")
-      return;
-    }
-    if(password !== passwordCheck){ 
-      setPasswordCheck("")
-      return;
-    }
-    if(term === false){
-      alert("서비스 이용약관, 개인정보취급방침에 동의하세요.")
-      return;
-    }
+    // if(!nameRegex.test(name)){ 
+    //   setName("")
+    //   return;
+    // }
+    // if(!emailRegex.test(email)){ 
+    //   setEmail("")
+    //   return;
+    // }
+    // if(!passwordRegex.test(password)){ 
+    //   setPassword("")
+    //   return;
+    // }
+    // if(password !== passwordCheck){ 
+    //   setPasswordCheck("")
+    //   return;
+    // }
+    // if(term === false){
+    //   alert("서비스 이용약관, 개인정보취급방침에 동의하세요.")
+    //   return;
+    // }
     dispatch({
       type : SIGN_UP_REQUEST,
       data : {email, password, name}

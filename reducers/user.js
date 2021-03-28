@@ -5,12 +5,19 @@ export const initialState = {
   signUpLoading: false, // 로그아웃 시도 중
   signUpDone: false,
   signUpError: null,
+  loginLoading: false, 
+  loginDone: false,
+  loginError: null,
+  me: null,
 }
 // 액션타입
 export const CHANGE_PAGE_TITLE = 'CHANGE_PAGE_TITLE';
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
@@ -29,6 +36,20 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       draft.signUpLoading = false;
       draft.signUpError = action.error;
       break;
+      case LOGIN_REQUEST:
+        draft.loginLoading = true;
+        draft.loginDone = null;
+        draft.loginError = false;
+        break;
+      case LOGIN_SUCCESS:
+        draft.loginLoading = false;
+        draft.me = action.data;
+        draft.loginDone = true;
+        break;
+      case LOGIN_FAILURE:
+        draft.loginLoading = false;
+        draft.loginError = action.error;
+        break;
     default:
       return state;
   }
