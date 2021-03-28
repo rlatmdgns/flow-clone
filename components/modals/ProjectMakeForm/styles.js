@@ -94,14 +94,8 @@ export const ToggleButton = styled.div`
   box-sizing: border-box;
   transition: background-color 0.25s;
 
-  &:hover {
-    background: #999;
-    ${Circle} {
-      background: #eee;
-    }
-  }
   ${(props) => {
-    if (props.active) {
+    if (props.active === true) {
       return css`
         background: #6449fc;
         ${Circle} {
@@ -110,15 +104,24 @@ export const ToggleButton = styled.div`
           transform: translateX(28px);
         }
       `;
+    } else {
+      return css`
+        &:hover {
+          background: #999;
+          ${Circle} {
+            background: #eee;
+          }
+        }
+      `;
     }
   }}
 `;
 
 export const SubmitButton = styled.button`
-  display:block;
+  display: block;
   width: 182px;
   height: 36px;
-  margin:0 auto;
+  margin: 0 auto;
   border-radius: 4px;
   background: #6449fc;
   font-size: 13px;

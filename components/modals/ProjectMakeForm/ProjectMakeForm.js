@@ -32,13 +32,13 @@ const ProjectMakeForm = () => {
           <SetTitle>옵션 설정</SetTitle>
         <SetItem>
           <SetText>회사 공개 프로젝트 설정</SetText>
-          <ToggleButton active>
+          <ToggleButton active={false}>
             <Circle/>
           </ToggleButton>
         </SetItem>
         <SetItem>
-          <SetText>회사 공개 프로젝트 설정</SetText>
-          <ToggleButton active>
+          <SetText>관리자 승인 후 참여가능</SetText>
+          <ToggleButton active={false}>
             <Circle/>
           </ToggleButton>
         </SetItem>

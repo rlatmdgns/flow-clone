@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import LeftMenu from '../LeftMenu';
 import styled from 'styled-components';
 import { UserHeader } from '../UserHeader/UserHeader';
+import Modal from '../modals/Modal';
+import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 
 const Wrap = styled.div`
   display:flex;
@@ -26,6 +28,9 @@ const AppLayout = ({children}) => {
         <UserHeader/>
         <Content>{children}</Content>
       </Container>
+      <Modal visible={true}>
+        <ProjectMakeForm/>
+      </Modal>
     </Wrap>
   )
 }
