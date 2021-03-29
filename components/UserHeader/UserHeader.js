@@ -20,6 +20,9 @@ const UserHeader = () => {
       case "/task":
         pageTitle = "모든 업무";
         break;
+      case "/projectDetail":
+        pageTitle = "프로젝트 상세";
+        break;
       default:
         break;
     }

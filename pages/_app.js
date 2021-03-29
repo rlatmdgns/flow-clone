@@ -1,4 +1,4 @@
-import React from 'react';
+import React from '../node_modules/react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import withReduxSaga from 'next-redux-saga';
