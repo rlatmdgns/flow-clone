@@ -28,7 +28,7 @@ const AppLayout = ({children}) => {
         <UserHeader/>
         <Content>{children}</Content>
       </Container>
-      <Modal visible={true}>
+      <Modal visible={false}>
         <ProjectMakeForm/>
       </Modal>
     </Wrap>
