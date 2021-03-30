@@ -57,24 +57,20 @@ export const ProjectItemContent = styled.div`
 export const TypeButton = styled.button`
   width: 24px;
   height: 24px;
-  background-image: url(${(props) =>
-    props.buttonType === 'card' ? '/images/icons/icon_card.png' : '/images/icons/icon_list.png'});
+  background-image: url(${(props) => (props.buttonType === 'card' ? '/images/icons/icon_card.png' : '/images/icons/icon_list.png')});
 
   & + & {
     margin-left: 10px;
   }
-  ${(props) =>
-    props.active
-      ? css`
-          background-image: url(${(props) =>
-            props.buttonType === 'card' ? '/images/icons/icon_card_hover.png' : '/images/icons/icon_list_hover.png'});
+  ${(props) => (props.active
+    ? css`
+          background-image: url(${(props) => (props.buttonType === 'card' ? '/images/icons/icon_card_hover.png' : '/images/icons/icon_list_hover.png')});
         `
-      : css`
+    : css`
           &:hover {
-            background-image: url(${(props) =>
-              props.buttonType === 'card' ? '/images/icons/icon_card_hover.png' : '/images/icons/icon_list_hover.png'});
+            background-image: url(${(props) => (props.buttonType === 'card' ? '/images/icons/icon_card_hover.png' : '/images/icons/icon_list_hover.png')});
           }
-        `}
+        `)}
   vertical-align: middle;
 `;
 
@@ -86,9 +82,8 @@ export const FilterButton = styled.button`
     background-image: url('/images/icons/icon_filter_hover.png');
   }
   vertical-align: middle;
-  ${(props) =>
-    props.active &&
-    css`
+  ${(props) => props.active
+    && css`
       background-image: url('/images/icons/icon_filter_hover.png');
     `}
 `;
@@ -108,6 +103,8 @@ export const ProjectSetButton = styled.button`
     background-image: url('/images/icons/icon_projectSet_hover.png');
   }
   background-repeat: no-repeat;
+  vertical-align:middle;
+  margin-left:40px;
 `;
 export const ProjectStatus = styled.div``;
 export const ProJectStarButton = styled.button`
@@ -115,16 +112,15 @@ export const ProJectStarButton = styled.button`
   height: 24px;
   background-image: url('/images/icons/icon_star.png');
 
-  ${(props) =>
-    props.active
-      ? css`
+  ${(props) => (props.active
+    ? css`
           background-image: url('/images/icons/icon_star_active.png');
         `
-      : css`
+    : css`
           &:hover {
             background-image: url('/images/icons/icon_star_hover.png');
           }
-        `}
+        `)}
   background-repeat:no-repeat;
 `;
 export const People = styled.span`

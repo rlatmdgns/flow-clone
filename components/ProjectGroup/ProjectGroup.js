@@ -19,75 +19,73 @@ import {
   ProjectAlarmCount,
 } from './styles';
 
-const ProjectGroup = () => {
-  return (
-    <ProjectWrap>
-      <ProjectButtonArea>
-        <div>
-          <TypeButton type="button" buttonType="card" active></TypeButton>
-          <TypeButton type="button" buttonType="list"></TypeButton>
-          <FilterButton type="button" active></FilterButton>
-        </div>
-        <ProjectSetButton type="button"></ProjectSetButton>
-      </ProjectButtonArea>
+const ProjectGroup = () => (
+  <ProjectWrap>
+    <ProjectButtonArea>
       <div>
-        <ProjectTitle>즐겨찾기</ProjectTitle>
-        <ProjectList>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <ProJectStarButton type="button" active></ProJectStarButton>
-                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+        <TypeButton type="button" buttonType="card" active />
+        <TypeButton type="button" buttonType="list" />
+        <FilterButton type="button" active />
+        <ProjectSetButton type="button" />
+      </div>
+    </ProjectButtonArea>
+    <div>
+      <ProjectTitle>즐겨찾기</ProjectTitle>
+      <ProjectList>
+        <li>
+          <ProjectItem>
+            <ProjectColor />
+            <ProjectItemContent>
+              <ProJectStarButton type="button" active />
+              <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+              <ProjectStatus>
+                <People>878</People>
+              </ProjectStatus>
+            </ProjectItemContent>
+          </ProjectItem>
+        </li>
+      </ProjectList>
+    </div>
+    <div>
+      <ProjectTitle>참여중</ProjectTitle>
+      <ProjectList>
+        <li>
+          <ProjectItem>
+            <ProjectColor />
+            <ProjectItemContent>
+              <ProJectStarButton type="button" />
+              <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+              <StatusArea>
+                <People>878</People>
                 <ProjectStatus>
-                  <People>878</People>
+                  <StatusItem status="lock" />
+                  <StatusItem status="alarm_off" />
                 </ProjectStatus>
-              </ProjectItemContent>
-            </ProjectItem>
-          </li>
-        </ProjectList>
-      </div>
-      <div>
-        <ProjectTitle>참여중</ProjectTitle>
-        <ProjectList>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <ProJectStarButton type="button"></ProJectStarButton>
-                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
-                <StatusArea>
-                  <People>878</People>
-                  <ProjectStatus>
-                    <StatusItem status="lock"></StatusItem>
-                    <StatusItem status="alarm_off"></StatusItem>
-                  </ProjectStatus>
-                </StatusArea>
-              </ProjectItemContent>
-              <ProjectAlarmCount>999</ProjectAlarmCount>
-            </ProjectItem>
-          </li>
-          <li>
-            <ProjectItem>
-              <ProjectColor></ProjectColor>
-              <ProjectItemContent>
-                <ProJectStarButton type="button"></ProJectStarButton>
-                <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
-                <StatusArea>
-                  <People>878</People>
-                  <ProjectStatus>
-                    <StatusItem status="lock"></StatusItem>
-                    <StatusItem status="alarm_off"></StatusItem>
-                  </ProjectStatus>
-                </StatusArea>
-              </ProjectItemContent>
-              <ProjectAlarmCount>999</ProjectAlarmCount>
-            </ProjectItem>
-          </li>
-        </ProjectList>
-      </div>
-    </ProjectWrap>
-  );
-};
+              </StatusArea>
+            </ProjectItemContent>
+            <ProjectAlarmCount>999</ProjectAlarmCount>
+          </ProjectItem>
+        </li>
+        <li>
+          <ProjectItem>
+            <ProjectColor />
+            <ProjectItemContent>
+              <ProJectStarButton type="button" />
+              <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
+              <StatusArea>
+                <People>878</People>
+                <ProjectStatus>
+                  <StatusItem status="lock" />
+                  <StatusItem status="alarm_off" />
+                </ProjectStatus>
+              </StatusArea>
+            </ProjectItemContent>
+            <ProjectAlarmCount>999</ProjectAlarmCount>
+          </ProjectItem>
+        </li>
+      </ProjectList>
+    </div>
+  </ProjectWrap>
+);
 
 export { ProjectGroup };
