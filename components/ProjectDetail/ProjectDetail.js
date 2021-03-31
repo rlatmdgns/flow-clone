@@ -8,7 +8,7 @@ const ProjectDetail = () => {
   return (
     <>
       <DetailHeader />
-      <DetailNav />
+      {/* <DetailNav /> */}
       <DetailView />
     </>
   );

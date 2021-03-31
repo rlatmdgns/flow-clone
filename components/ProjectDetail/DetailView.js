@@ -3,7 +3,7 @@ import React from 'react';
 const DetailView = (props) => {
     return (
         <div>
-            DetailView        
+            <b>전체 피드</b>        
         </div>
     );
 }
