@@ -21,17 +21,17 @@ function* signUp(action) {
     yield put({
       type: SIGN_UP_SUCCESS,
     });
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log('error', error);
     yield put({
       type: SIGN_UP_FAILURE,
-      error: err.response.data,
+      error: error.response.data,
     });
   }
 }
 
 function loginAPI(data) {
-  return axios.post('/login',  qs.stringify(data));
+  return axios.post('/login', qs.stringify(data));
 }
 
 function* login(action) {

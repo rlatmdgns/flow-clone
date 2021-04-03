@@ -24,10 +24,10 @@ const rootReducer = (state, action) => {
       console.log('HYDRATE', action);
       return action.payload;
     default: {
-      const combinedReducer = combineReducers({
+      const combineReducer = combineReducers({
         user,
       });
-      return combinedReducer(state, action);
+      return combineReducer(state, action);
     }
   }
 };
