@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const ModalWrapper = styled.div`
   box-sizing: border-box;
@@ -11,7 +11,7 @@ export const ModalWrapper = styled.div`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
   justify-content:center;
   align-items:center;
-`
+`;
 
 export const ModalOverlay = styled.div`
   box-sizing: border-box;
@@ -23,4 +23,4 @@ export const ModalOverlay = styled.div`
   right: 0;
   background-color: rgba(250, 250, 250, 0.8);
   z-index: 999;
-`
+`;

@@ -1,24 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {ModalWrapper, ModalOverlay} from './styles'
+import React, { useEffect, useState } from 'react';
+import ReactDOM from 'react-dom';
+import { ModalWrapper, ModalOverlay } from './styles';
 
+const Modal = ({ children, visible }) => {
+  const [isBrowser, setIsBrowser] = useState(false);
 
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
 
-const Modal = ({visible, children}) => {
-  return (
+  const modalContent = (
     <>
-    <ModalOverlay visible={visible} />
-    <ModalWrapper visible={visible}>
+      <ModalOverlay visible={visible} />
+      <ModalWrapper visible={visible}>
         {children}
-    </ModalWrapper>
+      </ModalWrapper>
     </>
   );
+
+  if (isBrowser) {
+    return ReactDOM.createPortal(
+      modalContent,
+      document.getElementById('modal-root'),
+    );
+  }
+  return null;
 };
-
-
-Modal.propTypes = {
-
-};
-
 
 export default Modal;

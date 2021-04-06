@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Router } from 'next/router';
+import Router from 'next/router';
 import { Form, Blind, Fieldset, LoginTitle, LoginInputBox, LoginInput, LoginMessage, LoginButton } from './styles';
 import { LOGIN_REQUEST } from '../../reducers/user';
 
