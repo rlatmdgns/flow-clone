@@ -30,10 +30,6 @@ function* signUp(action) {
   }
 }
 
-// function test(res) {
-//   const { token } = res.data;
-//   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-// }
 function loginAPI(data) {
   return axios.post('/login', qs.stringify(data));
 }
@@ -44,14 +40,12 @@ function* login(action) {
     // const result = yield call(loginAPI, action.data);
     // console.log('result----------', result.data.token);
     const { token } = result.data;
-
-    // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
+    // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     yield put({
       type: LOGIN_SUCCESS,
-      data: '',
+      data: token,
     });
+    document.cookie = `token=${token}`;
   } catch (error) {
     console.log(error);
     yield put({

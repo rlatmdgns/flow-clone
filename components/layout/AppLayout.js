@@ -8,25 +8,17 @@ import Modal from '../modals/Modal';
 import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 
 const Wrap = styled.div`
-  display:flex;
-  flex-direction:column;
   height:100vh;
 `;
 
 const BodyWrap = styled.div`
   display:flex;
-  flex:1;
+  height:calc(100% - 40px);
 `;
 const Container = styled.div`
-  display:flex;
-  flex-direction:column;
-  flex:1;
+  flex : auto;
 `;
 const Content = styled.div`
-  overflow:auto;
-  display:flex;
-  flex:1;
-  flex-direction:column;
 `;
 
 const Header = styled.header`

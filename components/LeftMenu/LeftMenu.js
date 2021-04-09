@@ -1,8 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router'
-import { LeftMenuWrap, ProjectAddButton, Logo, Gnb, GnbItem } from './styles';
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
+import { LeftMenuWrap, ProjectAddButton, Logo, Gnb, GnbItem } from './styles';
+
 const LeftMenu = () => {
   const router = useRouter();
   const menuData = [
@@ -79,16 +80,15 @@ const LeftMenu = () => {
               </li>
             );
           }
-            return (
-              <li key={i}>
-                <GnbItem img={v.img} hover={v.hover}>
-                  <Link href={v.link}>
-                    <a>{v.title}</a>
-                  </Link>
-                </GnbItem>
-              </li>
-            );
-          
+          return (
+            <li key={i}>
+              <GnbItem img={v.img} hover={v.hover}>
+                <Link href={v.link}>
+                  <a>{v.title}</a>
+                </Link>
+              </GnbItem>
+            </li>
+          );
         })}
       </Gnb>
     </LeftMenuWrap>

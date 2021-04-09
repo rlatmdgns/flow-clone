@@ -88,11 +88,17 @@ export const FilterButton = styled.button`
     `}
 `;
 export const ProjectButtonArea = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${FilterButton} {
-    margin-left: 30px;
-  }
+&::after{
+  display:block;
+  content:"";
+  clear: both;
+}
+`;
+export const TypeButtonArea = styled.div`
+float:left;
+`;
+export const SetButtonArea = styled.div`
+float:right;
 `;
 
 export const ProjectSetButton = styled.button`
@@ -104,7 +110,6 @@ export const ProjectSetButton = styled.button`
   }
   background-repeat: no-repeat;
   vertical-align:middle;
-  margin-left:40px;
 `;
 export const ProjectStatus = styled.div``;
 export const ProJectStarButton = styled.button`

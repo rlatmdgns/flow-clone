@@ -1,4 +1,8 @@
 import React from 'react';
+import axios from 'axios';
+import { END } from '@redux-saga/core';
+import cookies from 'next-cookies';
+import wrapper from '../store/confiureStore';
 import AppLayout from '../components/layout/AppLayout';
 import Modal from '../components/modals/Modal';
 import { ProjectMakeForm } from '../components/modals/ProjectMakeForm/ProjectMakeForm';
@@ -13,8 +17,21 @@ const Main = () => (
   </AppLayout>
 );
 
-// export const getServerSideProps = wrapper.getServerSideProps((context) => {
-
-// })
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  const { token } = cookies(context);
+  const cookie = context.req ? context.req.headers.cookie : '';
+  // const cookie = context.req ? context.req.headers.common.Authorization : '';
+  // axios.defaults.headers.Cookie = '';
+  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // if (context.req && cookie) {
+  //   // axios.defaults.headers.Cookie = cookie;
+  //   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // }
+  if (context.req && cookie) {
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  }
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise();
+});
 
 export default Main;

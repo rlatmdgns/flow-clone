@@ -17,17 +17,21 @@ import {
   StatusArea,
   StatusItem,
   ProjectAlarmCount,
+  TypeButtonArea,
+  SetButtonArea,
 } from './styles';
 
 const ProjectGroup = () => (
   <ProjectWrap>
     <ProjectButtonArea>
-      <div>
+      <TypeButtonArea>
         <TypeButton type="button" buttonType="card" active />
         <TypeButton type="button" buttonType="list" />
+      </TypeButtonArea>
+      <SetButtonArea>
         <FilterButton type="button" active />
         <ProjectSetButton type="button" />
-      </div>
+      </SetButtonArea>
     </ProjectButtonArea>
     <div>
       <ProjectTitle>즐겨찾기</ProjectTitle>

@@ -6,8 +6,8 @@ const PostWriteArea = () => (
     <PostWriteTab>
       <WriteTab>글</WriteTab>
       <WriteTab>업무</WriteTab>
-      {/* <WriteTab>일정</WriteTab>
-      <WriteTab>할일</WriteTab> */}
+      <WriteTab>일정</WriteTab>
+      <WriteTab>할일</WriteTab>
     </PostWriteTab>
     <PostWriteBottom>
       <p>글을 입력해주세요</p>

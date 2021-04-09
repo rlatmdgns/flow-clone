@@ -4,12 +4,11 @@ export const Logo = styled.h1`
   text-align: center;
 `;
 export const LeftMenuWrap = styled.div`
+  overflow:auto;
   width: 236px;
+  height:100%;
   background: #2c2a34;
   color: #ccc;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
 `;
 
 export const ProjectAddButton = styled.button`
@@ -37,14 +36,14 @@ export const GnbItem = styled.div`
     width: 16px;
     height: 16px;
     margin-right: 14px;
-    background-image:url(${props => props.pathname ? props.hover : props.img});   
+    background-image:url(${(props) => (props.pathname ? props.hover : props.img)});   
     vertical-align:top;
   }
   &:hover a::before {
-    background-image:url(${props => props.hover});
+    background-image:url(${(props) => props.hover});
   }
   & a{
-    color:${props => props.pathname ? "#36CFBD" : "#ccc"};
+    color:${(props) => (props.pathname ? '#36CFBD' : '#ccc')};
     text-decoration: none;
   }
   &:hover a,
