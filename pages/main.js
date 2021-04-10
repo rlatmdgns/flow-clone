@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import { END } from '@redux-saga/core';
 import cookies from 'next-cookies';
@@ -20,16 +20,11 @@ const Main = () => (
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const { token } = cookies(context);
   const cookie = context.req ? context.req.headers.cookie : '';
-  // const cookie = context.req ? context.req.headers.common.Authorization : '';
-  // axios.defaults.headers.Cookie = '';
-  // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // if (context.req && cookie) {
-  //   // axios.defaults.headers.Cookie = cookie;
-  //   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  // }
+  axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
+
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });

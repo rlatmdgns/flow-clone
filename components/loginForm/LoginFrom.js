@@ -10,7 +10,7 @@ const LoginFrom = () => {
   const { loginDone, loginError, loginLoading } = useSelector((state) => state.user);
   useEffect(() => {
     if (loginDone) {
-      Router.replace('/main');
+      Router.push('/main');
     }
   }, [loginDone]);
   const [id, setId] = useState('');

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
+import Cookies from 'universal-cookie';
+import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import LeftMenu from '../LeftMenu';
 import { UserHeader } from '../UserHeader/UserHeader';
@@ -29,6 +30,15 @@ const Header = styled.header`
 
 const AppLayout = ({ children }) => {
   const router = useRouter();
+  const cookies = new Cookies();
+  const token = cookies.get('token');
+
+  useEffect(() => {
+    if (!token) {
+      alert('재 로그인 해주세요.');
+      Router.replace('/login');
+    }
+  }, [token]);
   return (
     <Wrap>
       <Header />
