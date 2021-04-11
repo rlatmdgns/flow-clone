@@ -42,7 +42,7 @@ export const ProjectTitle = styled.p`
 `;
 export const ProjectItemContent = styled.div`
   float: left;
-  padding: 16px 20px;
+  padding: 13px 19px;
   ${ProjectTitle} {
     margin: 28px 0 34px 0;
     display: -webkit-box;

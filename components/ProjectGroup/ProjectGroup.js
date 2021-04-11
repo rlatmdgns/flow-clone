@@ -21,7 +21,7 @@ import {
   SetButtonArea,
 } from './styles';
 
-const ProjectGroup = () => (
+const ProjectGroup = ({ projects }) => (
   <ProjectWrap>
     <ProjectButtonArea>
       <TypeButtonArea>
@@ -53,40 +53,20 @@ const ProjectGroup = () => (
     <div>
       <ProjectTitle>참여중</ProjectTitle>
       <ProjectList>
-        <li>
-          <ProjectItem>
-            <ProjectColor />
-            <ProjectItemContent>
-              <ProJectStarButton type="button" />
-              <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
-              <StatusArea>
-                <People>878</People>
+        {projects.map((v, i) => (
+          <li key={v.id}>
+            <ProjectItem>
+              <ProjectColor />
+              <ProjectItemContent>
+                <ProJectStarButton type="button" />
+                <ProjectTitle>{v.title}</ProjectTitle>
                 <ProjectStatus>
-                  <StatusItem status="lock" />
-                  <StatusItem status="alarm_off" />
+                  <People>878</People>
                 </ProjectStatus>
-              </StatusArea>
-            </ProjectItemContent>
-            <ProjectAlarmCount>999</ProjectAlarmCount>
-          </ProjectItem>
-        </li>
-        <li>
-          <ProjectItem>
-            <ProjectColor />
-            <ProjectItemContent>
-              <ProJectStarButton type="button" />
-              <ProjectTitle>프로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명로젝트 명</ProjectTitle>
-              <StatusArea>
-                <People>878</People>
-                <ProjectStatus>
-                  <StatusItem status="lock" />
-                  <StatusItem status="alarm_off" />
-                </ProjectStatus>
-              </StatusArea>
-            </ProjectItemContent>
-            <ProjectAlarmCount>999</ProjectAlarmCount>
-          </ProjectItem>
-        </li>
+              </ProjectItemContent>
+            </ProjectItem>
+          </li>
+        ))}
       </ProjectList>
     </div>
   </ProjectWrap>

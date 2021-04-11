@@ -42,7 +42,9 @@ function* login(action) {
       type: LOGIN_SUCCESS,
       data: token,
     });
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     document.cookie = `token=${token}`;
+    document.cookie = `userId=${action.data.username}`;
   } catch (error) {
     console.log(error);
     yield put({

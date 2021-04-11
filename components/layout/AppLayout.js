@@ -17,7 +17,7 @@ const BodyWrap = styled.div`
   height:calc(100% - 40px);
 `;
 const Container = styled.div`
-  flex : auto;
+  flex : 1;
 `;
 const Content = styled.div`
 `;
@@ -32,6 +32,7 @@ const AppLayout = ({ children }) => {
   const router = useRouter();
   const cookies = new Cookies();
   const token = cookies.get('token');
+  const userId = cookies.get('userId');
 
   useEffect(() => {
     if (!token) {
@@ -46,11 +47,11 @@ const AppLayout = ({ children }) => {
         <LeftMenu />
         <Container>
           {router.pathname.indexOf('detail') < 0 && <UserHeader />}
-          <Content>{children}</Content>
+          <Content userId={userId}>{children}</Content>
         </Container>
       </BodyWrap>
       <Modal visible={false}>
-        <ProjectMakeForm />
+        <ProjectMakeForm userId={userId} />
       </Modal>
     </Wrap>
   );

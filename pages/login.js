@@ -7,17 +7,17 @@ import wrapper from '../store/confiureStore';
 const Login = () => (
   <LoginFrom />
 );
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const cookie = context.req ? context.req.headers.cookie : '';
-  console.log(context.req.headers.cookie);
-  console.log(context.req);
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.Cookie = cookie;
-  }
+// export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+//   const cookie = context.req ? context.req.headers.cookie : '';
+//   console.log(context.req.headers.cookie);
+//   console.log(context.req);
+//   axios.defaults.headers.Cookie = '';
+//   if (context.req && cookie) {
+//     axios.defaults.headers.Cookie = cookie;
+//   }
 
-  context.store.dispatch(END);
-  await context.store.sagaTask.toPromise();
-});
+//   context.store.dispatch(END);
+//   await context.store.sagaTask.toPromise();
+// });
 
 export default Login;
