@@ -28,6 +28,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case PROJECT_ADD_SUCCESS:
       draft.projectAddLoading = false;
+      draft.projects.unshift(action.data);
       draft.projectAddDone = true;
       break;
     case PROJECT_ADD_FAILURE:
@@ -41,8 +42,8 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case LOAD_PROJECTS_SUCCESS:
       draft.loadProjectsLoading = false;
-      draft.loadProjectsDone = true;
       draft.projects = draft.projects.concat(action.data);
+      draft.loadProjectsDone = true;
       break;
     case LOAD_PROJECTS_FAILURE:
       draft.loadProjectsLoading = false;

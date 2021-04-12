@@ -33,7 +33,7 @@ const AppLayout = ({ children }) => {
   const cookies = new Cookies();
   const token = cookies.get('token');
   const userId = cookies.get('userId');
-
+  console.log(userId);
   useEffect(() => {
     if (!token) {
       alert('재 로그인 해주세요.');
@@ -50,7 +50,7 @@ const AppLayout = ({ children }) => {
           <Content userId={userId}>{children}</Content>
         </Container>
       </BodyWrap>
-      <Modal visible={false}>
+      <Modal visible>
         <ProjectMakeForm userId={userId} />
       </Modal>
     </Wrap>

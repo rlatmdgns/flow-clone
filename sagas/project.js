@@ -16,9 +16,10 @@ function projectAddAPI(data) {
 function* projectAdd(action) {
   try {
     const result = yield call(projectAddAPI, action.data);
-    console.log(result);
+    console.log(result.data);
     yield put({
       type: PROJECT_ADD_SUCCESS,
+      data: { id: result.data, title: action.data.title },
     });
   } catch (error) {
     console.log(error);
@@ -29,14 +30,14 @@ function* projectAdd(action) {
   }
 }
 
-function loadProjectsAPI() {
-  return axios.get('/projects');
+function loadProjectsAPI(data) {
+  return axios.get('/normal', data);
 }
 
-function* loadProjects() {
+function* loadProjects(action) {
   try {
-    const result = yield call(loadProjectsAPI);
-    console.log('resultresultresult', result.data);
+    const result = yield call(loadProjectsAPI, action.data);
+    console.log('loadProjects', result);
     yield put({
       type: LOAD_PROJECTS_SUCCESS,
       data: result.data.projectList,

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 
 import user from './user';
 import project from './project';
+import modal from './modal';
 
 // const rootReducer = combineReducers({
 //   // index: (state = {}, action) => {
@@ -28,6 +29,7 @@ const rootReducer = (state, action) => {
       const combineReducer = combineReducers({
         user,
         project,
+        modal,
       });
       return combineReducer(state, action);
     }
