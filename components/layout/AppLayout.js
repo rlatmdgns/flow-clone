@@ -50,7 +50,7 @@ const AppLayout = ({ children }) => {
           <Content userId={userId}>{children}</Content>
         </Container>
       </BodyWrap>
-      <Modal visible>
+      <Modal visible={false}>
         <ProjectMakeForm userId={userId} />
       </Modal>
     </Wrap>

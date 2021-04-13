@@ -11,7 +11,7 @@ export const ProjectList = styled.ul`
   margin: -9px;
   list-style: none;
   li {
-    margin: 9px;
+    margin: 8px;
   }
 `;
 export const ProjectItem = styled.div`

@@ -54,7 +54,7 @@ const ProjectGroup = ({ projects }) => (
       <ProjectTitle>참여중</ProjectTitle>
       <ProjectList>
         {projects.map((v, i) => (
-          <li key={v.id}>
+          <li key={i}>
             <ProjectItem>
               <ProjectColor />
               <ProjectItemContent>

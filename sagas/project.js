@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { all, fork, put, call, takeLatest } from 'redux-saga/effects';
+import qs from 'qs';
+import { all, fork, put, call, takeLatest, throttle } from 'redux-saga/effects';
 import {
   PROJECT_ADD_REQUEST,
   PROJECT_ADD_SUCCESS,
@@ -31,10 +32,13 @@ function* projectAdd(action) {
 }
 
 function loadProjectsAPI(data) {
-  return axios.get('/normal', data);
+  return axios.get('/normal', {
+    params: data,
+  });
 }
 
 function* loadProjects(action) {
+  console.log(action);
   try {
     const result = yield call(loadProjectsAPI, action.data);
     console.log('loadProjects', result);
@@ -55,7 +59,7 @@ function* watchProjectAdd() {
   yield takeLatest(PROJECT_ADD_REQUEST, projectAdd);
 }
 function* watchLoadProject() {
-  yield takeLatest(LOAD_PROJECTS_REQUEST, loadProjects);
+  yield throttle(1000, LOAD_PROJECTS_REQUEST, loadProjects);
 }
 
 export default function* projectSaga() {
