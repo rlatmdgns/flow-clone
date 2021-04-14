@@ -3,33 +3,34 @@ import Cookies from 'universal-cookie';
 import Router, { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 import LeftMenu from '../LeftMenu';
 import { UserHeader } from '../UserHeader/UserHeader';
 import Modal from '../modals/Modal';
 import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 
 const Wrap = styled.div`
-  height:100vh;
+  height: 100vh;
 `;
 
 const BodyWrap = styled.div`
-  display:flex;
-  height:calc(100% - 40px);
+  display: flex;
+  height: calc(100% - 40px);
 `;
 const Container = styled.div`
-  flex : 1;
+  flex: 1;
 `;
-const Content = styled.div`
-`;
+const Content = styled.div``;
 
 const Header = styled.header`
-  position:relative;
-  height:40px;
-  background: #2C2A34;
+  position: relative;
+  height: 40px;
+  background: #2c2a34;
 `;
 
 const AppLayout = ({ children }) => {
   const router = useRouter();
+  const { createProject } = useSelector((state) => state.modal);
   const cookies = new Cookies();
   const token = cookies.get('token');
   const userId = cookies.get('userId');
@@ -50,9 +51,18 @@ const AppLayout = ({ children }) => {
           <Content userId={userId}>{children}</Content>
         </Container>
       </BodyWrap>
-      <Modal visible={false}>
-        <ProjectMakeForm userId={userId} />
-      </Modal>
+      {/* {(function () {
+
+      }())} */}
+      {(() => {
+        if (createProject) {
+          return (
+            <Modal visible={createProject}>
+              <ProjectMakeForm userId={userId} />
+            </Modal>
+          );
+        }
+      })()}
     </Wrap>
   );
 };

@@ -9,6 +9,7 @@ import {
   LOAD_PROJECTS_SUCCESS,
   LOAD_PROJECTS_REQUEST,
 } from '../reducers/project';
+import { CREATE_PROJECT } from '../reducers/modal';
 
 function projectAddAPI(data) {
   return axios.post('/project', data);
@@ -21,6 +22,10 @@ function* projectAdd(action) {
     yield put({
       type: PROJECT_ADD_SUCCESS,
       data: { id: result.data, title: action.data.title },
+    });
+    yield put({
+      type: CREATE_PROJECT,
+      data: false,
     });
   } catch (error) {
     console.log(error);
@@ -41,10 +46,10 @@ function* loadProjects(action) {
   console.log(action);
   try {
     const result = yield call(loadProjectsAPI, action.data);
-    console.log('loadProjects', result);
+    console.log('hasNext', result.data.hasNext);
     yield put({
       type: LOAD_PROJECTS_SUCCESS,
-      data: result.data.projectList,
+      data: result.data,
     });
   } catch (error) {
     console.log(error);
@@ -59,7 +64,7 @@ function* watchProjectAdd() {
   yield takeLatest(PROJECT_ADD_REQUEST, projectAdd);
 }
 function* watchLoadProject() {
-  yield throttle(1000, LOAD_PROJECTS_REQUEST, loadProjects);
+  yield throttle(3000, LOAD_PROJECTS_REQUEST, loadProjects);
 }
 
 export default function* projectSaga() {

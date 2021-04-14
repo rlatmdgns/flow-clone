@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { END } from '@redux-saga/core';
 import cookies from 'next-cookies';
@@ -12,18 +12,20 @@ import { LOAD_PROJECTS_REQUEST } from '../reducers/project';
 
 const Main = () => {
   const dispatch = useDispatch();
-  const { projects, loadProjectsLoading } = useSelector((state) => state.project);
+  const [pageNum, setPageNum] = useState(2);
+  const { projects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
   console.log('projects', projects);
   useEffect(() => {
     function onScroll() {
+      let count = pageNum;
       if (pageYOffset + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
-        let pageNum = 1;
-        if (!loadProjectsLoading) {
+        if (hasNext && !loadProjectsLoading) {
           dispatch({
             type: LOAD_PROJECTS_REQUEST,
-            data: { userId: 'rlatmdgns94', size: 4, page: pageNum },
+            data: { userId: 'rlatmdgns94', size: 5, page: pageNum },
           });
-          pageNum += 1;
+          count += 1;
+          setPageNum(count);
         }
       }
     }
@@ -31,7 +33,8 @@ const Main = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [projects, loadProjectsLoading]);
+  }, [projects, loadProjectsLoading, pageNum]);
+
   return (
     <AppLayout>
       <ProjectGroup projects={projects} />

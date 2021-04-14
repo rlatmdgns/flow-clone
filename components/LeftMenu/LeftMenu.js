@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { LeftMenuWrap, ProjectAddButton, Logo, Gnb, GnbItem } from './styles';
+import { CREATE_PROJECT } from '../../reducers/modal';
 
 const LeftMenu = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const menuData = [
     {
@@ -56,7 +58,12 @@ const LeftMenu = () => {
       hover: '/images/icons/icon_search2.png',
     },
   ];
-
+  const createProjectModal = () => {
+    dispatch({
+      type: CREATE_PROJECT,
+      data: true,
+    });
+  };
   return (
     <LeftMenuWrap>
       <Logo>
@@ -66,7 +73,7 @@ const LeftMenu = () => {
           </a>
         </Link>
       </Logo>
-      <ProjectAddButton>새 프로젝트 추가</ProjectAddButton>
+      <ProjectAddButton onClick={createProjectModal}>새 프로젝트 추가</ProjectAddButton>
       <Gnb>
         {menuData.map((v, i) => {
           if (router.pathname === v.link) {

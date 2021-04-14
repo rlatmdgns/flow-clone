@@ -8,6 +8,7 @@ export const initialState = {
   loadProjectsDone: false,
   loadProjectsError: null,
   projects: [],
+  hasNext: false,
 };
 // 액션타입
 
@@ -42,8 +43,9 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case LOAD_PROJECTS_SUCCESS:
       draft.loadProjectsLoading = false;
-      draft.projects = draft.projects.concat(action.data);
+      draft.projects = draft.projects.concat(action.data.projectList);
       draft.loadProjectsDone = true;
+      draft.hasNext = action.data.hasNext;
       break;
     case LOAD_PROJECTS_FAILURE:
       draft.loadProjectsLoading = false;
