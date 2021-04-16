@@ -82,10 +82,10 @@ export const PostTItle = styled.h4`
 `;
 
 export const PostCardContent = styled.div`
-  margin : 20px 0;
+  margin: 20px 0;
   font-size: 14px;
   word-break: break-word;
-  color:#333;
+  color: #333;
 `;
 export const TaskNumberArea = styled.div`
   display: table-cell;
@@ -136,8 +136,132 @@ export const StateButton = styled.button`
   font-size: 13px;
   background: #faf9f9;
   color: #777;
+  & + & {
+    margin-left: 10px;
+  }
 `;
 
-export const PostFooter = styled.div`
+export const PostFooter = styled.div``;
 
+export const CommentWrap = styled.div`
+  padding: 20px 30px 30px 30px;
+  border-radius: 0 0 10px 10px;
+  background: #f9f9f9;
+`;
+
+export const CommentHeader = styled.div``;
+
+export const CommentGroup = styled.ul`
+  margin: 0;
+  padding: 0;
+  li {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+`;
+
+export const CommentList = styled.li`
+
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    :last-child{
+      border:0;
+    }
+`;
+
+export const CommentThumNail = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  cursor: pointer;
+  background: yellowgreen;
+`;
+
+export const CommentUserArea = styled.div`
+  overflow: hidden;
+`;
+
+export const CommentUser = styled.div`
+  float: left;
+`;
+export const CommentText = styled.p`
+  margin:0;
+    word-break: break-all;
+    white-space: pre-wrap;
+    line-height: 25px;
+`;
+export const CommentMeMenu = styled.div`
+  float: right;
+
+`;
+
+export const MeItem = styled.button`
+   display: inline-block;
+  font-size: 14px;
+  color: #999;
+  cursor: pointer;
+  & + & {
+  margin-left: 4px;
+  }
+`;
+export const CommentItem = styled.div`
+  flex: 1;
+`;
+
+export const PostButtonArea = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const PostButton = styled.div`
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  & + & {
+    margin-left: 4px;
+  }
+`;
+
+export const DisplayPostRead = styled.div`
+  margin-left: auto;
+  font-size: 13px;
+  color: #999;
+  em {
+    font-weight: bold;
+    font-style: normal;
+  }
+`;
+
+export const CommentInputWrap = styled.div`
+  overflow:hidden;
+  ${CommentThumNail}{
+    float:left;
+  }
+`;
+export const CommentInput = styled.div`
+      width: calc(100% - 52px);
+    padding: 14px 50px 14px 20px;
+    min-height: 44px;
+    float:left;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #555;
+    word-break: break-all;
+    white-space: pre;
+    &[contenteditable="true"]:empty:before{
+      display: block; /* For Firefox */
+      content: attr(placeholder);
+      color: #999;
+    }
 `;

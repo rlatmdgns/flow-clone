@@ -22,6 +22,22 @@ import {
   PostCardContent,
   StateButton,
   PostFooter,
+  CommentWrap,
+  CommentHeader,
+  CommentGroup,
+  CommentThumNail,
+  CommentUserArea,
+  CommentUser,
+  CommentText,
+  CommentMeMenu,
+  CommentItem,
+  CommentList,
+  PostButtonArea,
+  PostButton,
+  DisplayPostRead,
+  MeItem,
+  CommentInputWrap,
+  CommentInput,
 } from './styles';
 
 const PostCard = () => (
@@ -82,36 +98,43 @@ const PostCard = () => (
       <PostCardContent>
         홍길동 간지로다가
       </PostCardContent>
+      <PostButtonArea>
+        <PostButton type="button">반응하기</PostButton>
+        <PostButton type="button">담아두기</PostButton>
+        <DisplayPostRead>읽음<em>76</em></DisplayPostRead>
+      </PostButtonArea>
     </PostCardContainer>
     <PostFooter>
-      <button>반응하기</button>
-      <button>담아두기</button>
-      <span>읽음<em>76</em></span>
-    </PostFooter>
-    <CommentWrap>
-      <CommentHeader />
-      <CommentGroup>
-        <li>
+      <CommentWrap>
+        <CommentHeader />
+        <CommentGroup>
+          <CommentList>
+            <CommentThumNail />
+            <CommentItem>
+              <CommentUserArea>
+                <CommentUser>
+                  <Name>홍길동</Name>
+                  <Rank>매니저</Rank>
+                  <Date>2021-04-16</Date>
+                </CommentUser>
+                <CommentMeMenu>
+                  <MeItem>수정</MeItem>
+                  <MeItem>삭제</MeItem>
+                </CommentMeMenu>
+              </CommentUserArea>
+              <CommentText>
+                1231221133
+              </CommentText>
+            </CommentItem>
+          </CommentList>
+        </CommentGroup>
+        <CommentInputWrap>
           <CommentThumNail />
-          <CommentContent>
-            <CommentUserArea>
-              <CommentUser>
-                <Name>홍길동</Name>
-                <Rank>매니저</Rank>
-                <Date>2021-04-16</Date>
-              </CommentUser>
-              <CommentMeMenu>
-                <button>수정</button>
-                <button>삭제</button>
-              </CommentMeMenu>
-            </CommentUserArea>
-            <CommentText>
-              1231221133
-            </CommentText>
-          </CommentContent>
-        </li>
-      </CommentGroup>
-    </CommentWrap>
+          <CommentInput contentEditable="true" placeholder="줄바꿈은 Shift or Ctrl + Enter / 입력은 Enter 입니다.." />
+        </CommentInputWrap>
+      </CommentWrap>
+    </PostFooter>
+
   </PostCardWrapper>
 );
 
