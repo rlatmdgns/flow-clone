@@ -9,9 +9,21 @@ export const initialState = {
   loadProjectsError: null,
   projects: [],
   hasNext: false,
+  posts: [],
 };
 // 액션타입
-
+const dummyData = {
+  user: {
+    name: '홍길동',
+    rank: '매니저',
+    company: '플로우',
+    team: '애니멀',
+  },
+  title: '플로우 클론 만들기',
+  createDate: '2021-04-16',
+  state: 'request',
+  tasknum: '0001',
+};
 export const PROJECT_ADD_REQUEST = 'PROJECT_ADD_REQUEST';
 export const PROJECT_ADD_SUCCESS = 'PROJECT_ADD_SUCCESS';
 export const PROJECT_ADD_FAILURE = 'PROJECT_ADD_FAILURE';

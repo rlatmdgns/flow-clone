@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const PostWrite = styled.div`
   overflow:hidden;
+  margin-bottom:20px;
   background: #fff;
   border: 1px solid #777;
   box-sizing: border-box;

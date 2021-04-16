@@ -4,7 +4,7 @@ import axios from 'axios';
 import { END } from '@redux-saga/core';
 import AppLayout from '../../components/layout/AppLayout';
 import ProjectDetail from '../../components/ProjectDetail';
-import wrapper from '../store/confiureStore';
+import wrapper from '../../store/confiureStore';
 
 const Detail = () => {
   const router = useRouter();
