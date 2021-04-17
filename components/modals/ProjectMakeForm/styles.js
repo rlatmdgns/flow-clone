@@ -19,7 +19,9 @@ export const PopupTitle = styled.div`
   color: #333;
 `;
 
-export const CloseButton = styled.button``;
+export const CloseButton = styled.button`
+font-size:16px;
+`;
 export const Content = styled.div`
   margin: 30px 0;
 `;
@@ -104,8 +106,8 @@ export const ToggleButton = styled.div`
           transform: translateX(28px);
         }
       `;
-    } else {
-      return css`
+    }
+    return css`
         &:hover {
           background: #999;
           ${Circle} {
@@ -113,7 +115,6 @@ export const ToggleButton = styled.div`
           }
         }
       `;
-    }
   }}
 `;
 

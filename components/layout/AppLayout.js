@@ -8,6 +8,7 @@ import LeftMenu from '../LeftMenu';
 import { UserHeader } from '../UserHeader/UserHeader';
 import Modal from '../modals/Modal';
 import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
+import CreatePostForm from '../modals/CreatePostForm';
 
 const Wrap = styled.div`
   height: 100vh;
@@ -59,6 +60,13 @@ const AppLayout = ({ children }) => {
           return (
             <Modal visible={createProject}>
               <ProjectMakeForm userId={userId} />
+            </Modal>
+          );
+        }
+        if (true) {
+          return (
+            <Modal visible>
+              <CreatePostForm />
             </Modal>
           );
         }

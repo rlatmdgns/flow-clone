@@ -18,6 +18,7 @@ import {
   Circle,
 } from './styles';
 import { PROJECT_ADD_REQUEST } from '../../../reducers/project';
+import { CREATE_PROJECT } from '../../../reducers/modal';
 
 const ProjectMakeForm = ({ userId }) => {
   const [explain, setExPlain] = useState('');
@@ -45,15 +46,27 @@ const ProjectMakeForm = ({ userId }) => {
       },
     });
   };
+
+  const popupCloseHandle = () => {
+    dispatch({
+      type: CREATE_PROJECT,
+      data: false,
+    });
+  };
+
   return (
     <ProjectFormPopup>
       <Header>
         <PopupTitle>프로젝트 만들기</PopupTitle>
-        <CloseButton />
+        <CloseButton type="button" onClick={popupCloseHandle}>X</CloseButton>
       </Header>
       <Content>
         <TitleInput type="text" placeholder="제목을 입력하세요" onChange={titleChange} value={title} />
-        <DescriptionTextArea placeholder="프로젝트에 관한 설명 입력 (필수항목은 아닙니다.)" onChange={explainChange} value={explain} />
+        <DescriptionTextArea
+          placeholder="프로젝트에 관한 설명 입력 (필수항목은 아닙니다.)"
+          onChange={explainChange}
+          value={explain}
+        />
         {/* <SetArea>
           <SetTitle>옵션 설정</SetTitle>
           <SetItem>
@@ -70,13 +83,13 @@ const ProjectMakeForm = ({ userId }) => {
           </SetItem>
         </SetArea> */}
       </Content>
-      <SubmitButton type="button" onClick={createProject}>적용하기</SubmitButton>
+      <SubmitButton type="button" onClick={createProject}>
+        적용하기
+      </SubmitButton>
     </ProjectFormPopup>
   );
 };
 
-ProjectMakeForm.propTypes = {
-
-};
+ProjectMakeForm.propTypes = {};
 
 export { ProjectMakeForm };

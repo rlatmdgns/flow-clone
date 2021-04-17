@@ -150,7 +150,6 @@ export const CommentWrap = styled.div`
 `;
 
 export const CommentHeader = styled.div``;
-
 export const CommentGroup = styled.ul`
   margin: 0;
   padding: 0;
