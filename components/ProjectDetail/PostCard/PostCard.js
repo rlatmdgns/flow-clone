@@ -41,30 +41,18 @@ import {
 } from './styles';
 
 const PostCard = ({ write, view }) => {
-  const [taskState, setTaskState] = useState(0);
+  const [taskState, setTaskState] = useState('request');
   // const [currentState, setCurrentState] = useState('request');
   const taskType = ['요청', '진행', '피드백', '완료', '보류'];
-  const stateHandler = (i) => {
-    console.log(i);
-    switch (i) {
-      case 0:
-        setTaskState(0);
-        break;
-      case 1:
-        setTaskState(1);
-        break;
-      case 2:
-        setTaskState(2);
-        break;
-      case 3:
-        setTaskState(3);
-        break;
-      case 4:
-        setTaskState(4);
-        break;
-      default:
-        break;
-    }
+  const state = {
+    0: 'request',
+    1: 'ongoing',
+    2: 'feedback',
+    3: 'complete',
+    4: 'hold',
+  };
+  const stateHandel = (i) => {
+    setTaskState(state[i]);
   };
 
   return (
@@ -103,7 +91,7 @@ const PostCard = ({ write, view }) => {
             <TaskItemTitle>업무상태</TaskItemTitle>
             <TaskListCell>
               {taskType.map((v, i) => {
-                if (i === taskState) {
+                if (state[i] === taskState) {
                   return (
                     <StateButton key={i} type="button" state={taskState}>
                       {v}
@@ -111,7 +99,7 @@ const PostCard = ({ write, view }) => {
                   );
                 }
                 return (
-                  <StateButton key={i} type="button" onClick={() => stateHandler(i)}>
+                  <StateButton key={i} type="button" onClick={() => stateHandel(i)}>
                     {v}
                   </StateButton>
                 );
