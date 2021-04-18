@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const PopupWrap = styled.div`
   position: relative;
   z-index: 5;
-  width:100%;
+  width: 100%;
   max-width: 945px;
   margin: 0 auto;
   padding: 20px 30px 0 30px;
@@ -27,8 +27,51 @@ export const PopupTitle = styled.div`
 `;
 
 export const CloseButton = styled.button`
-font-size:16px;
+  font-size: 16px;
 `;
 export const Content = styled.div`
   margin: 30px 0;
+`;
+
+export const CreatePostNav = styled.ul`
+  display: table;
+  width: 100%;
+  margin: 30px 0 0 0;
+  padding: 0;
+  table-layout: fixed;
+`;
+export const CreateItem = styled.li`
+  display: table-cell;
+`;
+export const CreateTab = styled.button`
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-bottom: 2px solid #ccc;
+  color: #999;
+  ${(props) => props.active
+    && css`
+      color: #333;
+      border-color: #333;
+      font-weight: 600;
+    `}
+`;
+export const Footer = styled.div`
+  display: flex;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+`;
+
+export const CreateButton = styled.button`
+  position: relative;
+  height: 36px;
+  padding: 0 47px;
+  margin-left: auto;
+  background: #6449fc;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
 `;

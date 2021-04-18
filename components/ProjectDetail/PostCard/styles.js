@@ -1,11 +1,32 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+const StateColorType = (state) => {
+  switch (state) {
+    case 0:
+      return 'color: #fff; background: #00b2ff;';
+    case 1:
+      return 'color: #fff; background: #00b01c;';
+    case 2:
+      return 'color: #fff; background: #fd7900;';
+    case 3:
+      return 'color: #fff; background: #402a9d;';
+    case 4:
+      return 'color: #fff; background: #777;';
+    default:
+      return 'color: #777; background: #faf9f9;';
+  }
+};
 export const PostCardWrapper = styled.div`
   overflow: hidden;
   border: 1px solid #ccc;
   border-radius: 10px;
   background: #fff;
   box-shadow: 0px 0px 15px rgb(0 0 0 / 4%);
+  ${(props) => props.write
+    && css`
+      border: 0;
+      box-shadow: none;
+    `}
 `;
 export const PostCardContainer = styled.div`
   padding: 20px 30px 30px 30px;
@@ -75,10 +96,15 @@ export const PostHeader = styled.div`
   box-sizing: border-box;
   border-bottom: 1px solid #faf9f9;
 `;
-export const PostTItle = styled.h4`
+export const PostTitle = styled.h4`
   display: table-cell;
   font-size: 20px;
   vertical-align: middle;
+  &[contenteditable='true']:empty:before {
+    display: block; /* For Firefox */
+    content: attr(placeholder);
+    color: #999;
+  }
 `;
 
 export const PostCardContent = styled.div`
@@ -86,6 +112,11 @@ export const PostCardContent = styled.div`
   font-size: 14px;
   word-break: break-word;
   color: #333;
+  &[contenteditable='true']:empty:before {
+    display: block; /* For Firefox */
+    content: attr(placeholder);
+    color: #999;
+  }
 `;
 export const TaskNumberArea = styled.div`
   display: table-cell;
@@ -134,8 +165,7 @@ export const StateButton = styled.button`
   border-radius: 220px;
   font-weight: bold;
   font-size: 13px;
-  background: #faf9f9;
-  color: #777;
+  ${({ state }) => StateColorType(state)};
   & + & {
     margin-left: 10px;
   }
@@ -161,13 +191,12 @@ export const CommentGroup = styled.ul`
 `;
 
 export const CommentList = styled.li`
-
-    display: flex;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    :last-child{
-      border:0;
-    }
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  :last-child {
+    border: 0;
+  }
 `;
 
 export const CommentThumNail = styled.div`
@@ -188,23 +217,22 @@ export const CommentUser = styled.div`
   float: left;
 `;
 export const CommentText = styled.p`
-  margin:0;
-    word-break: break-all;
-    white-space: pre-wrap;
-    line-height: 25px;
+  margin: 0;
+  word-break: break-all;
+  white-space: pre-wrap;
+  line-height: 25px;
 `;
 export const CommentMeMenu = styled.div`
   float: right;
-
 `;
 
 export const MeItem = styled.button`
-   display: inline-block;
+  display: inline-block;
   font-size: 14px;
   color: #999;
   cursor: pointer;
   & + & {
-  margin-left: 4px;
+    margin-left: 4px;
   }
 `;
 export const CommentItem = styled.div`
@@ -240,27 +268,27 @@ export const DisplayPostRead = styled.div`
 `;
 
 export const CommentInputWrap = styled.div`
-  overflow:hidden;
-  ${CommentThumNail}{
-    float:left;
+  overflow: hidden;
+  ${CommentThumNail} {
+    float: left;
   }
 `;
 export const CommentInput = styled.div`
-      width: calc(100% - 52px);
-    padding: 14px 50px 14px 20px;
-    min-height: 44px;
-    float:left;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #555;
-    word-break: break-all;
-    white-space: pre;
-    &[contenteditable="true"]:empty:before{
-      display: block; /* For Firefox */
-      content: attr(placeholder);
-      color: #999;
-    }
+  width: calc(100% - 52px);
+  padding: 14px 50px 14px 20px;
+  min-height: 44px;
+  float: left;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #555;
+  word-break: break-all;
+  white-space: pre;
+  &[contenteditable='true']:empty:before {
+    display: block; /* For Firefox */
+    content: attr(placeholder);
+    color: #999;
+  }
 `;

@@ -10,7 +10,7 @@ const ProjectDetail = () => (
     <ProjectHeader />
     <DetailContent>
       <PostWriteArea />
-      <PostCard />
+      <PostCard view />
     </DetailContent>
   </DetailContainer>
 );

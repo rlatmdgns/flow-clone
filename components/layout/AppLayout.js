@@ -31,7 +31,7 @@ const Header = styled.header`
 
 const AppLayout = ({ children }) => {
   const router = useRouter();
-  const { createProject } = useSelector((state) => state.modal);
+  const { createProject, createPost } = useSelector((state) => state.modal);
   const cookies = new Cookies();
   const token = cookies.get('token');
   const userId = cookies.get('userId');
@@ -63,7 +63,7 @@ const AppLayout = ({ children }) => {
             </Modal>
           );
         }
-        if (true) {
+        if (createPost) {
           return (
             <Modal visible>
               <CreatePostForm />
