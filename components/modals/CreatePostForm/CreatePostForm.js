@@ -23,13 +23,13 @@ const CreatePostForm = () => {
     // '글',
     '업무',
   ];
-  const CreateTabContent = {
-    0: <Task />,
-    // 1: 1,
-  };
-  const tabHandler = (i) => {
-    setActiveTab(i);
-  };
+  // const CreateTabContent = {
+  //   0: <Task />,
+  //   // 1: 1,
+  // };
+  // const tabHandler = (i) => {
+  //   setActiveTab(i);
+  // };
   const popupCloseHandle = () => {
     dispatch({
       type: CREATE_POST,
@@ -43,16 +43,16 @@ const CreatePostForm = () => {
         <CloseButton onClick={popupCloseHandle}>X</CloseButton>
       </Header>
       <CreatePostNav>
-        {CreateTitle.map((v, i) => (
+        {/* {CreateTitle.map((v, i) => (
           <CreateItem key={i} onClick={() => tabHandler(i)}>
             <CreateTab type="button" role="tab" active={activeTab === i}>
               {v}
             </CreateTab>
           </CreateItem>
-        ))}
+        ))} */}
       </CreatePostNav>
       <Content>
-        {CreateTabContent[activeTab]}
+        {/* {CreateTabContent[activeTab]} */}
       </Content>
       <Footer>
         <CreateButton type="button">올리기</CreateButton>
