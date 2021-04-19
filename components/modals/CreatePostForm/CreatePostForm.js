@@ -14,7 +14,7 @@ import {
   CreateButton,
 } from './styles';
 import { CREATE_POST } from '../../../reducers/modal';
-import Task from './Task/Task';
+// import Task from './Task/Task';
 
 const CreatePostForm = () => {
   const dispatch = useDispatch();
