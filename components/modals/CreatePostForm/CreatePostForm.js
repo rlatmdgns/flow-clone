@@ -14,6 +14,7 @@ import {
   CreateButton,
 } from './styles';
 import { CREATE_POST } from '../../../reducers/modal';
+import TaskStateGroup from '../../TaskStateGroup';
 // import Task from './Task/Task';
 
 const CreatePostForm = () => {

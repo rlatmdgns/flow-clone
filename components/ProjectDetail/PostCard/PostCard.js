@@ -20,7 +20,6 @@ import {
   TaskItemTitle,
   TaskListCell,
   PostCardContent,
-  StateButton,
   PostFooter,
   CommentWrap,
   CommentHeader,
@@ -39,19 +38,11 @@ import {
   CommentInputWrap,
   CommentInput,
 } from './styles';
+import TaskStateGroup from '../../TaskStateGroup';
 
 const PostCard = () => {
-  const [currentState, setCurrentState] = useState('request');
-  const taskType = ['요청', '진행', '피드백', '완료', '보류'];
-  const state = {
-    0: 'request',
-    1: 'ongoing',
-    2: 'feedback',
-    3: 'complete',
-    4: 'hold',
-  };
   const stateHandler = (i) => {
-    setCurrentState(state[i]);
+    console.log('postcard 부모입니다.', i);
   };
   return (
     <PostCardWrapper>
@@ -80,20 +71,7 @@ const PostCard = () => {
           <TaskList>
             <TaskItemTitle>업무상태</TaskItemTitle>
             <TaskListCell>
-              {taskType.map((v, i) => {
-                if (state[i] === currentState) {
-                  return (
-                    <StateButton key={i} type="button" state={currentState}>
-                      {v}
-                    </StateButton>
-                  );
-                }
-                return (
-                  <StateButton key={i} type="button" onClick={() => stateHandler(i)}>
-                    {v}
-                  </StateButton>
-                );
-              })}
+              <TaskStateGroup stateHandler={stateHandler} />
             </TaskListCell>
           </TaskList>
           <TaskList>
