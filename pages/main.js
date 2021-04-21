@@ -52,10 +52,10 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   if (context.req && cookie) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
-  context.store.dispatch({
-    type: LOAD_PROJECTS_REQUEST,
-    data: { userId: 'rlatmdgns94', size: 10, page: 0 },
-  });
+  // context.store.dispatch({
+  //   type: LOAD_PROJECTS_REQUEST,
+  //   data: { userId: 'rlatmdgns94', size: 10, page: 0 },
+  // });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });

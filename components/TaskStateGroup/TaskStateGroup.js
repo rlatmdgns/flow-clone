@@ -48,10 +48,10 @@ const TaskStateGroup = ({ stateHandler }) => {
     taskType.map((v, i) => {
       if (state[i] === currentState) {
         return (
-          <StateButton state={currentState}>{v}</StateButton>
+          <StateButton key={i} state={currentState}>{v}</StateButton>
         );
       }
-      return <StateButton onClick={() => onClick(i)}>{v}</StateButton>;
+      return <StateButton key={i} onClick={() => onClick(i)}>{v}</StateButton>;
     })
   );
 };
