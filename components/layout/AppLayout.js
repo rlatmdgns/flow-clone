@@ -36,12 +36,12 @@ const AppLayout = ({ children }) => {
   const token = cookies.get('token');
   const userId = cookies.get('userId');
   console.log(userId);
-  useEffect(() => {
-    if (!token) {
-      alert('재 로그인 해주세요.');
-      Router.replace('/login');
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     alert('재 로그인 해주세요.');
+  //     Router.replace('/login');
+  //   }
+  // }, [token]);
   return (
     <Wrap>
       <Header />

@@ -4,15 +4,15 @@ import styled from 'styled-components';
 
 const StateColorType = (state) => {
   switch (state) {
-    case 'request':
+    case 'REQUEST':
       return 'color: #fff; background: #00b2ff;';
-    case 'ongoing':
+    case 'ONGOING':
       return 'color: #fff; background: #00b01c;';
-    case 'feedback':
+    case 'FEEDBACK':
       return 'color: #fff; background: #fd7900;';
-    case 'complete':
+    case 'COMPLETE':
       return 'color: #fff; background: #402a9d;';
-    case 'hold':
+    case 'HOLD':
       return 'color: #fff; background: #777;';
     default:
       return 'color: #777; background: #faf9f9;';
@@ -30,15 +30,15 @@ ${({ state }) => StateColorType(state)};
   margin-left: 10px;
 }
 `;
-const TaskStateGroup = ({ stateHandler }) => {
+const TaskStateGroup = ({ stateHandler, taskStatus }) => {
   const taskType = ['요청', '진행', '피드백', '완료', '보류'];
-  const [currentState, setCurrentState] = useState('request');
+  const [currentState, setCurrentState] = useState(taskStatus);
   const state = {
-    0: 'request',
-    1: 'ongoing',
-    2: 'feedback',
-    3: 'complete',
-    4: 'hold',
+    0: 'REQUEST',
+    1: 'ONGOING',
+    2: 'FEEDBACK',
+    3: 'COMPLETE',
+    4: 'HOLD',
   };
   const onClick = (i) => {
     setCurrentState(state[i]);

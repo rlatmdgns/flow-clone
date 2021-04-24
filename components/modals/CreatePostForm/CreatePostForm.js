@@ -53,7 +53,6 @@ const CreatePostForm = () => {
       </CreatePostNav>
       <Content>
         {CreateTabContent[activeTab]}
-
       </Content>
       <Footer>
         <CreateButton type="button">올리기</CreateButton>

@@ -30,7 +30,9 @@ export const CloseButton = styled.button`
   font-size: 16px;
 `;
 export const Content = styled.div`
+  overflow:auto;
   margin: 30px 0;
+  max-height :60vh;
 `;
 
 export const CreatePostNav = styled.ul`
