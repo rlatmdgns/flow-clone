@@ -12,7 +12,6 @@ const CreateTask = () => {
       <CreateTaskList />
       <TaskContentText contentEditable="true" placeholder="업무내용을 입력하세요" />
     </div>
-
   );
 };
 

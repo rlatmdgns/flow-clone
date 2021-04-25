@@ -15,10 +15,12 @@ import {
 } from './styles';
 import { CREATE_POST } from '../../../reducers/modal';
 import CreateTask from '../../CreateTask';
+import { CREATE_TASK_REQUEST } from '../../../reducers/project';
 
 const CreatePostForm = () => {
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
+  const [submitType, setSubmitType] = useState(CREATE_TASK_REQUEST);
   const CreateTitle = [
     // '글',
     '업무',
@@ -28,12 +30,23 @@ const CreatePostForm = () => {
     // 1: 1,
   };
   const tabHandler = (i) => {
+    const TYPE = {
+      0: CREATE_TASK_REQUEST,
+    };
     setActiveTab(i);
+    setSubmitType(TYPE.i);
   };
   const popupCloseHandle = () => {
     dispatch({
       type: CREATE_POST,
       data: false,
+    });
+  };
+
+  const submitHandler = () => {
+    dispatch({
+      type: submitType,
+      data: { title: 'test', taskStatus: 'REQUEST', userId: 'rlatmdgns94', projectId: 1, priority: 'NORMAL', progress: 0 },
     });
   };
   return (
@@ -55,7 +68,7 @@ const CreatePostForm = () => {
         {CreateTabContent[activeTab]}
       </Content>
       <Footer>
-        <CreateButton type="button">올리기</CreateButton>
+        <CreateButton type="button" onClick={submitHandler}>올리기</CreateButton>
       </Footer>
     </PopupWrap>
   );

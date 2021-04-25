@@ -20,8 +20,8 @@ const ProjectHeader = () => (
       <DetailProjectColor />
       <DetailHeaderInner>
         <DetailTitleArea>
-          {/* <FavoriteButton>즐겨찾기</FavoriteButton>
-          <SetButton>프로젝트 설정</SetButton> */}
+          <FavoriteButton>즐겨찾기</FavoriteButton>
+          <SetButton>프로젝트 설정</SetButton>
           <DetailTitle>프로젝트 제목제목</DetailTitle>
         </DetailTitleArea>
         <DetailDescription>프로젝트 설명 글</DetailDescription>

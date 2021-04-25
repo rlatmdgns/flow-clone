@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import {
   ProjectWrap,
@@ -53,18 +54,22 @@ const ProjectGroup = ({ projects }) => (
     <div>
       <ProjectTitle>참여중</ProjectTitle>
       <ProjectList>
-        {projects.map((v, i) => (
-          <li key={i}>
-            <ProjectItem>
-              <ProjectColor />
-              <ProjectItemContent>
-                <ProJectStarButton type="button" />
-                <ProjectTitle>{v.title}</ProjectTitle>
-                <ProjectStatus>
-                  <People>878</People>
-                </ProjectStatus>
-              </ProjectItemContent>
-            </ProjectItem>
+        {projects.map((project, index) => (
+          <li key={project.id}>
+            <Link href="/posts/[id]" as={`/posts/${project.id}`}>
+              <a>
+                <ProjectItem>
+                  <ProjectColor />
+                  <ProjectItemContent>
+                    <ProJectStarButton type="button" />
+                    <ProjectTitle>{project.title}</ProjectTitle>
+                    <ProjectStatus>
+                      <People>878</People>
+                    </ProjectStatus>
+                  </ProjectItemContent>
+                </ProjectItem>
+              </a>
+            </Link>
           </li>
         ))}
       </ProjectList>
