@@ -14,7 +14,7 @@ const ProjectDetail = () => {
       <ProjectHeader />
       <DetailContent>
         <PostWriteArea />
-        {posts.map((post) => <PostCard key={post.projectId} post={post} />)}
+        {posts.map((post, index) => <PostCard key={index} post={post} />)}
       </DetailContent>
     </DetailContainer>
   );

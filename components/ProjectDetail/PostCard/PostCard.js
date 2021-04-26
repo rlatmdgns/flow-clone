@@ -44,7 +44,7 @@ const PostCard = ({ post }) => {
         <Thumbnail />
         <CreatorInfo>
           <dt>
-            {/* <Name>{post.userId}</Name> */}
+            <Name>홍길동</Name>
             <Rank>매니저</Rank>
             <Date>2021-04-16</Date>
           </dt>
@@ -55,13 +55,18 @@ const PostCard = ({ post }) => {
         </CreatorInfo>
       </CreatorArea>
       <PostHeader>
-        {/* <PostTitle>{post.title}</PostTitle> */}
+        <PostTitle>{post.contents.title}</PostTitle>
         <TaskNumberArea>
           <TaskNumber>업무번호 0001</TaskNumber>
         </TaskNumberArea>
       </PostHeader>
       <PostCardContainer>
-        {/* <TaskListGroup managers={post.managers} taskStatus={post.taskStatus} startDate={post.startDate} endDate={post.endDate} /> */}
+        <TaskListGroup
+          managers={post.contents.managers}
+          taskStatus={post.contents.taskStatus}
+          startDate={post.contents.startDate}
+          endDate={post.contents.endDate}
+        />
         <PostCardContent>홍길동 간지로다가</PostCardContent>
         <PostButtonArea>
           <PostButton type="button">반응하기</PostButton>

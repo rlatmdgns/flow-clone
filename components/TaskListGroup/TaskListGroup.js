@@ -5,8 +5,8 @@ import { TaskList, TaskItemTitle, TaskListCell } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 
 const TaskListGroup = ({ managers, startDate, endDate, taskStatus }) => {
-  const [taskStartDate, setTaskStartDate] = useState(moment(startDate).format('YYYY-MM-DD HH:mm'));
-  const [taskEndDate, setTaskEndDate] = useState(moment(endDate).format('YYYY-MM-DD HH:mm'));
+  // const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
+  // const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
 
   const stateHandler = () => {
     console.log('zzzzzzz');
@@ -29,25 +29,32 @@ const TaskListGroup = ({ managers, startDate, endDate, taskStatus }) => {
         </TaskListCell>
       </TaskList>
       <TaskList>
-        <TaskItemTitle>시작일시</TaskItemTitle>
-        <TaskListCell>
-          <span>
-            <span>{taskStartDate}</span>
-          </span>
-        </TaskListCell>
-        <TaskItemTitle>마감일시</TaskItemTitle>
-        <TaskListCell>
-          <span>
-            <span>{taskEndDate}</span>
-          </span>
-        </TaskListCell>
+        {startDate && (
+          <>
+            <TaskItemTitle>시작일시</TaskItemTitle>
+            <TaskListCell>
+              <span>
+                <span>{startDate}</span>
+              </span>
+            </TaskListCell>
+          </>
+        )}
+        {endDate && (
+          <>
+            <TaskItemTitle>마감일시</TaskItemTitle>
+            <TaskListCell>
+              <span>
+                <span>{endDate}</span>
+              </span>
+            </TaskListCell>
+          </>
+        )}
+
       </TaskList>
     </>
   );
 };
 
-TaskListGroup.propTypes = {
-
-};
+TaskListGroup.propTypes = {};
 
 export { TaskListGroup };

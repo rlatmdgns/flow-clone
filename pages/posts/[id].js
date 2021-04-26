@@ -17,9 +17,9 @@ const posts = () => {
     dispatch({
       type: LOAD_POSTS_REQUEST,
       data: { userId: 'rlatmdgns94', size: 10, page: 0 },
+      projectId: id,
     });
   }, []);
-  console.log(111);
   return (
     <AppLayout>
       <ProjectDetail />
@@ -29,15 +29,17 @@ const posts = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const { token } = cookies(context);
+  const { id } = context.params;
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
-  // context.store.dispatch({
-  //   type: LOAD_POSTS_REQUEST,
-  //   data: { userId: 'rlatmdgns94', size: 10, page: 0 },
-  // });
+  context.store.dispatch({
+    type: LOAD_POSTS_REQUEST,
+    data: { userId: 'rlatmdgns94', size: 10, page: 0 },
+    projectId: id,
+  });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
 });

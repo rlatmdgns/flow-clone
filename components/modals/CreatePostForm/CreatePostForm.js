@@ -26,7 +26,7 @@ const CreatePostForm = () => {
     '업무',
   ];
   const CreateTabContent = {
-    0: <CreateTask />,
+    0: <CreateTask submitType={submitType} />,
     // 1: 1,
   };
   const tabHandler = (i) => {
@@ -67,9 +67,6 @@ const CreatePostForm = () => {
       <Content>
         {CreateTabContent[activeTab]}
       </Content>
-      <Footer>
-        <CreateButton type="button" onClick={submitHandler}>올리기</CreateButton>
-      </Footer>
     </PopupWrap>
   );
 };

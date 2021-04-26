@@ -17,14 +17,18 @@ import {
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 
-function loadPostsAPI(data) {
-  return axios.get('/posts/1?page=0&size=20&userId=rlatmdgns94');
+function loadPostsAPI(data, projectId) {
+  // return axios.get('/posts/1?page=0&size=20&userId=rlatmdgns94');
+  // return axios.get(`/posts/${encodeURIComponent(data)}?lastId=${lastId || 0}`);
+  return axios.get(`/posts/${projectId}?`, {
+    params: data,
+  });
 }
 
 function* loadPosts(action) {
   console.log(action);
   try {
-    const result = yield call(loadPostsAPI);
+    const result = yield call(loadPostsAPI, action.data, action.projectId);
     console.log('aaaaaaadasdsadsadkslajdsalkdsajkldasjdksla', result);
     yield put({
       type: LOAD_POSTS_SUCCESS,

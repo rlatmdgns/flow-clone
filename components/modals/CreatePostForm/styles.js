@@ -60,20 +60,3 @@ export const CreateTab = styled.button`
       font-weight: 600;
     `}
 `;
-export const Footer = styled.div`
-  display: flex;
-  padding: 20px 0;
-  border-top: 1px solid #eee;
-`;
-
-export const CreateButton = styled.button`
-  position: relative;
-  height: 36px;
-  padding: 0 47px;
-  margin-left: auto;
-  background: #6449fc;
-  border-radius: 4px;
-  font-size: 13px;
-  color: #fff;
-  text-align: center;
-`;
