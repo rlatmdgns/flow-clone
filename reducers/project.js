@@ -14,7 +14,7 @@ export const initialState = {
   createPostDone: false,
   createPostError: null,
   projects: [],
-  posts: [],
+  projectPosts: [],
   hasNext: false,
 };
 
@@ -44,7 +44,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case LOAD_POSTS_SUCCESS:
       draft.loadPostsLoading = false;
-      draft.posts = draft.posts.concat(action.data.postInfos);
+      draft.projectPosts = draft.projectPosts.concat(action.data.postInfos);
       draft.loadPostsDone = true;
       break;
     case LOAD_POSTS_FAILURE:
@@ -58,7 +58,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case CREATE_TASK_SUCCESS:
       draft.createPostLoading = false;
-      draft.posts.unshift(action.data);
+      draft.projectPosts.unshift(action.data);
       draft.createPostDone = true;
       break;
     case CREATE_TASK_FAILURE:

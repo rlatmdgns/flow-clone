@@ -42,13 +42,6 @@ const CreatePostForm = () => {
       data: false,
     });
   };
-
-  const submitHandler = () => {
-    dispatch({
-      type: submitType,
-      data: { title: 'test', taskStatus: 'REQUEST', userId: 'rlatmdgns94', projectId: 1, priority: 'NORMAL', progress: 0 },
-    });
-  };
   return (
     <PopupWrap>
       <Header>

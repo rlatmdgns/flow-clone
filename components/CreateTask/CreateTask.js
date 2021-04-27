@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import Flatpickr from 'react-flatpickr';
 import useInput from '../../hooks/useInput';
@@ -9,51 +10,51 @@ import moment from 'moment';
 import { TitleInput, TaskContentText, Footer, CreateButton, TaskList, TaskItemTitle, TaskListCell } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 
-const CreateTask = () => {
+const CreateTask = ({submitType}) => {
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
   const [content, setContent] = useState({
     html: ``,
     editable: false,
   });
-  console.log(content);
-  // const text = useRef('');
+  const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  console.log('startDate', moment(startDate[0]).format('YYYY-MM-DDTHH:mm:ss'));
-  console.log('endDate', moment(endDate[0]).format('YYYY-MM-DDTHH:mm:ss'));
+  let taskStartDate;
+  let taskEndDate;
+  if (startDate !== null || startDate !== undefined || startDate !== '') {
+    taskStartDate = moment(startDate[0]).format('YYYY-MM-DDTHH:mm:ss');
+  }
+  if (startDate !== null || startDate !== undefined || startDate !== '') {
+    taskEndDate = moment(endDate[0]).format('YYYY-MM-DDTHH:mm:ss');
+  }
+
   const startDateClear = () => {
     setStartDate('');
   };
   const endDateClear = () => {
     setEndDate('');
   };
-  const stateHandler = () => {
-    console.log('Asdasas');
+  const stateHandler = (type) => {
+    setTaskState(type);
   };
   const onChangeContent = (e) => {
     setContent({ html: e.target.value });
-    // text.current = e.target.value;
   };
-  const sanitizeConf = {
-    allowedTags: ['b', 'i', 'em', 'strong', 'a', 'p', 'h1'],
-    allowedAttributes: { a: ['href'] },
-  };
-  const sanitize = () => {
-    setContent({ html: sanitizeHtml(content.html, sanitizeConf) });
-  };
-  const onDrag = (e) => {
-    const data = e.dataTransfer.getData("text/plain");
-    console.log(data)
-  };
-  const submitHandler = ({ submitType }) => {
+
+  const submitHandler = () => {
     dispatch({
       type: submitType,
       data: {
-        title: 'test',
-        taskStatus: 'REQUEST',
+        title: title,
+        taskStatus: taskState,
+        startDate: taskStartDate,
+        endDate: taskEndDate,
+        managers: [],
         userId: 'rlatmdgns94',
-        projectId: 1,
+        projectId: id,
         priority: 'NORMAL',
         progress: 0,
       },
@@ -62,7 +63,7 @@ const CreateTask = () => {
   return (
     <div>
       <TitleInput
-        itype="text"
+        type="text"
         title="제목을 입력하세요."
         placeholder="제목을 입력하세요"
         value={title}
@@ -128,8 +129,6 @@ const CreateTask = () => {
         html={content.html} // innerHTML of the editable div
         onChange={onChangeContent} // handle innerHTML change
         // onBlur={sanitize}
-        draggable="true"
-        onDrag={onDrag}
       />
       {/* <ContentEditable html={text.current} onBlur={sanitize} onChange={onChangeContent} /> */}
       <Footer>

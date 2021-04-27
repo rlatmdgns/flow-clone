@@ -48,12 +48,25 @@ function createTaskAPI(data) {
 }
 
 function* createTask(action) {
+  console.log(action);
   try {
     const result = yield call(createTaskAPI, action.data);
-    console.log(result.data);
+    console.log('resultresultresult', result);
     yield put({
       type: CREATE_TASK_SUCCESS,
-      // data: { id: result.data, title: action.data.title },
+      data: {
+        contents: {
+          title: action.data.title,
+          taskStatus: action.data.taskStatus,
+          startDate: action.data.startDate,
+          endDate: action.data.endDate,
+          managers: action.data.managers,
+          userId: action.data.userId,
+          projectId: action.data.projectId,
+          priority: action.data.priority,
+          progress: action.data.progress,
+        },
+      },
     });
     yield put({
       type: CREATE_POST,
@@ -75,10 +88,10 @@ function projectAddAPI(data) {
 function* projectAdd(action) {
   try {
     const result = yield call(projectAddAPI, action.data);
-    console.log(result.data);
+    console.log(',resultresultresult', result.data);
     yield put({
       type: PROJECT_ADD_SUCCESS,
-      data: { id: result.data, title: action.data.title },
+      data: { id: result.data.projectId, title: action.data.title },
     });
     yield put({
       type: CREATE_PROJECT,
@@ -117,16 +130,16 @@ function* loadProjects(action) {
   }
 }
 
-function* watchLoadPosts() {
-  yield takeLatest(LOAD_POSTS_REQUEST, loadPosts);
-}
-
 function* watchCreateTask() {
   yield takeLatest(CREATE_TASK_REQUEST, createTask);
 }
 
 function* watchProjectAdd() {
   yield takeLatest(PROJECT_ADD_REQUEST, projectAdd);
+}
+
+function* watchLoadPosts() {
+  yield throttle(3000, LOAD_POSTS_REQUEST, loadPosts);
 }
 function* watchLoadProject() {
   yield throttle(3000, LOAD_PROJECTS_REQUEST, loadProjects);

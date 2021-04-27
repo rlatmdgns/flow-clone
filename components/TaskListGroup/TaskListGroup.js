@@ -5,8 +5,8 @@ import { TaskList, TaskItemTitle, TaskListCell } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 
 const TaskListGroup = ({ managers, startDate, endDate, taskStatus }) => {
-  // const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
-  // const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
+  const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
+  const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
 
   const stateHandler = () => {
     console.log('zzzzzzz');
