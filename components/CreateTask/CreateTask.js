@@ -57,6 +57,7 @@ const CreateTask = ({submitType}) => {
         projectId: id,
         priority: 'NORMAL',
         progress: 0,
+        context : content.html
       },
     });
   };

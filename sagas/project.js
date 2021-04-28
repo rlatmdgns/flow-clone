@@ -14,6 +14,9 @@ import {
   LOAD_PROJECTS_FAILURE,
   LOAD_PROJECTS_SUCCESS,
   LOAD_PROJECTS_REQUEST,
+  STATE_CHANGE_FAILURE,
+  STATE_CHANGE_REQUEST,
+  STATE_CHANGE_SUCCESS,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 
@@ -26,10 +29,9 @@ function loadPostsAPI(data, projectId) {
 }
 
 function* loadPosts(action) {
-  console.log(action);
   try {
     const result = yield call(loadPostsAPI, action.data, action.projectId);
-    console.log('aaaaaaadasdsadsadkslajdsalkdsajkldasjdksla', result);
+    console.log(result, 'resultresultresult');
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -42,6 +44,26 @@ function* loadPosts(action) {
     });
   }
 }
+
+function stateChangeAPI(data) {
+  return axios.put('/task/status', data);
+}
+
+function* stateChange(action) {
+  try {
+    yield call(stateChangeAPI, action.data);
+    yield put({
+      type: STATE_CHANGE_SUCCESS,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: STATE_CHANGE_FAILURE,
+      error,
+    });
+  }
+}
+
 function createTaskAPI(data) {
   console.log(data);
   return axios.post('/task', data);
@@ -65,6 +87,7 @@ function* createTask(action) {
           projectId: action.data.projectId,
           priority: action.data.priority,
           progress: action.data.progress,
+          context: action.data.context,
         },
       },
     });
@@ -129,6 +152,9 @@ function* loadProjects(action) {
     });
   }
 }
+function* watchStateChange() {
+  yield takeLatest(STATE_CHANGE_REQUEST, stateChange);
+}
 
 function* watchCreateTask() {
   yield takeLatest(CREATE_TASK_REQUEST, createTask);
@@ -147,6 +173,7 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchStateChange),
     fork(watchLoadPosts),
     fork(watchCreateTask),
     fork(watchProjectAdd),

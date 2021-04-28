@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import ContentEditable from 'react-contenteditable';
 import {
   PostCardWrapper,
   CreatorArea,
@@ -58,17 +59,21 @@ const PostCard = ({ post }) => {
       <PostHeader>
         <PostTitle>{post.contents.title}</PostTitle>
         <TaskNumberArea>
-          <TaskNumber>업무번호 0001</TaskNumber>
+          <TaskNumber>업무번호 {post.contents.taskNumber}</TaskNumber>
         </TaskNumberArea>
       </PostHeader>
       <PostCardContainer>
         <TaskListGroup
+          postId={post.id}
           managers={post.contents.managers}
           taskStatus={post.contents.taskStatus}
           startDate={post.contents.startDate}
           endDate={post.contents.endDate}
+          progress={post.contents.progress}
         />
-        <PostCardContent>홍길동 간지로다가</PostCardContent>
+        <PostCardContent>
+          <ContentEditable html={post.contents.context} disabled />
+        </PostCardContent>
         <PostButtonArea>
           <PostButton type="button">반응하기</PostButton>
           <PostButton type="button">담아두기</PostButton>

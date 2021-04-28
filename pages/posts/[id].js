@@ -32,6 +32,7 @@ const posts = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   const { token } = cookies(context);
   const { id } = context.params;
+  console.log(id, 'ididididdidiidiididididdidiidi');
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {

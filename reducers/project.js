@@ -13,12 +13,19 @@ export const initialState = {
   createPostLoading: false,
   createPostDone: false,
   createPostError: null,
+  stateChangeLoading: false,
+  stateChangeDone: false,
+  stateChangeError: null,
   projects: [],
   projectPosts: [],
   hasNext: false,
 };
 
 // 액션타입
+export const STATE_CHANGE_REQUEST = 'STATE_CHANGE_REQUEST';
+export const STATE_CHANGE_SUCCESS = 'STATE_CHANGE_SUCCESS';
+export const STATE_CHANGE_FAILURE = 'STATE_CHANGE_FAILURE';
+
 export const CREATE_TASK_REQUEST = 'CREATE_TASK_REQUEST';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
 export const CREATE_TASK_FAILURE = 'CREATE_TASK_FAILURE';
@@ -37,6 +44,20 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case STATE_CHANGE_REQUEST:
+      draft.stateChangeLoading = true;
+      draft.stateChangeError = null;
+      draft.stateChangeDone = false;
+      break;
+    case STATE_CHANGE_SUCCESS:
+      draft.stateChangeLoading = false;
+      // draft.projectPosts = draft.projectPosts.concat(action.data.postInfos);
+      draft.stateChangeDone = true;
+      break;
+    case STATE_CHANGE_FAILURE:
+      draft.stateChangeLoading = false;
+      draft.stateChangeError = action.error;
+      break;
     case LOAD_POSTS_REQUEST:
       draft.loadPostsLoading = true;
       draft.loadPostsError = null;

@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 import { TaskList, TaskItemTitle, TaskListCell } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
+import { STATE_CHANGE_REQUEST } from '../../reducers/project';
+import Progress from '../Progress';
 
-const TaskListGroup = ({ managers, startDate, endDate, taskStatus }) => {
-  const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
-  const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
+const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progress }) => {
+  const dispatch = useDispatch();
+  // const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
+  // const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
 
-  const stateHandler = () => {
-    console.log('zzzzzzz');
+  const stateHandler = (status) => {
+    dispatch({
+      type: STATE_CHANGE_REQUEST,
+      data: { postId, status },
+    });
   };
   return (
     <>
@@ -49,7 +56,12 @@ const TaskListGroup = ({ managers, startDate, endDate, taskStatus }) => {
             </TaskListCell>
           </>
         )}
-
+      </TaskList>
+      <TaskList>
+        <TaskItemTitle>진척도</TaskItemTitle>
+        <TaskListCell>
+          <Progress progress={progress} />
+        </TaskListCell>
       </TaskList>
     </>
   );

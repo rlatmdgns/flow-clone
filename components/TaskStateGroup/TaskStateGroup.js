@@ -6,7 +6,7 @@ const StateColorType = (state) => {
   switch (state) {
     case 'REQUEST':
       return 'color: #fff; background: #00b2ff;';
-    case 'ONGOING':
+    case 'GOING':
       return 'color: #fff; background: #00b01c;';
     case 'FEEDBACK':
       return 'color: #fff; background: #fd7900;';
@@ -35,7 +35,7 @@ const TaskStateGroup = ({ stateHandler, taskStatus }) => {
   const [currentState, setCurrentState] = useState(taskStatus || 'REQUEST');
   const state = {
     0: 'REQUEST',
-    1: 'ONGOING',
+    1: 'GOING',
     2: 'FEEDBACK',
     3: 'COMPLETE',
     4: 'HOLD',
