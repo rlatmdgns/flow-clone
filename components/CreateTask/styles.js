@@ -25,7 +25,24 @@ export const TaskContentText = styled.div`
     color: #999;
   }
 `;
+export const TextEditable = styled.div`
+  div {
+    margin: 20px 0;
+    min-height: 100px;
+    background: #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #333;
+    word-break: break-all;
+    line-height: 25px;
+  }
 
+  div[contenteditable="true"]:empty:before {
+    display: block; /* For Firefox */
+    content: attr(placeholder);
+    color: #999;
+  }
+`;
 export const Footer = styled.div`
   display: flex;
   padding: 20px 0;

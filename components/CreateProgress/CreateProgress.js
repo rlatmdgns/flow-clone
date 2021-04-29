@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { ProgressWrap, ProgressBar, ProgressGraph, Data } from './styles';
 
-const Progress = ({ progress, progressHandler }) => {
-  const [taskProgress, setTaskProgress] = useState(progress);
+const CreateProgress = ({ progress, progressHandler }) => {
   const data = [
     0,
     20,
@@ -13,7 +12,6 @@ const Progress = ({ progress, progressHandler }) => {
     100,
   ];
   const onClick = (data) => {
-    setTaskProgress(data);
     progressHandler(data);
   };
   return (
@@ -25,13 +23,13 @@ const Progress = ({ progress, progressHandler }) => {
           </Data>
         ))}
       </ProgressBar>
-      <ProgressGraph taskProgress={taskProgress} />
+      <ProgressGraph taskProgress={progress} />
     </ProgressWrap>
   );
 };
 
-Progress.propTypes = {
+CreateProgress.propTypes = {
 
 };
 
-export { Progress };
+export { CreateProgress };

@@ -38,7 +38,7 @@ import {
 import TaskListGroup from '../../TaskListGroup';
 
 const PostCard = ({ post }) => {
-  console.log(post);
+  console.log(post.contents);
   // const { title, managers, taskStatus, startDate, endDate } = post.contents;
   return (
     <PostCardWrapper>

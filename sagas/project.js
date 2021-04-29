@@ -17,6 +17,9 @@ import {
   STATE_CHANGE_FAILURE,
   STATE_CHANGE_REQUEST,
   STATE_CHANGE_SUCCESS,
+  PROGRESS_CHANGE_FAILURE,
+  PROGRESS_CHANGE_REQUEST,
+  PROGRESS_CHANGE_SUCCESS,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 
@@ -59,6 +62,25 @@ function* stateChange(action) {
     console.log(error);
     yield put({
       type: STATE_CHANGE_FAILURE,
+      error,
+    });
+  }
+}
+
+function progressChangeAPI(data) {
+  return axios.put('/task/progress', data);
+}
+
+function* progressChange(action) {
+  try {
+    yield call(progressChangeAPI, action.data);
+    yield put({
+      type: PROGRESS_CHANGE_SUCCESS,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: PROGRESS_CHANGE_FAILURE,
       error,
     });
   }
@@ -155,6 +177,9 @@ function* loadProjects(action) {
 function* watchStateChange() {
   yield takeLatest(STATE_CHANGE_REQUEST, stateChange);
 }
+function* watchProgressChange() {
+  yield takeLatest(PROGRESS_CHANGE_REQUEST, progressChange);
+}
 
 function* watchCreateTask() {
   yield takeLatest(CREATE_TASK_REQUEST, createTask);
@@ -174,6 +199,7 @@ function* watchLoadProject() {
 export default function* projectSaga() {
   yield all([
     fork(watchStateChange),
+    fork(watchProgressChange),
     fork(watchLoadPosts),
     fork(watchCreateTask),
     fork(watchProjectAdd),

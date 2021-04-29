@@ -4,18 +4,22 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { TaskList, TaskItemTitle, TaskListCell } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
-import { STATE_CHANGE_REQUEST } from '../../reducers/project';
+import { PROGRESS_CHANGE_REQUEST, STATE_CHANGE_REQUEST } from '../../reducers/project';
 import Progress from '../Progress';
 
 const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progress }) => {
   const dispatch = useDispatch();
-  // const [taskStartDate, setTaskStartDate] = useState(null || moment(startDate).format('YYYY-MM-DD HH:mm'));
-  // const [taskEndDate, setTaskEndDate] = useState(null || moment(endDate).format('YYYY-MM-DD HH:mm'));
 
   const stateHandler = (status) => {
     dispatch({
       type: STATE_CHANGE_REQUEST,
       data: { postId, status },
+    });
+  };
+  const progressHandler = (progress) => {
+    dispatch({
+      type: PROGRESS_CHANGE_REQUEST,
+      data: { postId, progress },
     });
   };
   return (
@@ -41,7 +45,7 @@ const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progr
             <TaskItemTitle>시작일시</TaskItemTitle>
             <TaskListCell>
               <span>
-                <span>{startDate}</span>
+                <span>{moment(startDate).format('YYYY-MM-DD HH:mm')}</span>
               </span>
             </TaskListCell>
           </>
@@ -51,16 +55,21 @@ const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progr
             <TaskItemTitle>마감일시</TaskItemTitle>
             <TaskListCell>
               <span>
-                <span>{endDate}</span>
+                <span>{moment(endDate).format('YYYY-MM-DD HH:mm')}</span>
               </span>
             </TaskListCell>
           </>
         )}
+        {/* {(function name(params) {
+          if (endDate) {
+            return <div>1</div>;
+          }
+        }())} */}
       </TaskList>
       <TaskList>
         <TaskItemTitle>진척도</TaskItemTitle>
         <TaskListCell>
-          <Progress progress={progress} />
+          <Progress progress={progress} progressHandler={progressHandler} />
         </TaskListCell>
       </TaskList>
     </>

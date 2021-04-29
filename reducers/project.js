@@ -16,12 +16,19 @@ export const initialState = {
   stateChangeLoading: false,
   stateChangeDone: false,
   stateChangeError: null,
+  progressChangeLoading: false,
+  progressChangeDone: false,
+  progressChangeError: null,
   projects: [],
   projectPosts: [],
   hasNext: false,
 };
 
 // 액션타입
+export const PROGRESS_CHANGE_REQUEST = 'PROGRESS_CHANGE_REQUEST';
+export const PROGRESS_CHANGE_SUCCESS = 'PROGRESS_CHANGE_SUCCESS';
+export const PROGRESS_CHANGE_FAILURE = 'PROGRESS_CHANGE_FAILURE';
+
 export const STATE_CHANGE_REQUEST = 'STATE_CHANGE_REQUEST';
 export const STATE_CHANGE_SUCCESS = 'STATE_CHANGE_SUCCESS';
 export const STATE_CHANGE_FAILURE = 'STATE_CHANGE_FAILURE';
@@ -44,6 +51,19 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case PROGRESS_CHANGE_REQUEST:
+      draft.progressChangeLoading = true;
+      draft.progressChangeError = null;
+      draft.progressChangeDone = false;
+      break;
+    case PROGRESS_CHANGE_SUCCESS:
+      draft.progressChangeLoading = false;
+      draft.progressChangeDone = true;
+      break;
+    case PROGRESS_CHANGE_FAILURE:
+      draft.progressChangeLoading = false;
+      draft.progressChangeError = action.error;
+      break;
     case STATE_CHANGE_REQUEST:
       draft.stateChangeLoading = true;
       draft.stateChangeError = null;
@@ -51,7 +71,6 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case STATE_CHANGE_SUCCESS:
       draft.stateChangeLoading = false;
-      // draft.projectPosts = draft.projectPosts.concat(action.data.postInfos);
       draft.stateChangeDone = true;
       break;
     case STATE_CHANGE_FAILURE:
