@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 
 export const ProjectWrap = styled.div`
+  overflow:auto;
   padding: 0 30px;
+  height:calc(100vh - 140px);
 `;
 export const ProjectList = styled.ul`
   display: flex;

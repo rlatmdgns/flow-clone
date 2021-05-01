@@ -13,6 +13,9 @@ export const initialState = {
   createPostLoading: false,
   createPostDone: false,
   createPostError: null,
+  deletePostLoading: false,
+  deletePostDone: false,
+  deletePostError: null,
   stateChangeLoading: false,
   stateChangeDone: false,
   stateChangeError: null,
@@ -32,6 +35,10 @@ export const PROGRESS_CHANGE_FAILURE = 'PROGRESS_CHANGE_FAILURE';
 export const STATE_CHANGE_REQUEST = 'STATE_CHANGE_REQUEST';
 export const STATE_CHANGE_SUCCESS = 'STATE_CHANGE_SUCCESS';
 export const STATE_CHANGE_FAILURE = 'STATE_CHANGE_FAILURE';
+
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
 export const CREATE_TASK_REQUEST = 'CREATE_TASK_REQUEST';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
@@ -104,6 +111,20 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case CREATE_TASK_FAILURE:
       draft.createPostLoading = false;
       draft.createPostError = action.error;
+      break;
+    case DELETE_POST_REQUEST:
+      draft.deletePostLoading = true;
+      draft.deletePostError = null;
+      draft.deletePostDone = false;
+      break;
+    case DELETE_POST_SUCCESS:
+      draft.deletePostLoading = false;
+      draft.projectPosts = draft.projectPosts.filter((v) => v.id !== action.data.postId);
+      draft.deletePostDone = true;
+      break;
+    case DELETE_POST_FAILURE:
+      draft.deletePostLoading = false;
+      draft.deletePostError = action.error;
       break;
     case PROJECT_ADD_REQUEST:
       draft.projectAddLoading = true;

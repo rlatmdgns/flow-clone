@@ -17,12 +17,13 @@ export const PostCardContainer = styled.div`
 `;
 export const CreatorArea = styled.div`
   position: relative;
+  display:flex;
+  align-items:center;
   padding: 8px 20px 8px 30px;
   border-bottom: 1px solid #eeeeee;
   background: #faf9f9;
 `;
 export const Thumbnail = styled.span`
-  display: inline-block;
   width: 40px;
   height: 40px;
   background: yellowgreen;
@@ -30,7 +31,6 @@ export const Thumbnail = styled.span`
   vertical-align: middle;
 `;
 export const CreatorInfo = styled.dl`
-  display: inline-block;
   line-height: 18px;
   margin-left: 10px;
   vertical-align: middle;
@@ -41,6 +41,13 @@ export const CreatorInfo = styled.dl`
     margin: 0;
     font-size: 12px;
     color: #999;
+  }
+`;
+export const WriterMenu = styled.div`
+  margin-left: auto;
+  color:#999;
+  button + button {
+    margin-left: 10px;
   }
 `;
 export const Name = styled.strong`

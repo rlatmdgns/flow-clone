@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ProjectFormPopup,
   Header,
@@ -20,7 +20,8 @@ import {
 import { PROJECT_ADD_REQUEST } from '../../../reducers/project';
 import { CREATE_PROJECT } from '../../../reducers/modal';
 
-const ProjectMakeForm = ({ userId }) => {
+const ProjectMakeForm = () => {
+  const { me } = useSelector((state) => state.user);
   const [explain, setExPlain] = useState('');
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const ProjectMakeForm = ({ userId }) => {
       data: {
         explain,
         title,
-        userId,
+        userId: me.id,
       },
     });
   };

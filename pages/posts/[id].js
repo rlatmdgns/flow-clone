@@ -8,6 +8,7 @@ import AppLayout from '../../components/layout/AppLayout';
 import ProjectDetail from '../../components/ProjectDetail';
 import wrapper from '../../store/confiureStore';
 import { LOAD_POSTS_REQUEST } from '../../reducers/project';
+import { MY_INFO_REQUEST } from '../../reducers/user';
 
 const posts = () => {
   const router = useRouter();
@@ -30,17 +31,20 @@ const posts = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const { token } = cookies(context);
+  const { token, userId } = cookies(context);
   const { id } = context.params;
-  console.log(id, 'ididididdidiidiididididdidiidi');
+
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
   context.store.dispatch({
+    type: MY_INFO_REQUEST,
+  });
+  context.store.dispatch({
     type: LOAD_POSTS_REQUEST,
-    data: { userId: 'rlatmdgns94', size: 10, page: 0 },
+    data: { userId, size: 10, page: 0 },
     projectId: id,
   });
   context.store.dispatch(END);

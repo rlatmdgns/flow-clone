@@ -7,16 +7,27 @@ import 'flatpickr/dist/themes/material_green.css';
 import ContentEditable from 'react-contenteditable';
 import sanitizeHtml from 'sanitize-html';
 import moment from 'moment';
-import { TitleInput, TaskContentText, TextEditable,Footer, CreateButton, TaskList, TaskItemTitle, TaskListCell } from './styles';
+import {
+  TitleInput,
+  TaskContentText,
+  TextEditable,
+  Footer,
+  CreateButton,
+  TaskList,
+  TaskItemTitle,
+  TaskListCell,
+} from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 import CreateProgress from '../CreateProgress';
+import { useSelector } from 'react-redux';
 
-const CreateTask = ({submitType}) => {
+const CreateTask = ({ submitType }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const { me } = useSelector((state) => state.user);
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
-  const [taskState, setTaskState] = useState('REQUEST');  
+  const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -50,12 +61,13 @@ const CreateTask = ({submitType}) => {
         startDate: startDate,
         endDate: endDate,
         managers: [],
-        userId: 'rlatmdgns94',
+        userId: me.id,
         projectId: id,
         priority: 'NORMAL',
         progress: progress,
-        context : content.html
+        context: content.html,
       },
+      writerName:me.name
     });
   };
   return (
@@ -118,7 +130,7 @@ const CreateTask = ({submitType}) => {
       <TaskList>
         <TaskItemTitle>진척도</TaskItemTitle>
         <TaskListCell>
-          <CreateProgress progress={progress} progressHandler={progressHandler}/>
+          <CreateProgress progress={progress} progressHandler={progressHandler} />
         </TaskListCell>
       </TaskList>
       {/* <TaskContentText 

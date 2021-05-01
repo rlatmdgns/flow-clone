@@ -32,16 +32,16 @@ const Header = styled.header`
 const AppLayout = ({ children }) => {
   const router = useRouter();
   const { createProject, createPost } = useSelector((state) => state.modal);
-  const cookies = new Cookies();
-  const token = cookies.get('token');
-  const userId = cookies.get('userId');
-  console.log(userId);
+  const { me } = useSelector((state) => state.user);
+  // const cookies = new Cookies();
+  // const token = cookies.get('token');
+  // const userId = cookies.get('userId');
   useEffect(() => {
-    if (!token) {
+    if (!me) {
       alert('재 로그인 해주세요.');
-      Router.replace('/login');
+      Router.replace('/');
     }
-  }, [token]);
+  }, [me]);
   return (
     <Wrap>
       <Header />
@@ -49,7 +49,7 @@ const AppLayout = ({ children }) => {
         <LeftMenu />
         <Container>
           {router.pathname.indexOf('posts') < 0 && <UserHeader />}
-          <Content userId={userId}>{children}</Content>
+          <Content>{children}</Content>
         </Container>
       </BodyWrap>
       {/* {(function () {
@@ -59,7 +59,7 @@ const AppLayout = ({ children }) => {
         if (createProject) {
           return (
             <Modal visible={createProject}>
-              <ProjectMakeForm userId={userId} />
+              <ProjectMakeForm />
             </Modal>
           );
         }

@@ -9,10 +9,12 @@ import Modal from '../components/modals/Modal';
 import { ProjectMakeForm } from '../components/modals/ProjectMakeForm/ProjectMakeForm';
 import { ProjectGroup } from '../components/ProjectGroup/ProjectGroup';
 import { LOAD_PROJECTS_REQUEST } from '../reducers/project';
+import { MY_INFO_REQUEST } from '../reducers/user';
 
 const Main = () => {
   const dispatch = useDispatch();
   const [pageNum, setPageNum] = useState(2);
+  const { me } = useSelector((state) => state.user);
   const { projects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
   console.log('projects', projects);
   useEffect(() => {
@@ -22,7 +24,7 @@ const Main = () => {
         if (hasNext && !loadProjectsLoading) {
           dispatch({
             type: LOAD_PROJECTS_REQUEST,
-            data: { userId: 'rlatmdgns94', size: 5, page: pageNum },
+            data: { userId: me.id, size: 5, page: pageNum },
           });
           count += 1;
           setPageNum(count);
@@ -46,15 +48,18 @@ const Main = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const { token } = cookies(context);
+  const { token, userId } = cookies(context);
   const cookie = context.req ? context.req.headers.cookie : '';
   axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
   context.store.dispatch({
+    type: MY_INFO_REQUEST,
+  });
+  context.store.dispatch({
     type: LOAD_PROJECTS_REQUEST,
-    data: { userId: 'rlatmdgns94', size: 10, page: 0 },
+    data: { userId, size: 10, page: 0 },
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();

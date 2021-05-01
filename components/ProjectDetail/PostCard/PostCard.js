@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PostCardWrapper,
   CreatorArea,
@@ -34,19 +35,45 @@ import {
   MeItem,
   CommentInputWrap,
   CommentInput,
+  WriterMenu,
 } from './styles';
 import TaskListGroup from '../../TaskListGroup';
+import { DELETE_POST_REQUEST } from '../../../reducers/project';
 
 const PostCard = ({ post }) => {
-  console.log(post.contents);
-  // const { title, managers, taskStatus, startDate, endDate } = post.contents;
+  console.log(post);
+  const dispatch = useDispatch();
+  const { me } = useSelector((state) => state.user);
+  // const [editMode, setEditMode] = useState(false);
+  // const onClickUpdate = useCallback(() => {
+  //   setEditMode(true);
+  // }, []);
+
+  // const onCancelUpdate = useCallback(() => {
+  //   setEditMode(false);
+  // }, []);
+  // const onChangePost = useCallback((editText) => () => {
+  //   dispatch({
+  //     type: UPDATE_POST_REQUEST,
+  //     data: {
+  //       PostId: post.id,
+  //       content: editText,
+  //     },
+  //   });
+  // }, [post]);
+  const postDelete = () => {
+    dispatch({
+      type: DELETE_POST_REQUEST,
+      data: { postId: post.id, userId: me.id },
+    });
+  };
   return (
     <PostCardWrapper>
       <CreatorArea>
         <Thumbnail />
         <CreatorInfo>
           <dt>
-            <Name>홍길동</Name>
+            <Name>{post.writerName}</Name>
             <Rank>매니저</Rank>
             <Date>2021-04-16</Date>
           </dt>
@@ -55,6 +82,12 @@ const PostCard = ({ post }) => {
             <Team>애니멀팀</Team>
           </dd>
         </CreatorInfo>
+        {me.id === post.writerId && (
+          <WriterMenu>
+            <button type="button">수정</button>
+            <button type="button" onClick={postDelete}>삭제</button>
+          </WriterMenu>
+        )}
       </CreatorArea>
       <PostHeader>
         <PostTitle>{post.contents.title}</PostTitle>

@@ -20,6 +20,9 @@ import {
   PROGRESS_CHANGE_FAILURE,
   PROGRESS_CHANGE_REQUEST,
   PROGRESS_CHANGE_SUCCESS,
+  DELETE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 
@@ -111,6 +114,7 @@ function* createTask(action) {
           progress: action.data.progress,
           context: action.data.context,
         },
+        writerName: action.writerName,
       },
     });
     yield put({
@@ -121,6 +125,28 @@ function* createTask(action) {
     console.log(error);
     yield put({
       type: CREATE_TASK_FAILURE,
+      error,
+    });
+  }
+}
+function deletePostAPI(data) {
+  return axios.delete('/post', {
+    data,
+  });
+}
+
+function* deletePost(action) {
+  console.log(action.data);
+  try {
+    yield call(deletePostAPI, action.data);
+    yield put({
+      type: DELETE_POST_SUCCESS,
+      data: { postId: action.data.postId, userId: action.data.userId },
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: DELETE_POST_FAILURE,
       error,
     });
   }
@@ -177,6 +203,10 @@ function* loadProjects(action) {
 function* watchStateChange() {
   yield takeLatest(STATE_CHANGE_REQUEST, stateChange);
 }
+function* watchDeletePost() {
+  yield takeLatest(DELETE_POST_REQUEST, deletePost);
+}
+
 function* watchProgressChange() {
   yield takeLatest(PROGRESS_CHANGE_REQUEST, progressChange);
 }
@@ -198,6 +228,7 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchDeletePost),
     fork(watchStateChange),
     fork(watchProgressChange),
     fork(watchLoadPosts),

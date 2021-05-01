@@ -11,7 +11,7 @@ const ProjectDetail = ({ projectPosts }) => (
     <DetailContent>
       <PostWriteArea />
       {projectPosts.map((post, index) => (
-        <PostCard key={index} post={post} />
+        <PostCard key={post.id} post={post} />
       ))}
     </DetailContent>
   </DetailContainer>

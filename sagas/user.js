@@ -8,6 +8,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
+  MY_INFO_FAILURE,
+  MY_INFO_SUCCESS,
+  MY_INFO_REQUEST,
 } from '../reducers/user';
 
 function signUpAPI(data) {
@@ -40,7 +43,6 @@ function* login(action) {
     const { token } = result.data;
     yield put({
       type: LOGIN_SUCCESS,
-      data: token,
     });
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     document.cookie = `token=${token}`;
@@ -53,6 +55,26 @@ function* login(action) {
     });
   }
 }
+function userAPI() {
+  return axios.get('/user-info');
+}
+
+function* user() {
+  try {
+    const result = yield call(userAPI);
+    console.log(result);
+    yield put({
+      type: MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: MY_INFO_FAILURE,
+      error: error.response.data,
+    });
+  }
+}
 function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
@@ -60,6 +82,14 @@ function* watchLogin() {
   yield takeLatest(LOGIN_REQUEST, login);
 }
 
+function* watchUser() {
+  yield takeLatest(MY_INFO_REQUEST, user);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchSignUp), fork(watchLogin)]);
+  yield all([
+    fork(watchSignUp),
+    fork(watchLogin),
+    fork(watchUser),
+  ]);
 }
