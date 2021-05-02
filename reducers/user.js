@@ -2,6 +2,10 @@ import produce from 'immer';
 
 export const initialState = {
   currentPage: null,
+  editMode: {
+    state: false,
+    postId: null,
+  },
   signUpLoading: false,
   signUpDone: false,
   signUpError: null,
@@ -15,6 +19,7 @@ export const initialState = {
 };
 // 액션타입
 export const CHANGE_PAGE_TITLE = 'CHANGE_PAGE_TITLE';
+export const EDIT_MODE = 'EDIT_MODE';
 export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
@@ -29,6 +34,9 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
     case CHANGE_PAGE_TITLE:
       draft.currentPage = action.data;
+      break;
+    case EDIT_MODE:
+      draft.editMode = action.data;
       break;
     case SIGN_UP_REQUEST:
       draft.signUpLoading = true;

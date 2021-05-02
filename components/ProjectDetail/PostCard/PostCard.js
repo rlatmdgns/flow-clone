@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,29 +39,20 @@ import {
 } from './styles';
 import TaskListGroup from '../../TaskListGroup';
 import { DELETE_POST_REQUEST } from '../../../reducers/project';
+import { EDIT_MODE } from '../../../reducers/user';
 
 const PostCard = ({ post }) => {
   console.log(post);
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   // const [editMode, setEditMode] = useState(false);
-  // const onClickUpdate = useCallback(() => {
-  //   setEditMode(true);
-  // }, []);
-
-  // const onCancelUpdate = useCallback(() => {
-  //   setEditMode(false);
-  // }, []);
-  // const onChangePost = useCallback((editText) => () => {
-  //   dispatch({
-  //     type: UPDATE_POST_REQUEST,
-  //     data: {
-  //       PostId: post.id,
-  //       content: editText,
-  //     },
-  //   });
-  // }, [post]);
-  const postDelete = () => {
+  const onClickEdit = useCallback(() => {
+    dispatch({
+      type: EDIT_MODE,
+      data: { state: true, postId: post.id },
+    });
+  }, []);
+  const onClickDelete = () => {
     dispatch({
       type: DELETE_POST_REQUEST,
       data: { postId: post.id, userId: me.id },
@@ -84,8 +75,8 @@ const PostCard = ({ post }) => {
         </CreatorInfo>
         {me.id === post.writerId && (
           <WriterMenu>
-            <button type="button">수정</button>
-            <button type="button" onClick={postDelete}>삭제</button>
+            <button type="button" onClick={onClickEdit}>수정</button>
+            <button type="button" onClick={onClickDelete}>삭제</button>
           </WriterMenu>
         )}
       </CreatorArea>

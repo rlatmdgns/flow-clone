@@ -16,6 +16,9 @@ export const initialState = {
   deletePostLoading: false,
   deletePostDone: false,
   deletePostError: null,
+  editPostLoading: false,
+  editPostDone: false,
+  editPostError: null,
   stateChangeLoading: false,
   stateChangeDone: false,
   stateChangeError: null,
@@ -43,6 +46,10 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const CREATE_TASK_REQUEST = 'CREATE_TASK_REQUEST';
 export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
 export const CREATE_TASK_FAILURE = 'CREATE_TASK_FAILURE';
+
+export const EDIT_TASK_REQUEST = 'EDIT_TASK_REQUEST';
+export const EDIT_TASK_SUCCESS = 'EDIT_TASK_SUCCESS';
+export const EDIT_TASK_FAILURE = 'EDIT_TASK_FAILURE';
 
 export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
 export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
@@ -111,6 +118,20 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case CREATE_TASK_FAILURE:
       draft.createPostLoading = false;
       draft.createPostError = action.error;
+      break;
+    case EDIT_TASK_REQUEST:
+      draft.editPostLoading = true;
+      draft.editPostError = null;
+      draft.editPostDone = false;
+      break;
+    case EDIT_TASK_SUCCESS:
+      draft.editPostLoading = false;
+      draft.projectPosts.find((v) => v.id === action.data.postId).contents = action.data.contents;
+      draft.editPostDone = true;
+      break;
+    case EDIT_TASK_FAILURE:
+      draft.editPostLoading = false;
+      draft.editPostError = action.error;
       break;
     case DELETE_POST_REQUEST:
       draft.deletePostLoading = true;

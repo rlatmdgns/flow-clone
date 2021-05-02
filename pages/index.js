@@ -11,17 +11,10 @@ import wrapper from '../store/confiureStore';
 
 const Home = () => {
   const { me } = useSelector((state) => state.user);
-  useEffect(() => {
-    if (me) {
-      Router.replace('/main');
-    }
-  }, [me]);
+
   return (
     <>
       <LoginFrom />
-      <Link href="/signup">
-        <a>회원가입</a>
-      </Link>
     </>
   );
 };

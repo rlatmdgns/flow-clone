@@ -32,7 +32,9 @@ ${({ state }) => StateColorType(state)};
 `;
 const TaskStateGroup = ({ stateHandler, taskStatus }) => {
   const taskType = ['요청', '진행', '피드백', '완료', '보류'];
+
   const [currentState, setCurrentState] = useState(taskStatus || 'REQUEST');
+  console.log('currentState', currentState);
   const state = {
     0: 'REQUEST',
     1: 'GOING',

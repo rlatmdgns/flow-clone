@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { Form, Blind, Fieldset, LoginTitle, LoginInputBox, LoginInput, LoginMessage, LoginButton } from './styles';
@@ -57,6 +57,9 @@ const LoginFrom = () => {
         </LoginInputBox>
         <LoginMessage>ssssss</LoginMessage>
         <LoginButton type="button" onClick={test}>로그인</LoginButton>
+        <Link href="/signup">
+          <a>회원가입</a>
+        </Link>
       </Fieldset>
     </Form>
   );

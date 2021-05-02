@@ -11,6 +11,9 @@ export const PostCardWrapper = styled.div`
       border: 0;
       box-shadow: none;
     `}
+  & + & {
+    margin-top:20px;
+  }
 `;
 export const PostCardContainer = styled.div`
   padding: 20px 30px 30px 30px;

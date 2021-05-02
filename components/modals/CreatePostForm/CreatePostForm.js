@@ -16,8 +16,11 @@ import {
 import { CREATE_POST } from '../../../reducers/modal';
 import CreateTask from '../../CreateTask';
 import { CREATE_TASK_REQUEST } from '../../../reducers/project';
+import { EDIT_MODE } from '../../../reducers/user';
+import EditTask from '../../EditTask';
 
-const CreatePostForm = () => {
+const CreatePostForm = ({ editMode }) => {
+  console.log(editMode);
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [submitType, setSubmitType] = useState(CREATE_TASK_REQUEST);
@@ -42,7 +45,24 @@ const CreatePostForm = () => {
       data: false,
     });
   };
-  return (
+  const editCloseHandle = () => {
+    dispatch({
+      type: EDIT_MODE,
+      data: false,
+    });
+  };
+
+  return editMode.state ? (
+    <PopupWrap>
+      <Header>
+        <PopupTitle>게시물 수정</PopupTitle>
+        <CloseButton onClick={editCloseHandle}>X</CloseButton>
+      </Header>
+      <Content>
+        <EditTask editMode={editMode} editCloseHandle={editCloseHandle} />
+      </Content>
+    </PopupWrap>
+  ) : (
     <PopupWrap>
       <Header>
         <PopupTitle>게시물 작성</PopupTitle>
@@ -57,15 +77,11 @@ const CreatePostForm = () => {
           </CreateItem>
         ))}
       </CreatePostNav>
-      <Content>
-        {CreateTabContent[activeTab]}
-      </Content>
+      <Content>{CreateTabContent[activeTab]}</Content>
     </PopupWrap>
   );
 };
 
-CreatePostForm.propTypes = {
-
-};
+CreatePostForm.propTypes = {};
 
 export { CreatePostForm };

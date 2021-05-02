@@ -10,7 +10,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     if (signUpDone) {
-      Router.replace('/login');
+      Router.replace('/');
     }
   }, [signUpDone]);
 

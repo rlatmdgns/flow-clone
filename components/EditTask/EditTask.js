@@ -20,19 +20,21 @@ import {
 import TaskStateGroup from '../TaskStateGroup';
 import CreateProgress from '../CreateProgress';
 import { useSelector } from 'react-redux';
+import { EDIT_TASK_REQUEST } from '../../reducers/project';
 
-const CreateTask = ({ submitType }) => {
+const EditTask = ({ editMode, editCloseHandle }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
+  const { projectPosts } = useSelector((state) => state.project);
+  const editPost = projectPosts.find((v) => v.id === editMode.postId);
   const { id } = router.query;
-  const [title, onChangeTitle] = useInput('');
-  const [taskState, setTaskState] = useState('REQUEST');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-
+  const [title, onChangeTitle] = useInput(editPost.contents.title);
+  const [taskState, setTaskState] = useState(editPost.contents.taskStatus);
+  const [startDate, setStartDate] = useState(editPost.contents.startDate);
+  const [endDate, setEndDate] = useState(editPost.contents.endDate);
   const [content, setContent] = useState({
-    html: ``,
+    html: `${editPost.contents.context}`,
     editable: false,
   });
   const [progress, setProgress] = useState(0);
@@ -52,10 +54,11 @@ const CreateTask = ({ submitType }) => {
   const progressHandler = (data) => {
     setProgress(data);
   };
-  const submitHandler = () => {
+  const onClickEdit = () => {
     dispatch({
-      type: submitType,
+      type: EDIT_TASK_REQUEST,
       data: {
+        postId: editPost.id,
         title: title,
         taskStatus: taskState,
         startDate: startDate,
@@ -67,8 +70,6 @@ const CreateTask = ({ submitType }) => {
         progress: progress,
         context: content.html,
       },
-      writerName:me.name,
-      writerId: me.id,
     });
   };
   return (
@@ -83,7 +84,7 @@ const CreateTask = ({ submitType }) => {
       <TaskList>
         <TaskItemTitle>업무상태</TaskItemTitle>
         <TaskListCell>
-          <TaskStateGroup stateHandler={stateHandler} />
+          <TaskStateGroup stateHandler={stateHandler} taskStatus={taskState} />
         </TaskListCell>
       </TaskList>
       <TaskList>
@@ -134,12 +135,6 @@ const CreateTask = ({ submitType }) => {
           <CreateProgress progress={progress} progressHandler={progressHandler} />
         </TaskListCell>
       </TaskList>
-      {/* <TaskContentText 
-      contentEditable="true"
-       placeholder="업무내용을 입력하세요" 
-       onChange={onChangeContent}
-       html={content.html} // innerHTML of the editable div
-       /> */}
       <TextEditable>
         <ContentEditable
           className="editable"
@@ -150,16 +145,18 @@ const CreateTask = ({ submitType }) => {
           placeholder="글을 입력하세요"
         />
       </TextEditable>
-      {/* <ContentEditable html={text.current} onBlur={sanitize} onChange={onChangeContent} /> */}
       <Footer>
-        <CreateButton type="button" onClick={submitHandler}>
-          올리기
+        <CreateButton type="button" onClick={editCloseHandle}>
+          취소ㄹ
+        </CreateButton>
+        <CreateButton type="button" onClick={onClickEdit}>
+          수정
         </CreateButton>
       </Footer>
     </div>
   );
 };
 
-CreateTask.propTypes = {};
+EditTask.propTypes = {};
 
-export { CreateTask };
+export { EditTask };

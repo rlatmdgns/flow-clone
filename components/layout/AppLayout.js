@@ -9,6 +9,7 @@ import { UserHeader } from '../UserHeader/UserHeader';
 import Modal from '../modals/Modal';
 import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 import CreatePostForm from '../modals/CreatePostForm';
+import EditPostForm from '../modals/EditPostForm';
 
 const Wrap = styled.div`
   height: 100vh;
@@ -32,6 +33,7 @@ const Header = styled.header`
 const AppLayout = ({ children }) => {
   const router = useRouter();
   const { createProject, createPost } = useSelector((state) => state.modal);
+  const { editMode } = useSelector((state) => state.user);
   const { me } = useSelector((state) => state.user);
   // const cookies = new Cookies();
   // const token = cookies.get('token');
@@ -63,13 +65,20 @@ const AppLayout = ({ children }) => {
             </Modal>
           );
         }
-        if (createPost) {
+        if (createPost || editMode.state) {
           return (
             <Modal visible>
-              <CreatePostForm />
+              <CreatePostForm editMode={editMode} />
             </Modal>
           );
         }
+        // if (1) {
+        //   return (
+        //     <Modal visible>
+        //       <EditPostForm />
+        //     </Modal>
+        //   );
+        // }
       })()}
     </Wrap>
   );

@@ -23,8 +23,12 @@ import {
   DELETE_POST_FAILURE,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
+  EDIT_TASK_SUCCESS,
+  EDIT_TASK_FAILURE,
+  EDIT_TASK_REQUEST,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
+import { EDIT_MODE } from '../reducers/user';
 
 function loadPostsAPI(data, projectId) {
   // return axios.get('/posts/1?page=0&size=20&userId=rlatmdgns94');
@@ -37,7 +41,6 @@ function loadPostsAPI(data, projectId) {
 function* loadPosts(action) {
   try {
     const result = yield call(loadPostsAPI, action.data, action.projectId);
-    console.log(result, 'resultresultresult');
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -95,13 +98,13 @@ function createTaskAPI(data) {
 }
 
 function* createTask(action) {
-  console.log(action);
   try {
     const result = yield call(createTaskAPI, action.data);
-    console.log('resultresultresult', result);
+    console.log('aaaaa', result.data);
     yield put({
       type: CREATE_TASK_SUCCESS,
       data: {
+        id: result.data.id,
         contents: {
           title: action.data.title,
           taskStatus: action.data.taskStatus,
@@ -115,6 +118,7 @@ function* createTask(action) {
           context: action.data.context,
         },
         writerName: action.writerName,
+        writerId: action.writerId,
       },
     });
     yield put({
@@ -129,6 +133,48 @@ function* createTask(action) {
     });
   }
 }
+
+function editTaskAPI(data) {
+  console.log(data);
+  return axios.put('/task', data);
+}
+
+function* editTask(action) {
+  console.log('edit', action.data);
+  try {
+    const result = yield call(editTaskAPI, action.data);
+    console.log('eeeee', result.config.data);
+    yield put({
+      type: EDIT_TASK_SUCCESS,
+      data: {
+        postId: action.data.postId,
+        contents: {
+          title: action.data.title,
+          taskStatus: action.data.taskStatus,
+          startDate: action.data.startDate,
+          endDate: action.data.endDate,
+          managers: action.data.managers,
+          userId: action.data.userId,
+          projectId: action.data.projectId,
+          priority: action.data.priority,
+          progress: action.data.progress,
+          context: action.data.context,
+        },
+      },
+    });
+    yield put({
+      type: EDIT_MODE,
+      data: false,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: EDIT_TASK_FAILURE,
+      error,
+    });
+  }
+}
+
 function deletePostAPI(data) {
   return axios.delete('/post', {
     data,
@@ -159,7 +205,6 @@ function projectAddAPI(data) {
 function* projectAdd(action) {
   try {
     const result = yield call(projectAddAPI, action.data);
-    console.log(',resultresultresult', result.data);
     yield put({
       type: PROJECT_ADD_SUCCESS,
       data: { id: result.data.projectId, title: action.data.title },
@@ -200,6 +245,7 @@ function* loadProjects(action) {
     });
   }
 }
+
 function* watchStateChange() {
   yield takeLatest(STATE_CHANGE_REQUEST, stateChange);
 }
@@ -209,6 +255,10 @@ function* watchDeletePost() {
 
 function* watchProgressChange() {
   yield takeLatest(PROGRESS_CHANGE_REQUEST, progressChange);
+}
+
+function* watchEditTask() {
+  yield takeLatest(EDIT_TASK_REQUEST, editTask);
 }
 
 function* watchCreateTask() {
@@ -232,6 +282,7 @@ export default function* projectSaga() {
     fork(watchStateChange),
     fork(watchProgressChange),
     fork(watchLoadPosts),
+    fork(watchEditTask),
     fork(watchCreateTask),
     fork(watchProjectAdd),
     fork(watchLoadProject),

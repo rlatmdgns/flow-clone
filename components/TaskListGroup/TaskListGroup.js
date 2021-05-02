@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import Progress from '../Progress';
 
 const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progress }) => {
   const dispatch = useDispatch();
-
   const stateHandler = (status) => {
     dispatch({
       type: STATE_CHANGE_REQUEST,
