@@ -32,9 +32,6 @@ ${({ state }) => StateColorType(state)};
 `;
 const TaskStateGroup = ({ stateHandler, taskStatus }) => {
   const taskType = ['요청', '진행', '피드백', '완료', '보류'];
-
-  const [currentState, setCurrentState] = useState(taskStatus || 'REQUEST');
-  console.log('currentState', currentState);
   const state = {
     0: 'REQUEST',
     1: 'GOING',
@@ -43,14 +40,13 @@ const TaskStateGroup = ({ stateHandler, taskStatus }) => {
     4: 'HOLD',
   };
   const onClick = (i) => {
-    setCurrentState(state[i]);
     stateHandler(state[i]);
   };
   return (
     taskType.map((v, i) => {
-      if (state[i] === currentState) {
+      if (state[i] === taskStatus) {
         return (
-          <StateButton key={i} state={currentState}>{v}</StateButton>
+          <StateButton key={i} state={taskStatus}>{v}</StateButton>
         );
       }
       return <StateButton key={i} onClick={() => onClick(i)}>{v}</StateButton>;

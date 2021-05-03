@@ -20,7 +20,6 @@ import { EDIT_MODE } from '../../../reducers/user';
 import EditTask from '../../EditTask';
 
 const CreatePostForm = ({ editMode }) => {
-  console.log(editMode);
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [submitType, setSubmitType] = useState(CREATE_TASK_REQUEST);

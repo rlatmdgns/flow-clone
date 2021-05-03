@@ -15,15 +15,6 @@ const posts = () => {
   const dispatch = useDispatch();
   const { projectPosts, loadPostsLoading } = useSelector((state) => state.project);
   const { id } = router.query;
-  useEffect(() => {
-    // dispatch({
-    //   type: LOAD_POSTS_REQUEST,
-    //   data: { userId: 'rlatmdgns94', size: 10, page: 0 },
-    //   projectId: id,
-    // });
-    console.log('ssssss');
-  }, [projectPosts]);
-
   return (
     <AppLayout>
       <ProjectDetail projectPosts={projectPosts} />

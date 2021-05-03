@@ -72,6 +72,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case PROGRESS_CHANGE_SUCCESS:
       draft.progressChangeLoading = false;
+      draft.projectPosts.find((v) => v.id === action.data.postId).contents.progress = action.data.progress;
       draft.progressChangeDone = true;
       break;
     case PROGRESS_CHANGE_FAILURE:
@@ -85,6 +86,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case STATE_CHANGE_SUCCESS:
       draft.stateChangeLoading = false;
+      draft.projectPosts.find((v) => v.id === action.data.postId).contents.taskStatus = action.data.status;
       draft.stateChangeDone = true;
       break;
     case STATE_CHANGE_FAILURE:

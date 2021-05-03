@@ -18,9 +18,9 @@ import {
   TaskListCell,
 } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
-import CreateProgress from '../CreateProgress';
 import { useSelector } from 'react-redux';
 import { EDIT_TASK_REQUEST } from '../../reducers/project';
+import Progress from '../Progress';
 
 const EditTask = ({ editMode, editCloseHandle }) => {
   const dispatch = useDispatch();
@@ -37,7 +37,8 @@ const EditTask = ({ editMode, editCloseHandle }) => {
     html: `${editPost.contents.context}`,
     editable: false,
   });
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(editPost.contents.progress);
+
 
   const startDateClear = () => {
     setStartDate('');
@@ -132,7 +133,7 @@ const EditTask = ({ editMode, editCloseHandle }) => {
       <TaskList>
         <TaskItemTitle>진척도</TaskItemTitle>
         <TaskListCell>
-          <CreateProgress progress={progress} progressHandler={progressHandler} />
+          <Progress progress={progress} progressHandler={progressHandler} />
         </TaskListCell>
       </TaskList>
       <TextEditable>

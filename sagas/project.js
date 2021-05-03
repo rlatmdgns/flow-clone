@@ -63,6 +63,7 @@ function* stateChange(action) {
     yield call(stateChangeAPI, action.data);
     yield put({
       type: STATE_CHANGE_SUCCESS,
+      data: action.data,
     });
   } catch (error) {
     console.log(error);
@@ -82,6 +83,7 @@ function* progressChange(action) {
     yield call(progressChangeAPI, action.data);
     yield put({
       type: PROGRESS_CHANGE_SUCCESS,
+      data: action.data,
     });
   } catch (error) {
     console.log(error);
@@ -93,14 +95,12 @@ function* progressChange(action) {
 }
 
 function createTaskAPI(data) {
-  console.log(data);
   return axios.post('/task', data);
 }
 
 function* createTask(action) {
   try {
     const result = yield call(createTaskAPI, action.data);
-    console.log('aaaaa', result.data);
     yield put({
       type: CREATE_TASK_SUCCESS,
       data: {
@@ -135,15 +135,12 @@ function* createTask(action) {
 }
 
 function editTaskAPI(data) {
-  console.log(data);
   return axios.put('/task', data);
 }
 
 function* editTask(action) {
-  console.log('edit', action.data);
   try {
     const result = yield call(editTaskAPI, action.data);
-    console.log('eeeee', result.config.data);
     yield put({
       type: EDIT_TASK_SUCCESS,
       data: {
@@ -182,7 +179,6 @@ function deletePostAPI(data) {
 }
 
 function* deletePost(action) {
-  console.log(action.data);
   try {
     yield call(deletePostAPI, action.data);
     yield put({
@@ -229,7 +225,6 @@ function loadProjectsAPI(data) {
 }
 
 function* loadProjects(action) {
-  console.log(action);
   try {
     const result = yield call(loadProjectsAPI, action.data);
     console.log('hasNext', result.data.hasNext);

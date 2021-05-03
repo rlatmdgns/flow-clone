@@ -18,8 +18,8 @@ import {
   TaskListCell,
 } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
-import CreateProgress from '../CreateProgress';
 import { useSelector } from 'react-redux';
+import Progress from '../Progress';
 
 const CreateTask = ({ submitType }) => {
   const dispatch = useDispatch();
@@ -28,8 +28,8 @@ const CreateTask = ({ submitType }) => {
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
   const [taskState, setTaskState] = useState('REQUEST');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
   const [content, setContent] = useState({
     html: ``,
@@ -131,7 +131,7 @@ const CreateTask = ({ submitType }) => {
       <TaskList>
         <TaskItemTitle>진척도</TaskItemTitle>
         <TaskListCell>
-          <CreateProgress progress={progress} progressHandler={progressHandler} />
+          <Progress progress={progress} progressHandler={progressHandler}/>
         </TaskListCell>
       </TaskList>
       {/* <TaskContentText 
@@ -150,7 +150,6 @@ const CreateTask = ({ submitType }) => {
           placeholder="글을 입력하세요"
         />
       </TextEditable>
-      {/* <ContentEditable html={text.current} onBlur={sanitize} onChange={onChangeContent} /> */}
       <Footer>
         <CreateButton type="button" onClick={submitHandler}>
           올리기

@@ -16,7 +16,12 @@ const Main = () => {
   const [pageNum, setPageNum] = useState(2);
   const { me } = useSelector((state) => state.user);
   const { projects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
-  console.log('projects', projects);
+  useEffect(() => {
+    if (!me) {
+      alert('재 로그인 해주세요.');
+      Router.replace('/');
+    }
+  }, [me]);
   useEffect(() => {
     function onScroll() {
       let count = pageNum;

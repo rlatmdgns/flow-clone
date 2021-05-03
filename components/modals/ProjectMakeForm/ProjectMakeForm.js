@@ -34,7 +34,6 @@ const ProjectMakeForm = () => {
   };
 
   const createProject = () => {
-    console.log('만들기');
     if (title === '') {
       return alert('제목을 입력해주세요;');
     }

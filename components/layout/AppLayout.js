@@ -9,7 +9,6 @@ import { UserHeader } from '../UserHeader/UserHeader';
 import Modal from '../modals/Modal';
 import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 import CreatePostForm from '../modals/CreatePostForm';
-import EditPostForm from '../modals/EditPostForm';
 
 const Wrap = styled.div`
   height: 100vh;
@@ -38,12 +37,6 @@ const AppLayout = ({ children }) => {
   // const cookies = new Cookies();
   // const token = cookies.get('token');
   // const userId = cookies.get('userId');
-  useEffect(() => {
-    if (!me) {
-      alert('재 로그인 해주세요.');
-      Router.replace('/');
-    }
-  }, [me]);
   return (
     <Wrap>
       <Header />
@@ -72,13 +65,6 @@ const AppLayout = ({ children }) => {
             </Modal>
           );
         }
-        // if (1) {
-        //   return (
-        //     <Modal visible>
-        //       <EditPostForm />
-        //     </Modal>
-        //   );
-        // }
       })()}
     </Wrap>
   );
