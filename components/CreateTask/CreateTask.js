@@ -30,7 +30,6 @@ const CreateTask = ({ submitType }) => {
   const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
   const [content, setContent] = useState({
     html: ``,
     editable: false,
