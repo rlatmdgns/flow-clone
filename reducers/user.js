@@ -58,6 +58,7 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       break;
     case LOGIN_SUCCESS:
       draft.loginLoading = false;
+      draft.me = action.data.username;
       draft.loginDone = true;
       break;
     case LOGIN_FAILURE:

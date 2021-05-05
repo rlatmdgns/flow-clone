@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
 import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import moment from 'moment';
 import {
   PostCardWrapper,
   CreatorArea,
@@ -36,16 +38,17 @@ import {
   CommentInputWrap,
   CommentInput,
   WriterMenu,
+  LikeButton,
 } from './styles';
 import TaskListGroup from '../../TaskListGroup';
-import { DELETE_POST_REQUEST } from '../../../reducers/project';
+import { DELETE_POST_REQUEST, LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/project';
 import { EDIT_MODE } from '../../../reducers/user';
 
 const PostCard = ({ post }) => {
-  console.log(post);
   const dispatch = useDispatch();
+  const router = useRouter();
+  const { id } = router.query;
   const { me } = useSelector((state) => state.user);
-  // const [editMode, setEditMode] = useState(false);
   const onClickEdit = useCallback(() => {
     dispatch({
       type: EDIT_MODE,
@@ -58,6 +61,19 @@ const PostCard = ({ post }) => {
       data: { postId: post.id, userId: me.id },
     });
   };
+  const onClickLike = () => {
+    dispatch({
+      type: LIKE_POST_REQUEST,
+      data: { projectId: id, postId: post.id, userId: me.id },
+    });
+  };
+  const onClickUnLike = () => {
+    dispatch({
+      type: UNLIKE_POST_REQUEST,
+      data: { projectId: id, postId: post.id, userId: me.id },
+    });
+  };
+  const liked = post.likes.find((user) => user.userId === me.id);
   return (
     <PostCardWrapper>
       <CreatorArea>
@@ -65,18 +81,21 @@ const PostCard = ({ post }) => {
         <CreatorInfo>
           <dt>
             <Name>{post.writerName}</Name>
-            <Rank>매니저</Rank>
-            <Date>2021-04-16</Date>
+            {/* <Rank>매니저</Rank> */}
+            <Date>{moment(post.createdAt).format('YYYY-MM-DD HH:mm')}</Date>
           </dt>
-          <dd>
-            <Company>플로우</Company>
-            <Team>애니멀팀</Team>
+          <dd>{/* <Company>플로우</Company>
+            <Team>애니멀팀</Team> */}
           </dd>
         </CreatorInfo>
         {me.id === post.writerId && (
           <WriterMenu>
-            <button type="button" onClick={onClickEdit}>수정</button>
-            <button type="button" onClick={onClickDelete}>삭제</button>
+            <button type="button" onClick={onClickEdit}>
+              수정
+            </button>
+            <button type="button" onClick={onClickDelete}>
+              삭제
+            </button>
           </WriterMenu>
         )}
       </CreatorArea>
@@ -99,8 +118,17 @@ const PostCard = ({ post }) => {
           <ContentEditable html={post.contents.context} disabled />
         </PostCardContent>
         <PostButtonArea>
-          <PostButton type="button">반응하기</PostButton>
-          <PostButton type="button">담아두기</PostButton>
+          {/* <PostButton type="button">반응하기</PostButton>
+          <PostButton type="button">담아두기</PostButton> */}
+          {liked ? (
+            <LikeButton me type="button" onClick={onClickUnLike}>
+              😀 좋아요취소 {post.likes.length === 1 ? `${me.name}님` : `${me.name}외 ${post.likes.length}명`}
+            </LikeButton>
+          ) : (
+            <LikeButton type="button" onClick={onClickLike}>
+              좋아요 {post.likes.length !== 0 && `${post.likes.length}명`}
+            </LikeButton>
+          )}
           <DisplayPostRead>
             읽음<em>76</em>
           </DisplayPostRead>

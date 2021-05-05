@@ -10,6 +10,12 @@ export const initialState = {
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
+  likePostLoading: false,
+  likePostDone: false,
+  likePostError: null,
+  unLikePostLoading: false,
+  unLikePostDone: false,
+  unLikePostError: null,
   createPostLoading: false,
   createPostDone: false,
   createPostError: null,
@@ -31,6 +37,14 @@ export const initialState = {
 };
 
 // 액션타입
+export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
+export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
+export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
+
+export const LIKE_POST_REQUEST = 'LIKE_POST_REQUEST';
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS';
+export const LIKE_POST_FAILURE = 'LIKE_POST_FAILURE';
+
 export const PROGRESS_CHANGE_REQUEST = 'PROGRESS_CHANGE_REQUEST';
 export const PROGRESS_CHANGE_SUCCESS = 'PROGRESS_CHANGE_SUCCESS';
 export const PROGRESS_CHANGE_FAILURE = 'PROGRESS_CHANGE_FAILURE';
@@ -65,16 +79,47 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case UNLIKE_POST_REQUEST:
+      draft.unLikePostLoading = true;
+      draft.unLikePostError = null;
+      draft.unLikePostDone = false;
+      break;
+    case UNLIKE_POST_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
+      draft.unLikePostLoading = false;
+      post.likes = post.likes.filter((v) => v.userId !== action.data.userId);
+      draft.unLikePostDone = true;
+    } break;
+    case UNLIKE_POST_FAILURE:
+      draft.unLikePostLoading = false;
+      draft.unLikePostError = action.error;
+      break;
+    case LIKE_POST_REQUEST:
+      draft.unLikePostLoading = true;
+      draft.unLikePostError = null;
+      draft.unLikePostDone = false;
+      break;
+    case LIKE_POST_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
+      draft.likePostLoading = false;
+      post.likes.push({ userId: action.data.userId });
+      draft.likePostDone = true;
+    } break;
+    case LIKE_POST_FAILURE:
+      draft.likePostLoading = false;
+      draft.likePostError = action.error;
+      break;
     case PROGRESS_CHANGE_REQUEST:
       draft.progressChangeLoading = true;
       draft.progressChangeError = null;
       draft.progressChangeDone = false;
       break;
-    case PROGRESS_CHANGE_SUCCESS:
+    case PROGRESS_CHANGE_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
       draft.progressChangeLoading = false;
-      draft.projectPosts.find((v) => v.id === action.data.postId).contents.progress = action.data.progress;
+      post.contents.progress = action.data.progress;
       draft.progressChangeDone = true;
-      break;
+    } break;
     case PROGRESS_CHANGE_FAILURE:
       draft.progressChangeLoading = false;
       draft.progressChangeError = action.error;
@@ -84,11 +129,12 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       draft.stateChangeError = null;
       draft.stateChangeDone = false;
       break;
-    case STATE_CHANGE_SUCCESS:
+    case STATE_CHANGE_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
       draft.stateChangeLoading = false;
-      draft.projectPosts.find((v) => v.id === action.data.postId).contents.taskStatus = action.data.status;
+      post.contents.taskStatus = action.data.status;
       draft.stateChangeDone = true;
-      break;
+    } break;
     case STATE_CHANGE_FAILURE:
       draft.stateChangeLoading = false;
       draft.stateChangeError = action.error;
@@ -126,11 +172,12 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
       draft.editPostError = null;
       draft.editPostDone = false;
       break;
-    case EDIT_TASK_SUCCESS:
+    case EDIT_TASK_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
       draft.editPostLoading = false;
-      draft.projectPosts.find((v) => v.id === action.data.postId).contents = action.data.contents;
+      post.contents = action.data.contents;
       draft.editPostDone = true;
-      break;
+    } break;
     case EDIT_TASK_FAILURE:
       draft.editPostLoading = false;
       draft.editPostError = action.error;

@@ -43,6 +43,7 @@ function* login(action) {
     const { token } = result.data;
     yield put({
       type: LOGIN_SUCCESS,
+      data: action.data.username,
     });
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
     document.cookie = `token=${token}`;
@@ -62,7 +63,6 @@ function userAPI() {
 function* user() {
   try {
     const result = yield call(userAPI);
-    console.log(result);
     yield put({
       type: MY_INFO_SUCCESS,
       data: result.data,

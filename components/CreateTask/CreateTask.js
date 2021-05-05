@@ -51,6 +51,9 @@ const CreateTask = ({ submitType }) => {
   const progressHandler = (data) => {
     setProgress(data);
   };
+  const addManager = () => {
+    console.log(1)
+  }
   const submitHandler = () => {
     dispatch({
       type: submitType,
@@ -82,13 +85,13 @@ const CreateTask = ({ submitType }) => {
       <TaskList>
         <TaskItemTitle>업무상태</TaskItemTitle>
         <TaskListCell>
-          <TaskStateGroup stateHandler={stateHandler} />
+          <TaskStateGroup taskStatus={taskState} stateHandler={stateHandler} />
         </TaskListCell>
       </TaskList>
       <TaskList>
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
-          <button type="button">담당자 추가</button>
+          <button type="button" onClick={addManager}>담당자 추가</button>
         </TaskListCell>
       </TaskList>
       <TaskList>

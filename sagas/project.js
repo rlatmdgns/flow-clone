@@ -26,6 +26,12 @@ import {
   EDIT_TASK_SUCCESS,
   EDIT_TASK_FAILURE,
   EDIT_TASK_REQUEST,
+  LIKE_POST_FAILURE,
+  LIKE_POST_REQUEST,
+  LIKE_POST_SUCCESS,
+  UNLIKE_POST_FAILURE,
+  UNLIKE_POST_REQUEST,
+  UNLIKE_POST_SUCCESS,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
@@ -49,6 +55,46 @@ function* loadPosts(action) {
     console.log(error);
     yield put({
       type: LOAD_POSTS_FAILURE,
+      error,
+    });
+  }
+}
+
+function likePostAPI(data) {
+  return axios.post('/post/like', data);
+}
+
+function* likePost(action) {
+  try {
+    yield call(likePostAPI, action.data);
+    yield put({
+      type: LIKE_POST_SUCCESS,
+      data: action.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: LIKE_POST_FAILURE,
+      error,
+    });
+  }
+}
+
+function unlikePostAPI(data) {
+  return axios.delete('/post/like', { data });
+}
+
+function* unlikePost(action) {
+  try {
+    yield call(unlikePostAPI, action.data);
+    yield put({
+      type: UNLIKE_POST_SUCCESS,
+      data: action.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: UNLIKE_POST_FAILURE,
       error,
     });
   }
@@ -101,6 +147,7 @@ function createTaskAPI(data) {
 function* createTask(action) {
   try {
     const result = yield call(createTaskAPI, action.data);
+    console.log(result.data, '업무등록');
     yield put({
       type: CREATE_TASK_SUCCESS,
       data: {
@@ -116,7 +163,10 @@ function* createTask(action) {
           priority: action.data.priority,
           progress: action.data.progress,
           context: action.data.context,
+          taskNumber: result.data.taskNumber,
         },
+        likes: [],
+        createdAt: result.data.createdAt,
         writerName: action.writerName,
         writerId: action.writerId,
       },
@@ -241,6 +291,13 @@ function* loadProjects(action) {
   }
 }
 
+function* watchLikePostChange() {
+  yield takeLatest(LIKE_POST_REQUEST, likePost);
+}
+function* watchUnLikePostChange() {
+  yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
+}
+
 function* watchStateChange() {
   yield takeLatest(STATE_CHANGE_REQUEST, stateChange);
 }
@@ -273,6 +330,8 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchUnLikePostChange),
+    fork(watchLikePostChange),
     fork(watchDeletePost),
     fork(watchStateChange),
     fork(watchProgressChange),

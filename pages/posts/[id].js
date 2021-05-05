@@ -11,10 +11,7 @@ import { LOAD_POSTS_REQUEST } from '../../reducers/project';
 import { MY_INFO_REQUEST } from '../../reducers/user';
 
 const posts = () => {
-  const router = useRouter();
-  const dispatch = useDispatch();
   const { projectPosts, loadPostsLoading } = useSelector((state) => state.project);
-  const { id } = router.query;
   return (
     <AppLayout>
       <ProjectDetail projectPosts={projectPosts} />

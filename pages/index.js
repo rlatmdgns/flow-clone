@@ -9,27 +9,10 @@ import LoginFrom from '../components/loginForm';
 import { MY_INFO_REQUEST } from '../reducers/user';
 import wrapper from '../store/confiureStore';
 
-const Home = () => {
-  const { me } = useSelector((state) => state.user);
-
-  return (
-    <>
-      <LoginFrom />
-    </>
-  );
-};
-export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const { token } = cookies(context);
-  const cookie = context.req ? context.req.headers.cookie : '';
-  axios.defaults.headers.Cookie = '';
-  if (context.req && cookie) {
-    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
-  context.store.dispatch({
-    type: MY_INFO_REQUEST,
-  });
-  context.store.dispatch(END);
-  await context.store.sagaTask.toPromise();
-});
+const Home = () => (
+  <>
+    <LoginFrom />
+  </>
+);
 
 export default Home;

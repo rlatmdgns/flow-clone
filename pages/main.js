@@ -3,6 +3,8 @@ import axios from 'axios';
 import { END } from '@redux-saga/core';
 import cookies from 'next-cookies';
 import { useSelector, useDispatch } from 'react-redux';
+import Router from 'next/router';
+
 import wrapper from '../store/confiureStore';
 import AppLayout from '../components/layout/AppLayout';
 import Modal from '../components/modals/Modal';
@@ -16,12 +18,12 @@ const Main = () => {
   const [pageNum, setPageNum] = useState(2);
   const { me } = useSelector((state) => state.user);
   const { projects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
-  useEffect(() => {
-    if (!me) {
-      alert('재 로그인 해주세요.');
-      Router.replace('/');
-    }
-  }, [me]);
+  // useEffect(() => {
+  //   if (!(me && me.id)) {
+  //     alert('재 로그인 해주세요.');
+  //     Router.push('/');
+  //   }
+  // }, [me && me.id]);
   useEffect(() => {
     function onScroll() {
       let count = pageNum;

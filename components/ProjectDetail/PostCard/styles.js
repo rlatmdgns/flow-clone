@@ -249,3 +249,7 @@ export const CommentInput = styled.div`
     color: #999;
   }
 `;
+
+export const LikeButton = styled.button`
+color:${(props) => (props.me ? '#6449fc' : '#999')};
+`;
