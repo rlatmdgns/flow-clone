@@ -33,7 +33,7 @@ const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progr
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
           {managers.map((manager, i) => (
-            <span key={i}>{manager}</span>
+            <span>{manager.name}</span>
           ))}
           <button type="button">담당자 추가</button>
         </TaskListCell>

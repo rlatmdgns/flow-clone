@@ -20,13 +20,19 @@ import {
 import TaskStateGroup from '../TaskStateGroup';
 import { useSelector } from 'react-redux';
 import Progress from '../Progress';
+import ManagerPopup from '../ManagerPopup/ManagerPopup';
+import { LOAD_PARTICIPANTS_REQUEST } from '../../reducers/project';
+import { POPUP_MANAGER } from '../../reducers/modal';
 
 const CreateTask = ({ submitType }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
+  const { popupManager } = useSelector((state) => state.modal);
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
+  const [taskManagers, setTaskManagers] = useState([]);
+  console.log(taskManagers)
   const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -45,15 +51,29 @@ const CreateTask = ({ submitType }) => {
   const stateHandler = (type) => {
     setTaskState(type);
   };
+  const onManager = () => {
+    dispatch({
+      type: POPUP_MANAGER,
+      data: true,
+    });
+    dispatch({
+      type: LOAD_PARTICIPANTS_REQUEST,
+      data: id,
+    });
+  };
+  const addManager = (data) => {
+    setTaskManagers(data)
+    dispatch({
+      type: POPUP_MANAGER,
+      data: false,
+    });
+  }
   const onChangeContent = (e) => {
     setContent({ html: e.target.value });
   };
   const progressHandler = (data) => {
     setProgress(data);
   };
-  const addManager = () => {
-    console.log(1)
-  }
   const submitHandler = () => {
     dispatch({
       type: submitType,
@@ -62,7 +82,7 @@ const CreateTask = ({ submitType }) => {
         taskStatus: taskState,
         startDate: startDate,
         endDate: endDate,
-        managers: [],
+        managers: taskManagers,
         userId: me.id,
         projectId: id,
         priority: 'NORMAL',
@@ -91,7 +111,10 @@ const CreateTask = ({ submitType }) => {
       <TaskList>
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
-          <button type="button" onClick={addManager}>담당자 추가</button>
+          <div>
+            <button type="button" onClick={onManager}>담당자 추가</button>
+            {popupManager && <ManagerPopup addManager={addManager}/>}
+          </div>
         </TaskListCell>
       </TaskList>
       <TaskList>

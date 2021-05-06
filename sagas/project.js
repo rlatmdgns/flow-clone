@@ -32,9 +32,32 @@ import {
   UNLIKE_POST_FAILURE,
   UNLIKE_POST_REQUEST,
   UNLIKE_POST_SUCCESS,
+  LOAD_PARTICIPANTS_FAILURE,
+  LOAD_PARTICIPANTS_REQUEST,
+  LOAD_PARTICIPANTS_SUCCESS,
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
+
+function loadParticipantsAPI(data) {
+  return axios.get(`/participants/${data}`);
+}
+
+function* loadParticipants(action) {
+  try {
+    const result = yield call(loadParticipantsAPI, action.data);
+    yield put({
+      type: LOAD_PARTICIPANTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: LOAD_PARTICIPANTS_FAILURE,
+      error,
+    });
+  }
+}
 
 function loadPostsAPI(data, projectId) {
   // return axios.get('/posts/1?page=0&size=20&userId=rlatmdgns94');
@@ -291,6 +314,9 @@ function* loadProjects(action) {
   }
 }
 
+function* watchLoadParticipants() {
+  yield takeLatest(LOAD_PARTICIPANTS_REQUEST, loadParticipants);
+}
 function* watchLikePostChange() {
   yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
@@ -330,6 +356,7 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchLoadParticipants),
     fork(watchUnLikePostChange),
     fork(watchLikePostChange),
     fork(watchDeletePost),

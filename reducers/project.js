@@ -10,6 +10,9 @@ export const initialState = {
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
+  loadParticipantsLoading: false,
+  loadParticipantsDone: false,
+  loadParticipantsError: null,
   likePostLoading: false,
   likePostDone: false,
   likePostError: null,
@@ -33,10 +36,15 @@ export const initialState = {
   progressChangeError: null,
   projects: [],
   projectPosts: [],
+  projectParticipants: [],
   hasNext: false,
 };
 
 // 액션타입
+export const LOAD_PARTICIPANTS_REQUEST = 'LOAD_PARTICIPANTS_REQUEST';
+export const LOAD_PARTICIPANTS_SUCCESS = 'LOAD_PARTICIPANTS_SUCCESS';
+export const LOAD_PARTICIPANTS_FAILURE = 'LOAD_PARTICIPANTS_FAILURE';
+
 export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
 export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
 export const UNLIKE_POST_FAILURE = 'UNLIKE_POST_FAILURE';
@@ -79,6 +87,20 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case LOAD_PARTICIPANTS_REQUEST:
+      draft.loadParticipantsLoading = true;
+      draft.loadParticipantsError = null;
+      draft.loadParticipantsDone = false;
+      break;
+    case LOAD_PARTICIPANTS_SUCCESS:
+      draft.loadParticipantsLoading = false;
+      draft.projectParticipants = action.data;
+      draft.loadParticipantsDone = true;
+      break;
+    case LOAD_PARTICIPANTS_FAILURE:
+      draft.loadParticipantsLoading = false;
+      draft.loadParticipantsError = action.error;
+      break;
     case UNLIKE_POST_REQUEST:
       draft.unLikePostLoading = true;
       draft.unLikePostError = null;

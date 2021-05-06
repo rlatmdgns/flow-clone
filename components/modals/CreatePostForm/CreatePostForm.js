@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 import {
   PopupWrap,
   Header,
@@ -20,17 +21,12 @@ import { EDIT_MODE } from '../../../reducers/user';
 import EditTask from '../../EditTask';
 
 const CreatePostForm = ({ editMode }) => {
+  const router = useRouter();
+  const { id } = router.query;
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const [submitType, setSubmitType] = useState(CREATE_TASK_REQUEST);
-  const CreateTitle = [
-    // '글',
-    '업무',
-  ];
-  const CreateTabContent = {
-    0: <CreateTask submitType={submitType} />,
-    // 1: 1,
-  };
+
   const tabHandler = (i) => {
     const TYPE = {
       0: CREATE_TASK_REQUEST,
@@ -50,7 +46,14 @@ const CreatePostForm = ({ editMode }) => {
       data: false,
     });
   };
-
+  const CreateTitle = [
+    // '글',
+    '업무',
+  ];
+  const CreateTabContent = {
+    0: <CreateTask submitType={submitType} />,
+    // 1: 1,
+  };
   return editMode.state ? (
     <PopupWrap>
       <Header>
