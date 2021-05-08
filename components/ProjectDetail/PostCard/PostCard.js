@@ -43,12 +43,18 @@ import {
 import TaskListGroup from '../../TaskListGroup';
 import { DELETE_POST_REQUEST, LIKE_POST_REQUEST, UNLIKE_POST_REQUEST } from '../../../reducers/project';
 import { EDIT_MODE } from '../../../reducers/user';
+import useInput from '../../../hooks/useInput';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { id } = router.query;
   const { me } = useSelector((state) => state.user);
+  const [comment, setComment] = useState('');
+  const onChangeComment = (e) => {
+    setComment(e.target.innerText);
+  };
+  console.log(comment, 'asas');
   const onClickEdit = useCallback(() => {
     dispatch({
       type: EDIT_MODE,
@@ -80,6 +86,7 @@ const PostCard = ({ post }) => {
       console.log(11111112213123123);
     }
   };
+
   return (
     <PostCardWrapper>
       <CreatorArea>
@@ -135,9 +142,9 @@ const PostCard = ({ post }) => {
               좋아요 {post.likes.length !== 0 && `${post.likes.length}명`}
             </LikeButton>
           )}
-          <DisplayPostRead>
+          {/* <DisplayPostRead>
             읽음<em>76</em>
-          </DisplayPostRead>
+          </DisplayPostRead> */}
         </PostButtonArea>
       </PostCardContainer>
       <PostFooter>
@@ -164,7 +171,16 @@ const PostCard = ({ post }) => {
           </CommentGroup>
           <CommentInputWrap>
             <CommentThumNail />
-            <CommentInput contentEditable="true" placeholder="줄바꿈은 Shift or Ctrl + Enter / 입력은 Enter 입니다.." onKeyPress={onComment} />
+            <CommentInput>
+              <ContentEditable
+                className="editable"
+                tagName="div"
+                html="1111" // innerHTML of the editable div
+                // onChange={onChangeContent} // handle innerHTML change
+          // onBlur={sanitize}
+                placeholder="글을 입력하세요"
+              />
+            </CommentInput>
           </CommentInputWrap>
         </CommentWrap>
       </PostFooter>

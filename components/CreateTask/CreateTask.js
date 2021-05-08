@@ -32,7 +32,6 @@ const CreateTask = ({ submitType }) => {
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
   const [taskManagers, setTaskManagers] = useState([]);
-  console.log(taskManagers,"aaaa")
   const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -87,7 +86,7 @@ const CreateTask = ({ submitType }) => {
         taskStatus: taskState,
         startDate: startDate,
         endDate: endDate,
-        managers: taskManagers.map((v)=>(v.id)),
+        managersInfo: taskManagers,
         userId: me.id,
         projectId: id,
         priority: 'NORMAL',

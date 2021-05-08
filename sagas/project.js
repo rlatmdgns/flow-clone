@@ -181,7 +181,7 @@ function* createTask(action) {
           taskStatus: action.data.taskStatus,
           startDate: action.data.startDate,
           endDate: action.data.endDate,
-          managers: action.data.managers,
+          managers: action.data.managersInfo,
           userId: action.data.userId,
           projectId: action.data.projectId,
           priority: action.data.priority,

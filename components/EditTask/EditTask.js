@@ -18,18 +18,22 @@ import {
   TaskListCell,
 } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
+import ManagerPopup from '../ManagerPopup/ManagerPopup';
 import { useSelector } from 'react-redux';
-import { EDIT_TASK_REQUEST } from '../../reducers/project';
+import { EDIT_TASK_REQUEST, LOAD_PARTICIPANTS_REQUEST } from '../../reducers/project';
 import Progress from '../Progress';
+import { POPUP_MANAGER } from '../../reducers/modal';
 
 const EditTask = ({ editMode, editCloseHandle }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
+  const { popupManager } = useSelector((state) => state.modal);
   const { projectPosts } = useSelector((state) => state.project);
   const editPost = projectPosts.find((v) => v.id === editMode.postId);
   const { id } = router.query;
   const [title, onChangeTitle] = useInput(editPost.contents.title);
+  const [taskManagers, setTaskManagers] = useState(editPost.contents.managers);
   const [taskState, setTaskState] = useState(editPost.contents.taskStatus);
   const [startDate, setStartDate] = useState(editPost.contents.startDate);
   const [endDate, setEndDate] = useState(editPost.contents.endDate);
@@ -39,7 +43,6 @@ const EditTask = ({ editMode, editCloseHandle }) => {
   });
   const [progress, setProgress] = useState(editPost.contents.progress);
 
-
   const startDateClear = () => {
     setStartDate('');
   };
@@ -48,6 +51,26 @@ const EditTask = ({ editMode, editCloseHandle }) => {
   };
   const stateHandler = (type) => {
     setTaskState(type);
+  };
+  const onManager = () => {
+    dispatch({
+      type: POPUP_MANAGER,
+      data: true,
+    });
+    dispatch({
+      type: LOAD_PARTICIPANTS_REQUEST,
+      data: id,
+    });
+  };
+  const addManager = (data) => {
+    setTaskManagers(data);
+    dispatch({
+      type: POPUP_MANAGER,
+      data: false,
+    });
+  };
+  const deleteManager = (id) => {
+    setTaskManagers(taskManagers.filter((v) => v.id !== id));
   };
   const onChangeContent = (e) => {
     setContent({ html: e.target.value });
@@ -64,7 +87,7 @@ const EditTask = ({ editMode, editCloseHandle }) => {
         taskStatus: taskState,
         startDate: startDate,
         endDate: endDate,
-        managers: [],
+        managers: taskManagers  ,
         userId: me.id,
         projectId: id,
         priority: 'NORMAL',
@@ -91,7 +114,20 @@ const EditTask = ({ editMode, editCloseHandle }) => {
       <TaskList>
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
-          <button type="button">담당자 추가</button>
+          {taskManagers.map((v) => {
+            return (
+              <span key={v.id}>
+                {v.name}
+                <button type="button" onClick={() => deleteManager(v.id)}>
+                  [삭제]
+                </button>
+              </span>
+            );
+          })}
+          <button type="button" onClick={onManager}>
+            담당자 추가
+          </button>
+          {popupManager && <ManagerPopup addManager={addManager} taskManagers={taskManagers} />}
         </TaskListCell>
       </TaskList>
       <TaskList>
