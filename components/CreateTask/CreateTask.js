@@ -32,7 +32,7 @@ const CreateTask = ({ submitType }) => {
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
   const [taskManagers, setTaskManagers] = useState([]);
-  console.log(taskManagers)
+  console.log(taskManagers,"aaaa")
   const [taskState, setTaskState] = useState('REQUEST');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -68,6 +68,11 @@ const CreateTask = ({ submitType }) => {
       data: false,
     });
   }
+  const deleteManager = (id) => {
+    setTaskManagers(taskManagers.filter((v)=>
+      v.id !== id
+    ))
+  }
   const onChangeContent = (e) => {
     setContent({ html: e.target.value });
   };
@@ -82,13 +87,14 @@ const CreateTask = ({ submitType }) => {
         taskStatus: taskState,
         startDate: startDate,
         endDate: endDate,
-        managers: taskManagers,
+        managers: taskManagers.map((v)=>(v.id)),
         userId: me.id,
         projectId: id,
         priority: 'NORMAL',
         progress: progress,
         context: content.html,
       },
+      replies:[],
       writerName:me.name,
       writerId: me.id,
     });
@@ -112,8 +118,11 @@ const CreateTask = ({ submitType }) => {
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
           <div>
+            {taskManagers.map((v)=>{
+              return <span key={v.id} >{v.name}<button type="button" onClick={()=> deleteManager(v.id)}>[삭제]</button></span>
+            })}
             <button type="button" onClick={onManager}>담당자 추가</button>
-            {popupManager && <ManagerPopup addManager={addManager}/>}
+            {popupManager && <ManagerPopup addManager={addManager} taskManagers={taskManagers}/>}
           </div>
         </TaskListCell>
       </TaskList>

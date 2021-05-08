@@ -74,6 +74,12 @@ const PostCard = ({ post }) => {
     });
   };
   const liked = post.likes.find((user) => user.userId === me.id);
+  const onComment = (e) => {
+    const isEnter = (e.code === 'Enter' || e.keyCode === 13);
+    if (isEnter) {
+      console.log(11111112213123123);
+    }
+  };
   return (
     <PostCardWrapper>
       <CreatorArea>
@@ -158,7 +164,7 @@ const PostCard = ({ post }) => {
           </CommentGroup>
           <CommentInputWrap>
             <CommentThumNail />
-            <CommentInput contentEditable="true" placeholder="줄바꿈은 Shift or Ctrl + Enter / 입력은 Enter 입니다.." />
+            <CommentInput contentEditable="true" placeholder="줄바꿈은 Shift or Ctrl + Enter / 입력은 Enter 입니다.." onKeyPress={onComment} />
           </CommentInputWrap>
         </CommentWrap>
       </PostFooter>

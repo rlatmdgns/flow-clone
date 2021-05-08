@@ -170,6 +170,7 @@ function createTaskAPI(data) {
 function* createTask(action) {
   try {
     const result = yield call(createTaskAPI, action.data);
+    console.log(action.data.managers, 'SAdsaadsadsasdasda');
     console.log(result.data, '업무등록');
     yield put({
       type: CREATE_TASK_SUCCESS,
@@ -188,6 +189,7 @@ function* createTask(action) {
           context: action.data.context,
           taskNumber: result.data.taskNumber,
         },
+        replies: [],
         likes: [],
         createdAt: result.data.createdAt,
         writerName: action.writerName,
