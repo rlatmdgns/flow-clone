@@ -35,9 +35,34 @@ import {
   LOAD_PARTICIPANTS_FAILURE,
   LOAD_PARTICIPANTS_REQUEST,
   LOAD_PARTICIPANTS_SUCCESS,
+  ADD_REPLY_SUCCESS,
+  ADD_REPLY_FAILURE,
+  ADD_REPLY_REQUEST,
+
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
+
+function addReplyAPI(data) {
+  return axios.post('/post/reply', data);
+}
+
+function* addReply(action) {
+  try {
+    const result = yield call(addReplyAPI, action.data);
+    console.log('result', result.data);
+    yield put({
+      type: ADD_REPLY_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: ADD_REPLY_FAILURE,
+      error,
+    });
+  }
+}
 
 function loadParticipantsAPI(data) {
   return axios.get(`/participants/${data}`);
@@ -316,6 +341,10 @@ function* loadProjects(action) {
   }
 }
 
+function* watchAddReply() {
+  yield takeLatest(ADD_REPLY_REQUEST, addReply);
+}
+
 function* watchLoadParticipants() {
   yield takeLatest(LOAD_PARTICIPANTS_REQUEST, loadParticipants);
 }
@@ -358,6 +387,7 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchAddReply),
     fork(watchLoadParticipants),
     fork(watchUnLikePostChange),
     fork(watchLikePostChange),

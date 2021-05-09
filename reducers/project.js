@@ -34,6 +34,15 @@ export const initialState = {
   progressChangeLoading: false,
   progressChangeDone: false,
   progressChangeError: null,
+  addReplyLoading: false,
+  addReplyDone: false,
+  addReplyError: null,
+  deleteReplyLoading: false,
+  deleteReplyDone: false,
+  deleteReplyError: null,
+  editReplyLoading: false,
+  editReplyDone: false,
+  editReplyError: null,
   projects: [],
   projectPosts: [],
   projectParticipants: [],
@@ -41,6 +50,18 @@ export const initialState = {
 };
 
 // 액션타입
+export const ADD_REPLY_REQUEST = 'ADD_REPLY_REQUEST';
+export const ADD_REPLY_SUCCESS = 'ADD_REPLY_SUCCESS';
+export const ADD_REPLY_FAILURE = 'ADD_REPLY_FAILURE';
+
+export const DELETE_REPLY_REQUEST = 'DELETE_REPLY_REQUEST';
+export const DELETE_REPLY_SUCCESS = 'DELETE_REPLY_SUCCESS';
+export const DELETE_REPLY_FAILURE = 'DELETE_REPLY_FAILURE';
+
+export const EDIT_REPLY_REQUEST = 'EDIT_REPLY_REQUEST';
+export const EDIT_REPLY_SUCCESS = 'EDIT_REPLY_SUCCESS';
+export const EDIT_REPLY_FAILURE = 'EDIT_REPLY_FAILURE';
+
 export const LOAD_PARTICIPANTS_REQUEST = 'LOAD_PARTICIPANTS_REQUEST';
 export const LOAD_PARTICIPANTS_SUCCESS = 'LOAD_PARTICIPANTS_SUCCESS';
 export const LOAD_PARTICIPANTS_FAILURE = 'LOAD_PARTICIPANTS_FAILURE';
@@ -87,6 +108,20 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case ADD_REPLY_REQUEST:
+      draft.addReplyLoading = true;
+      draft.addReplyError = null;
+      draft.addReplyDone = false;
+      break;
+    case ADD_REPLY_SUCCESS:
+      draft.addReplyLoading = false;
+      draft.projectParticipants = action.data;
+      draft.addReplyDone = true;
+      break;
+    case ADD_REPLY_FAILURE:
+      draft.addReplyLoading = false;
+      draft.addReplyError = action.error;
+      break;
     case LOAD_PARTICIPANTS_REQUEST:
       draft.loadParticipantsLoading = true;
       draft.loadParticipantsError = null;
