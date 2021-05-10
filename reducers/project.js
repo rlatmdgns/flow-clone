@@ -108,16 +108,48 @@ export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case DELETE_REPLY_REQUEST:
+      draft.deleteReplyLoading = true;
+      draft.deleteReplyError = null;
+      draft.deleteReplyDone = false;
+      break;
+    case DELETE_REPLY_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.data.postId);
+      draft.deleteReplyLoading = false;
+      post.replies = post.replies.filter((v) => v.id !== action.data.replyId);
+      draft.deleteReplyDone = true;
+    }
+      break;
+    case DELETE_REPLY_FAILURE:
+      draft.deleteReplyLoading = false;
+      draft.deleteReplyError = action.error;
+      break;
+    case EDIT_REPLY_REQUEST:
+      draft.editReplyLoading = true;
+      draft.editReplyError = null;
+      draft.editReplyDone = false;
+      break;
+    case EDIT_REPLY_SUCCESS: {
+      draft.editReplyLoading = false;
+      const post = draft.projectPosts.find((v) => v.id === action.postId);
+      post.replies.find((v) => v.id === action.data.replyId).contents = action.data.contents;
+      draft.editReplyDone = true;
+    } break;
+    case EDIT_REPLY_FAILURE:
+      draft.editReplyLoading = false;
+      draft.editReplyError = action.error;
+      break;
     case ADD_REPLY_REQUEST:
       draft.addReplyLoading = true;
       draft.addReplyError = null;
       draft.addReplyDone = false;
       break;
-    case ADD_REPLY_SUCCESS:
+    case ADD_REPLY_SUCCESS: {
+      const post = draft.projectPosts.find((v) => v.id === action.postId);
       draft.addReplyLoading = false;
-      draft.projectParticipants = action.data;
+      post.replies.push(action.data);
       draft.addReplyDone = true;
-      break;
+    } break;
     case ADD_REPLY_FAILURE:
       draft.addReplyLoading = false;
       draft.addReplyError = action.error;

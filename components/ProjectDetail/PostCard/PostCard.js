@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import ContentEditable from 'react-contenteditable';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,18 +25,10 @@ import {
   CommentHeader,
   CommentGroup,
   CommentThumNail,
-  CommentUserArea,
-  CommentUser,
-  CommentText,
-  CommentMeMenu,
-  CommentItem,
-  CommentList,
   PostButtonArea,
   PostButton,
   DisplayPostRead,
-  MeItem,
   CommentInputWrap,
-  CommentInput,
   WriterMenu,
   LikeButton,
 } from './styles';
@@ -48,15 +40,18 @@ import {
   UNLIKE_POST_REQUEST,
 } from '../../../reducers/project';
 import { EDIT_MODE } from '../../../reducers/user';
-import useInput from '../../../hooks/useInput';
+
+import CommentContent from '../../CommentContent/CommentContent';
+import CommentInput from '../../CommentInput/CommentInput';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
   const { id } = router.query;
   const { me } = useSelector((state) => state.user);
   const { addReplyDone } = useSelector((state) => state.project);
-  const ref = useRef();
+
   const onClickEdit = useCallback(() => {
     dispatch({
       type: EDIT_MODE,
@@ -82,50 +77,11 @@ const PostCard = ({ post }) => {
     });
   };
   const liked = post.likes.find((user) => user.userId === me.id);
-  useEffect(() => {
-    if (addReplyDone) {
-      ref.current.innerHTML = '';
-    }
-  }, [addReplyDone]);
-
-  const onKeyUpComment = (e) => {
-    const { userAgent } = window.navigator;
-    const isChrome = userAgent.indexOf('Chrome');
-    if (isChrome) {
-      const el = document.activeElement;
-      if (el.lastChild && el.lastChild.nodeName != 'BR') {
-        el.appendChild(document.createElement('br'));
-      }
-    }
-    if (e.keyCode === 13 || e.code === 'Enter') {
-      if (e.ctrlKey || e.shiftKey || e.metaKey) {
-        if (window.getSelection) {
-          e.preventDefault();
-          const selection = window.getSelection();
-          const range = selection.getRangeAt(0);
-          const br = document.createElement('br');
-          range.deleteContents();
-          range.insertNode(br);
-          range.setStartAfter(br);
-          range.setEndAfter(br);
-          range.collapse(false);
-          selection.removeAllRanges();
-          selection.addRange(range);
-        }
-      } else {
-        e.preventDefault();
-        dispatch({
-          type: ADD_REPLY_REQUEST,
-          data: {
-            projectId: id,
-            postId: post.id,
-            userId: me.id,
-            contents: ref.current.innerText,
-          },
-        });
-      }
-    }
-  };
+  // useEffect(() => {
+  //   if (addReplyDone) {
+  //     ref.current.innerHTML = '';
+  //   }
+  // }, [addReplyDone]);
 
   return (
     <PostCardWrapper>
@@ -192,35 +148,16 @@ const PostCard = ({ post }) => {
           <CommentHeader />
           <CommentGroup>
             {post.replies.map((reply) => (
-              <CommentList key={reply.id}>
-                <CommentThumNail />
-                <CommentItem>
-                  <CommentUserArea>
-                    <CommentUser>
-                      <Name>{reply.writerName}</Name>
-                      {/* <Rank>매니저</Rank> */}
-                      <Date>{moment(reply.createdAt).format('YYYY-MM-DD HH:mm')}</Date>
-                    </CommentUser>
-                    {me.id === reply.writerId && (
-                    <CommentMeMenu>
-                      <MeItem>수정</MeItem>
-                      <MeItem>삭제</MeItem>
-                    </CommentMeMenu>
-                    )}
-                  </CommentUserArea>
-                  <CommentText>{reply.contents}</CommentText>
-                </CommentItem>
-              </CommentList>
+              <CommentContent
+                key={reply.id}
+                reply={reply}
+                postId={post.id}
+              />
             ))}
           </CommentGroup>
           <CommentInputWrap>
             <CommentThumNail />
-            <CommentInput
-              contentEditable="true"
-              ref={ref}
-              placeholder="댓글을 입력하세요(Enter는 입력, shift or ctrl + Enter는 줄바꿈)"
-              onKeyPress={onKeyUpComment}
-            />
+            <CommentInput postId={post.id} projectId={id} />
           </CommentInputWrap>
         </CommentWrap>
       </PostFooter>

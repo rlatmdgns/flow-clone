@@ -38,11 +38,65 @@ import {
   ADD_REPLY_SUCCESS,
   ADD_REPLY_FAILURE,
   ADD_REPLY_REQUEST,
+  DELETE_REPLY_REQUEST,
+  DELETE_REPLY_SUCCESS,
+  DELETE_REPLY_FAILURE,
+  EDIT_REPLY_REQUEST,
+  EDIT_REPLY_SUCCESS,
+  EDIT_REPLY_FAILURE,
 
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
 
+function deleteReplyAPI(data) {
+  return axios.delete('/post/reply', { data });
+}
+
+function* deleteReply(action) {
+  try {
+    const result = yield call(deleteReplyAPI, action.data);
+    console.log(result.data);
+    yield put({
+      type: DELETE_REPLY_SUCCESS,
+      data: {
+        replyId: action.data.replyId,
+        postId: action.postId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: DELETE_REPLY_FAILURE,
+      error,
+    });
+  }
+}
+function editReplyAPI(data) {
+  return axios.put('/post/reply', data);
+}
+
+function* editReply(action) {
+  try {
+    const result = yield call(editReplyAPI, action.data);
+    console.log('result 댓수정', result.data);
+    yield put({
+      type: EDIT_REPLY_SUCCESS,
+      data: {
+        contents: action.data.contents,
+        replyId: action.data.replyId,
+        writerId: action.data.userId,
+      },
+      postId: action.postId,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: EDIT_REPLY_FAILURE,
+      error,
+    });
+  }
+}
 function addReplyAPI(data) {
   return axios.post('/post/reply', data);
 }
@@ -50,10 +104,18 @@ function addReplyAPI(data) {
 function* addReply(action) {
   try {
     const result = yield call(addReplyAPI, action.data);
-    console.log('result', result.data);
+    console.log('result 댓글', result.data);
+
     yield put({
       type: ADD_REPLY_SUCCESS,
-      data: result.data,
+      data: {
+        contents: action.data.contents,
+        createdAt: result.data.createdAt,
+        id: result.data.id,
+        writerId: action.data.userId,
+        writerName: action.name,
+      },
+      postId: action.data.postId,
     });
   } catch (error) {
     console.log(error);
@@ -341,6 +403,13 @@ function* loadProjects(action) {
   }
 }
 
+function* watchDeleteReply() {
+  yield takeLatest(DELETE_REPLY_REQUEST, deleteReply);
+}
+function* watchEditReply() {
+  yield takeLatest(EDIT_REPLY_REQUEST, editReply);
+}
+
 function* watchAddReply() {
   yield takeLatest(ADD_REPLY_REQUEST, addReply);
 }
@@ -387,6 +456,8 @@ function* watchLoadProject() {
 
 export default function* projectSaga() {
   yield all([
+    fork(watchDeleteReply),
+    fork(watchEditReply),
     fork(watchAddReply),
     fork(watchLoadParticipants),
     fork(watchUnLikePostChange),

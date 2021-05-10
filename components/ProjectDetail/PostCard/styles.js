@@ -56,7 +56,8 @@ export const WriterMenu = styled.div`
 export const Name = styled.strong`
   display: inline-block;
   max-width: 110px;
-  vertical-align: middle;
+  margin:0px 6px 0 0;
+  vertical-align: top;
 `;
 export const Rank = styled.em`
   display: inline-block;
@@ -66,7 +67,7 @@ export const Rank = styled.em`
 `;
 export const Date = styled.span`
   color: #aaa;
-  vertical-align: middle;
+  vertical-align: top;
 `;
 export const Company = styled.strong`
   display: inline-block;
@@ -192,9 +193,6 @@ export const MeItem = styled.button`
     margin-left: 4px;
   }
 `;
-export const CommentItem = styled.div`
-  flex: 1;
-`;
 
 export const PostButtonArea = styled.div`
   display: flex;
@@ -230,26 +228,10 @@ export const CommentInputWrap = styled.div`
     float: left;
   }
 `;
-export const CommentInput = styled.div`
-  width: calc(100% - 52px);
-  padding: 14px 50px 14px 20px;
-  min-height: 44px;
-  float: left;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #555;
-  word-break: break-all;
-  white-space: pre;
-  &[contenteditable='true']:empty:before {
-    display: block; /* For Firefox */
-    content: attr(placeholder);
-    color: #999;
-  }
-`;
 
+export const CommentItem = styled.div`
+  flex: 1;
+`;
 export const LikeButton = styled.button`
 color:${(props) => (props.me ? '#6449fc' : '#999')};
 `;
