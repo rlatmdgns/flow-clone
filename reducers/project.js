@@ -13,6 +13,12 @@ export const initialState = {
   loadParticipantsLoading: false,
   loadParticipantsDone: false,
   loadParticipantsError: null,
+  loadMembersLoading: false,
+  loadMembersDone: false,
+  loadMembersError: null,
+  inviteMemberLoading: false,
+  inviteMemberDone: false,
+  inviteMemberError: null,
   likePostLoading: false,
   likePostDone: false,
   likePostError: null,
@@ -46,6 +52,7 @@ export const initialState = {
   projects: [],
   projectPosts: [],
   projectParticipants: [],
+  members: [],
   hasNext: false,
 };
 
@@ -65,6 +72,14 @@ export const EDIT_REPLY_FAILURE = 'EDIT_REPLY_FAILURE';
 export const LOAD_PARTICIPANTS_REQUEST = 'LOAD_PARTICIPANTS_REQUEST';
 export const LOAD_PARTICIPANTS_SUCCESS = 'LOAD_PARTICIPANTS_SUCCESS';
 export const LOAD_PARTICIPANTS_FAILURE = 'LOAD_PARTICIPANTS_FAILURE';
+
+export const LOAD_MEMBERS_REQUEST = 'LOAD_MEMBERS_REQUEST';
+export const LOAD_MEMBERS_SUCCESS = 'LOAD_MEMBERS_SUCCESS';
+export const LOAD_MEMBERS_FAILURE = 'LOAD_MEMBERS_FAILURE';
+
+export const INVITE_MEMBER_REQUEST = 'INVITE_MEMBER_REQUEST';
+export const INVITE_MEMBER_SUCCESS = 'INVITE_MEMBER_SUCCESS';
+export const INVITE_MEMBER_FAILURE = 'INVITE_MEMBER_FAILURE';
 
 export const UNLIKE_POST_REQUEST = 'UNLIKE_POST_REQUEST';
 export const UNLIKE_POST_SUCCESS = 'UNLIKE_POST_SUCCESS';
@@ -167,6 +182,33 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case LOAD_PARTICIPANTS_FAILURE:
       draft.loadParticipantsLoading = false;
       draft.loadParticipantsError = action.error;
+      break;
+    case LOAD_MEMBERS_REQUEST:
+      draft.loadMembersLoading = true;
+      draft.loadMembersError = null;
+      draft.loadMembersDone = false;
+      break;
+    case LOAD_MEMBERS_SUCCESS:
+      draft.loadMembersLoading = false;
+      draft.members = action.data;
+      draft.loadMembersDone = true;
+      break;
+    case LOAD_MEMBERS_FAILURE:
+      draft.loadMembersLoading = false;
+      draft.loadMembersError = action.error;
+      break;
+    case INVITE_MEMBER_REQUEST:
+      draft.inviteMemberLoading = true;
+      draft.inviteMemberError = null;
+      draft.inviteMemberDone = false;
+      break;
+    case INVITE_MEMBER_SUCCESS:
+      draft.inviteMemberLoading = false;
+      draft.inviteMemberDone = true;
+      break;
+    case INVITE_MEMBER_FAILURE:
+      draft.inviteMemberLoading = false;
+      draft.inviteMemberError = action.error;
       break;
     case UNLIKE_POST_REQUEST:
       draft.unLikePostLoading = true;

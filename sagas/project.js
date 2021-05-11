@@ -44,10 +44,36 @@ import {
   EDIT_REPLY_REQUEST,
   EDIT_REPLY_SUCCESS,
   EDIT_REPLY_FAILURE,
+  LOAD_MEMBERS_SUCCESS,
+  LOAD_MEMBERS_FAILURE,
+  LOAD_MEMBERS_REQUEST,
+  INVITE_MEMBER_REQUEST,
+  INVITE_MEMBER_SUCCESS,
+  INVITE_MEMBER_FAILURE,
 
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
+
+function inviteMemberAPI(data) {
+  return axios.post('/project/invite', data);
+}
+
+function* inviteMember(action) {
+  try {
+    const result = yield call(inviteMemberAPI, action.data);
+    console.log(result.data);
+    yield put({
+      type: INVITE_MEMBER_SUCCESS,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: INVITE_MEMBER_FAILURE,
+      error,
+    });
+  }
+}
 
 function deleteReplyAPI(data) {
   return axios.delete('/post/reply', { data });
@@ -121,6 +147,27 @@ function* addReply(action) {
     console.log(error);
     yield put({
       type: ADD_REPLY_FAILURE,
+      error,
+    });
+  }
+}
+
+function loadMembersAPI() {
+  return axios.get('/members');
+}
+
+function* loadMembers(action) {
+  try {
+    const result = yield call(loadMembersAPI, action.data);
+    console.log(result.data);
+    yield put({
+      type: LOAD_MEMBERS_SUCCESS,
+      data: result.data.membersInfo,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: LOAD_MEMBERS_FAILURE,
       error,
     });
   }
@@ -417,6 +464,12 @@ function* watchAddReply() {
 function* watchLoadParticipants() {
   yield takeLatest(LOAD_PARTICIPANTS_REQUEST, loadParticipants);
 }
+function* watchLoadMembers() {
+  yield takeLatest(LOAD_MEMBERS_REQUEST, loadMembers);
+}
+function* watchInviteMember() {
+  yield takeLatest(INVITE_MEMBER_REQUEST, inviteMember);
+}
 function* watchLikePostChange() {
   yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
@@ -460,6 +513,8 @@ export default function* projectSaga() {
     fork(watchEditReply),
     fork(watchAddReply),
     fork(watchLoadParticipants),
+    fork(watchLoadMembers),
+    fork(watchInviteMember),
     fork(watchUnLikePostChange),
     fork(watchLikePostChange),
     fork(watchDeletePost),

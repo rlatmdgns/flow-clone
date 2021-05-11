@@ -4,19 +4,18 @@ export const DetailHeader = styled.div`
   background: #fff;
 `;
 export const DetailHeaderTop = styled.div`
-padding:25px 30px;
+  display:flex;
+  align-items:center;
+  padding:25px 30px;
 `;
 export const DetailProjectColor = styled.i`
-  display: inline-block;
   min-width: 50px;
   min-height: 50px;
   background: #fd7900;
   border-radius: 10px;
   margin-right: 20px;
-  vertical-align: middle;
 `;
 export const DetailHeaderInner = styled.div`
-  display: inline-block;
   vertical-align: middle;
 `;
 export const DetailTitle = styled.h3`
@@ -79,4 +78,40 @@ export const DetailMenuItem = styled.li`
       background: #333;
     }
   `}
+`;
+export const InviteButton = styled.button`
+  margin-left:auto;
+  padding: 10px;
+  border-radius:4px;
+  border:1px solid #ddd;
+  color:#999;
+`;
+export const MembersList = styled.ul`
+  position:absolute;
+  top: 100px;
+  right: 30px;
+  width:120px;
+  background:#fff;
+  padding: 4px 0;
+  border-radius:4px;
+  border:1px solid #ddd;
+`;
+export const MemberItem = styled.li`
+  display:flex;
+  align-items:center;
+  list-style:none;
+  padding:4px 10px;
+
+  button {
+    margin-left:auto;
+    padding:2px 8px;
+    border-radius:4px;
+    border:1px solid #ddd;
+    color:#999;
+    background:#fff;
+    &:hover{
+      background:#6449fc;
+      color:#fff;
+    }
+  }
 `;

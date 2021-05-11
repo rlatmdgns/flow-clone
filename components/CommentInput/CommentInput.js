@@ -1,15 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { ADD_REPLY_REQUEST, EDIT_REPLY_REQUEST } from '../../reducers/project';
 
 import { Input } from './styles';
 
 const CommentInput = ({ edit, replyId, postId, projectId, editModeEnd }) => {
-  console.log(projectId);
-  console.log(postId, 'postId');
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
+  const { addReplyDone } = useSelector((state) => state.project);
   const ref = useRef();
+
+  useEffect(() => {
+    if (addReplyDone) {
+      ref.current.innerHTML = '';
+    }
+  }, [addReplyDone]);
   const onKeyComment = (e) => {
     const { userAgent } = window.navigator;
     const isChrome = userAgent.indexOf('Chrome');
