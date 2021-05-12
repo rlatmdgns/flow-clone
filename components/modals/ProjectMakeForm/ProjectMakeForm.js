@@ -20,7 +20,7 @@ import {
 import { PROJECT_ADD_REQUEST } from '../../../reducers/project';
 import { CREATE_PROJECT } from '../../../reducers/modal';
 
-const ProjectMakeForm = () => {
+const ProjectMakeForm = ({ popupCloseHandle }) => {
   const { me } = useSelector((state) => state.user);
   const [explain, setExPlain] = useState('');
   const [title, setTitle] = useState('');
@@ -44,13 +44,6 @@ const ProjectMakeForm = () => {
         title,
         userId: me.id,
       },
-    });
-  };
-
-  const popupCloseHandle = () => {
-    dispatch({
-      type: CREATE_PROJECT,
-      data: false,
     });
   };
 

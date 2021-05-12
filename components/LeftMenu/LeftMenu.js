@@ -1,12 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LeftMenuWrap, ProjectAddButton, Logo, Gnb, GnbItem } from './styles';
 import { CREATE_PROJECT } from '../../reducers/modal';
+import Modal from '../modals/Modal';
+import { ProjectMakeForm } from '../modals/ProjectMakeForm/ProjectMakeForm';
 
 const LeftMenu = () => {
   const dispatch = useDispatch();
+  const { createProject } = useSelector((state) => state.modal);
   const router = useRouter();
   const menuData = [
     {
@@ -64,6 +67,12 @@ const LeftMenu = () => {
       data: true,
     });
   };
+  const popupCloseHandle = () => {
+    dispatch({
+      type: CREATE_PROJECT,
+      data: false,
+    });
+  };
   return (
     <LeftMenuWrap>
       <Logo>
@@ -74,6 +83,9 @@ const LeftMenu = () => {
         </Link>
       </Logo>
       <ProjectAddButton onClick={createProjectModal}>새 프로젝트 추가</ProjectAddButton>
+      <Modal visible={createProject} popupCloseHandle={popupCloseHandle}>
+        <ProjectMakeForm popupCloseHandle={popupCloseHandle} />
+      </Modal>
       <Gnb>
         {menuData.map((v, i) => {
           if (router.pathname === v.link) {

@@ -58,7 +58,7 @@ const ProjectHeader = () => {
           <DetailDescription>프로젝트 설명 글</DetailDescription>
         </DetailHeaderInner>
         <InviteButton onClick={getMemberHandle}>프로젝트 초대</InviteButton>
-        { memberPopup && (members.length > 0) && (
+        { memberPopup && (members.length > 1) && (
           <MembersList ref={modalWrap}>
             {members.map((v) => {
               if (v.id !== me.id) {

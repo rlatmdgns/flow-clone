@@ -31,9 +31,9 @@ const Header = styled.header`
 
 const AppLayout = ({ children }) => {
   const router = useRouter();
-  const { createProject, createPost } = useSelector((state) => state.modal);
-  const { editMode } = useSelector((state) => state.user);
-  const { me } = useSelector((state) => state.user);
+  // const { createProject, createPost } = useSelector((state) => state.modal);
+  // const { editMode } = useSelector((state) => state.user);
+  // const { me } = useSelector((state) => state.user);
   // const cookies = new Cookies();
   // const token = cookies.get('token');
   // const userId = cookies.get('userId');
@@ -50,7 +50,7 @@ const AppLayout = ({ children }) => {
       {/* {(function () {
 
       }())} */}
-      {(() => {
+      {/* {(() => {
         if (createProject) {
           return (
             <Modal visible={createProject}>
@@ -65,7 +65,7 @@ const AppLayout = ({ children }) => {
             </Modal>
           );
         }
-      })()}
+      })()} */}
     </Wrap>
   );
 };

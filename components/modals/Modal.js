@@ -1,21 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { ModalWrapper, ModalOverlay } from './styles';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 
-const Modal = ({ children, visible }) => {
+import ReactDOM from 'react-dom';
+import { ModalWrapper } from './styles';
+
+const Modal = ({ children, visible, popupCloseHandle }) => {
+  const modalEl = useRef(); //
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
     setIsBrowser(true);
   }, []);
 
+  const modalClose = (e) => {
+    console.log(modalEl.current);
+    if (modalEl.current === e.target) {
+      popupCloseHandle();
+    }
+  };
+  const keyPress = useCallback((e) => {
+    if (e.key === 'Escape' && visible) {
+      popupCloseHandle();
+    }
+  }, [modalClose]);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyPress);
+    return () => document.removeEventListener('keydown', keyPress);
+  }, []);
   const modalContent = (
-    <>
-      <ModalOverlay visible={visible} />
-      <ModalWrapper visible={visible}>
-        {children}
-      </ModalWrapper>
-    </>
+    <ModalWrapper visible={visible} ref={modalEl} onClick={modalClose}>
+      {children}
+    </ModalWrapper>
   );
 
   if (isBrowser) {
