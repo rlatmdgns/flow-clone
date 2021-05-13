@@ -83,7 +83,7 @@ const LeftMenu = () => {
         </Link>
       </Logo>
       <ProjectAddButton onClick={createProjectModal}>새 프로젝트 추가</ProjectAddButton>
-      <Modal visible={createProject} popupCloseHandle={popupCloseHandle}>
+      <Modal visible={createProject} popupCloseHandle={popupCloseHandle} dimd>
         <ProjectMakeForm popupCloseHandle={popupCloseHandle} />
       </Modal>
       <Gnb>

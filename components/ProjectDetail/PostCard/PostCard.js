@@ -43,14 +43,24 @@ import { EDIT_MODE } from '../../../reducers/user';
 
 import CommentContent from '../../CommentContent/CommentContent';
 import CommentInput from '../../CommentInput/CommentInput';
+import Modal from '../../modals/Modal';
+import CreatePostForm from '../../modals/CreatePostForm';
+import { ConfirmPopup } from '../../modals/ConfirmPopup/ConfirmPopup';
 
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-
   const { id } = router.query;
+  const [isOpen, setIsOpen] = useState(false);
   const { me } = useSelector((state) => state.user);
   const { addReplyDone } = useSelector((state) => state.project);
+  const { editMode } = useSelector((state) => state.user);
+  const popupCloseHandle = () => {
+    dispatch({
+      type: EDIT_MODE,
+      data: { state: false, postId: post.id },
+    });
+  };
 
   const onClickEdit = useCallback(() => {
     dispatch({
@@ -102,7 +112,7 @@ const PostCard = ({ post }) => {
             <button type="button" onClick={onClickEdit}>
               수정
             </button>
-            <button type="button" onClick={onClickDelete}>
+            <button type="button" onClick={() => setIsOpen(true)}>
               삭제
             </button>
           </WriterMenu>
@@ -161,6 +171,12 @@ const PostCard = ({ post }) => {
           </CommentInputWrap>
         </CommentWrap>
       </PostFooter>
+      <Modal visible={editMode.state} popupCloseHandle={popupCloseHandle} dimd>
+        <CreatePostForm editMode={editMode} />
+      </Modal>
+      <Modal visible={isOpen} popupCloseHandle={popupCloseHandle} dimd>
+        <ConfirmPopup text="업무를 삭제하시겠습니까?" setIsOpen={setIsOpen} onClickDelete={onClickDelete} />
+      </Modal>
     </PostCardWrapper>
   );
 };

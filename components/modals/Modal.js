@@ -3,7 +3,8 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import { ModalWrapper } from './styles';
 
-const Modal = ({ children, visible, popupCloseHandle }) => {
+const Modal = ({ children, visible, popupCloseHandle, dimd }) => {
+  console.log(visible);
   const modalEl = useRef(); //
   const [isBrowser, setIsBrowser] = useState(false);
 
@@ -18,17 +19,18 @@ const Modal = ({ children, visible, popupCloseHandle }) => {
     }
   };
   const keyPress = useCallback((e) => {
-    if (e.key === 'Escape' && visible) {
+    if (e.key === 'Escape' && !visible) {
+      console.log(e.key);
       popupCloseHandle();
     }
-  }, [modalClose]);
+  }, [visible]);
 
   useEffect(() => {
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
   }, []);
   const modalContent = (
-    <ModalWrapper visible={visible} ref={modalEl} onClick={modalClose}>
+    <ModalWrapper visible={visible} ref={modalEl} onClick={modalClose} dimd={dimd}>
       {children}
     </ModalWrapper>
   );

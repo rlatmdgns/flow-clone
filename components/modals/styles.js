@@ -9,7 +9,7 @@ export const ModalWrapper = styled.div`
   left: 0;
   z-index: 11;
   display: ${(props) => (props.visible ? 'flex' : 'none')};
-  justify-content:center;
-  align-items:center;
-  background-color: rgba(250, 250, 250, 0.8);
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => (props.dimd ? 'rgba(250, 250, 250, 0.8)' : 'transparent')};
 `;

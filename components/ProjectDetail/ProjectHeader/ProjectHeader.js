@@ -19,16 +19,20 @@ import {
   MemberItem,
 } from './styles';
 import { INVITE_MEMBER_REQUEST, LOAD_MEMBERS_REQUEST } from '../../../reducers/project';
+import Modal from '../../modals/Modal';
 
 const ProjectHeader = () => {
   const router = useRouter();
   const { id } = router.query;
   const dispatch = useDispatch();
-  const modalWrap = useRef(); //
   const [memberPopup, setMemberPopup] = useState(false);
   const { me } = useSelector((state) => state.user);
-  const { members } = useSelector((state) => state.project);
-
+  const { members, inviteMemberDone } = useSelector((state) => state.project);
+  useEffect(() => {
+    if (inviteMemberDone) {
+      setMemberPopup(false);
+    }
+  }, [inviteMemberDone]);
   const getMemberHandle = () => {
     dispatch({
       type: LOAD_MEMBERS_REQUEST,
@@ -45,6 +49,9 @@ const ProjectHeader = () => {
       },
     });
   };
+  const closeMemberPopup = () => {
+    setMemberPopup(false);
+  };
   return (
     <DetailHeader>
       <DetailHeaderTop>
@@ -58,8 +65,9 @@ const ProjectHeader = () => {
           <DetailDescription>프로젝트 설명 글</DetailDescription>
         </DetailHeaderInner>
         <InviteButton onClick={getMemberHandle}>프로젝트 초대</InviteButton>
-        { memberPopup && (members.length > 1) && (
-          <MembersList ref={modalWrap}>
+        <Modal visible={memberPopup} popupCloseHandle={closeMemberPopup} dimd={false}>
+          { memberPopup && (members.length > 1) && (
+          <MembersList>
             {members.map((v) => {
               if (v.id !== me.id) {
                 return (
@@ -70,7 +78,8 @@ const ProjectHeader = () => {
               }
             })}
           </MembersList>
-        ) }
+          ) }
+        </Modal>
       </DetailHeaderTop>
       <DetailMenu>
         <DetailMenuItem active>타임라인</DetailMenuItem>
