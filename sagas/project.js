@@ -14,6 +14,9 @@ import {
   LOAD_PROJECTS_FAILURE,
   LOAD_PROJECTS_SUCCESS,
   LOAD_PROJECTS_REQUEST,
+  LOAD_FAVORITE_PROJECTS_FAILURE,
+  LOAD_FAVORITE_PROJECTS_SUCCESS,
+  LOAD_FAVORITE_PROJECTS_REQUEST,
   STATE_CHANGE_FAILURE,
   STATE_CHANGE_REQUEST,
   STATE_CHANGE_SUCCESS,
@@ -50,10 +53,58 @@ import {
   INVITE_MEMBER_REQUEST,
   INVITE_MEMBER_SUCCESS,
   INVITE_MEMBER_FAILURE,
+  FAVORITE_PROJECT_REQUEST,
+  FAVORITE_PROJECT_SUCCESS,
+  FAVORITE_PROJECT_FAILURE,
+  UNFAVORITE_PROJECT_SUCCESS,
+  UNFAVORITE_PROJECT_FAILURE,
+  UNFAVORITE_PROJECT_REQUEST,
 
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
 import { EDIT_MODE } from '../reducers/user';
+
+function unFavoriteProjectAPI(data) {
+  return axios.delete('/favorite', { data });
+}
+
+function* unFavoriteProject(action) {
+  try {
+    const result = yield call(unFavoriteProjectAPI, action.data);
+    console.log(action.data);
+    yield put({
+      type: UNFAVORITE_PROJECT_SUCCESS,
+      data: action.data,
+      title: action.title,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: UNFAVORITE_PROJECT_FAILURE,
+      error,
+    });
+  }
+}
+function favoriteProjectAPI(data) {
+  return axios.post('/favorite', data);
+}
+
+function* favoriteProject(action) {
+  try {
+    const result = yield call(favoriteProjectAPI, action.data);
+    yield put({
+      type: FAVORITE_PROJECT_SUCCESS,
+      data: action.data,
+      title: action.title,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: FAVORITE_PROJECT_FAILURE,
+      error,
+    });
+  }
+}
 
 function inviteMemberAPI(data) {
   return axios.post('/project/invite', data);
@@ -426,6 +477,27 @@ function* projectAdd(action) {
     });
   }
 }
+function loadFavoriteProjectsAPI(data) {
+  return axios.get('/favorite', {
+    params: data,
+  });
+}
+
+function* loadFavoriteProjects(action) {
+  try {
+    const result = yield call(loadFavoriteProjectsAPI, action.data);
+    yield put({
+      type: LOAD_FAVORITE_PROJECTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: LOAD_FAVORITE_PROJECTS_FAILURE,
+      error,
+    });
+  }
+}
 
 function loadProjectsAPI(data) {
   return axios.get('/normal', {
@@ -448,6 +520,14 @@ function* loadProjects(action) {
       error,
     });
   }
+}
+
+function* watchUnFavoriteProject() {
+  yield takeLatest(UNFAVORITE_PROJECT_REQUEST, unFavoriteProject);
+}
+
+function* watchFavoriteProject() {
+  yield takeLatest(FAVORITE_PROJECT_REQUEST, favoriteProject);
 }
 
 function* watchDeleteReply() {
@@ -503,12 +583,17 @@ function* watchProjectAdd() {
 function* watchLoadPosts() {
   yield throttle(3000, LOAD_POSTS_REQUEST, loadPosts);
 }
+function* watchLoadFavoriteProject() {
+  yield throttle(3000, LOAD_FAVORITE_PROJECTS_REQUEST, loadFavoriteProjects);
+}
 function* watchLoadProject() {
   yield throttle(3000, LOAD_PROJECTS_REQUEST, loadProjects);
 }
 
 export default function* projectSaga() {
   yield all([
+    fork(watchUnFavoriteProject),
+    fork(watchFavoriteProject),
     fork(watchDeleteReply),
     fork(watchEditReply),
     fork(watchAddReply),
@@ -524,6 +609,7 @@ export default function* projectSaga() {
     fork(watchEditTask),
     fork(watchCreateTask),
     fork(watchProjectAdd),
+    fork(watchLoadFavoriteProject),
     fork(watchLoadProject),
   ]);
 }

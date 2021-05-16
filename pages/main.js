@@ -10,14 +10,14 @@ import AppLayout from '../components/layout/AppLayout';
 import Modal from '../components/modals/Modal';
 import { ProjectMakeForm } from '../components/modals/ProjectMakeForm/ProjectMakeForm';
 import { ProjectGroup } from '../components/ProjectGroup/ProjectGroup';
-import { LOAD_PROJECTS_REQUEST } from '../reducers/project';
+import { LOAD_FAVORITE_PROJECTS_REQUEST, LOAD_PROJECTS_REQUEST } from '../reducers/project';
 import { MY_INFO_REQUEST } from '../reducers/user';
 
 const Main = () => {
   const dispatch = useDispatch();
   const [pageNum, setPageNum] = useState(2);
   const { me } = useSelector((state) => state.user);
-  const { projects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
+  const { projects, favoriteProjects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
   // useEffect(() => {
   //   if (!(me && me.id)) {
   //     alert('재 로그인 해주세요.');
@@ -46,7 +46,7 @@ const Main = () => {
 
   return (
     <AppLayout>
-      <ProjectGroup projects={projects} />
+      <ProjectGroup projects={projects} favoriteProjects={favoriteProjects} />
       <Modal>
         <ProjectMakeForm />
       </Modal>
@@ -63,6 +63,10 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   }
   context.store.dispatch({
     type: MY_INFO_REQUEST,
+  });
+  context.store.dispatch({
+    type: LOAD_FAVORITE_PROJECTS_REQUEST,
+    data: { userId },
   });
   context.store.dispatch({
     type: LOAD_PROJECTS_REQUEST,

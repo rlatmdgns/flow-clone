@@ -1,6 +1,12 @@
 import produce from 'immer';
 
 export const initialState = {
+  favoriteProjectLoading: false,
+  favoriteProjectDone: false,
+  favoriteProjectError: null,
+  unFavoriteProjectLoading: false,
+  unFavoriteProjectDone: false,
+  unFavoriteProjectError: null,
   projectAddLoading: false,
   projectAddDone: false,
   projectAddError: null,
@@ -49,6 +55,7 @@ export const initialState = {
   editReplyLoading: false,
   editReplyDone: false,
   editReplyError: null,
+  favoriteProjects: [],
   projects: [],
   projectPosts: [],
   projectParticipants: [],
@@ -57,6 +64,14 @@ export const initialState = {
 };
 
 // 액션타입
+export const UNFAVORITE_PROJECT_REQUEST = 'UNFAVORITE_PROJECT_REQUEST';
+export const UNFAVORITE_PROJECT_SUCCESS = 'UNFAVORITE_PROJECT_SUCCESS';
+export const UNFAVORITE_PROJECT_FAILURE = 'UNFAVORITE_PROJECT_FAILURE';
+
+export const FAVORITE_PROJECT_REQUEST = 'FAVORITE_PROJECT_REQUEST';
+export const FAVORITE_PROJECT_SUCCESS = 'FAVORITE_PROJECT_SUCCESS';
+export const FAVORITE_PROJECT_FAILURE = 'FAVORITE_PROJECT_FAILURE';
+
 export const ADD_REPLY_REQUEST = 'ADD_REPLY_REQUEST';
 export const ADD_REPLY_SUCCESS = 'ADD_REPLY_SUCCESS';
 export const ADD_REPLY_FAILURE = 'ADD_REPLY_FAILURE';
@@ -117,12 +132,52 @@ export const PROJECT_ADD_REQUEST = 'PROJECT_ADD_REQUEST';
 export const PROJECT_ADD_SUCCESS = 'PROJECT_ADD_SUCCESS';
 export const PROJECT_ADD_FAILURE = 'PROJECT_ADD_FAILURE';
 
+export const LOAD_FAVORITE_PROJECTS_REQUEST = 'LOAD_FAVORITE_PROJECTS_REQUEST';
+export const LOAD_FAVORITE_PROJECTS_SUCCESS = 'LOAD_FAVORITE_PROJECTS_SUCCESS';
+export const LOAD_FAVORITE_PROJECTS_FAILURE = 'LOAD_FAVORITE_PROJECTS_FAILURE';
+
 export const LOAD_PROJECTS_REQUEST = 'LOAD_PROJECTS_REQUEST';
 export const LOAD_PROJECTS_SUCCESS = 'LOAD_PROJECTS_SUCCESS';
 export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
+    case UNFAVORITE_PROJECT_REQUEST:
+      draft.unFavoriteProjectLoading = true;
+      draft.unFavoriteProjectError = null;
+      draft.unFavoriteProjectDone = false;
+      break;
+    case UNFAVORITE_PROJECT_SUCCESS:
+      draft.unFavoriteProjectLoading = false;
+      draft.favoriteProjects = draft.favoriteProjects.filter((v) => v.id !== action.data.projectId);
+      draft.projects = draft.projects.concat({
+        id: action.data.projectId,
+        title: action.title,
+      });
+      draft.unFavoriteProjectDone = true;
+      break;
+    case UNFAVORITE_PROJECT_FAILURE:
+      draft.unFavoriteProjectLoading = false;
+      draft.unFavoriteProjectError = action.error;
+      break;
+    case FAVORITE_PROJECT_REQUEST:
+      draft.favoriteProjectLoading = true;
+      draft.favoriteProjectError = null;
+      draft.favoriteProjectDone = false;
+      break;
+    case FAVORITE_PROJECT_SUCCESS:
+      draft.favoriteProjectLoading = false;
+      draft.projects = draft.projects.filter((v) => v.id !== action.data.projectId);
+      draft.favoriteProjects = draft.favoriteProjects.concat({
+        id: action.data.projectId,
+        title: action.title,
+      });
+      draft.favoriteProjectDone = true;
+      break;
+    case FAVORITE_PROJECT_FAILURE:
+      draft.favoriteProjectLoading = false;
+      draft.favoriteProjectError = action.error;
+      break;
     case DELETE_REPLY_REQUEST:
       draft.deleteReplyLoading = true;
       draft.deleteReplyError = null;
@@ -340,6 +395,21 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case PROJECT_ADD_FAILURE:
       draft.projectAddLoading = false;
       draft.projectAddError = action.error;
+      break;
+    case LOAD_FAVORITE_PROJECTS_REQUEST:
+      draft.favoriteProjectLoading = true;
+      draft.favoriteProjectError = null;
+      draft.favoriteProjectDone = false;
+      break;
+    case LOAD_FAVORITE_PROJECTS_SUCCESS:
+      draft.favoriteProjectLoading = false;
+      draft.favoriteProjects = draft.favoriteProjects.concat(action.data.projectList);
+      draft.favoriteProjectDone = true;
+      draft.hasNext = action.data.hasNext;
+      break;
+    case LOAD_FAVORITE_PROJECTS_FAILURE:
+      draft.favoriteProjectLoading = false;
+      draft.favoriteProjectError = action.error;
       break;
     case LOAD_PROJECTS_REQUEST:
       draft.loadProjectsLoading = true;
