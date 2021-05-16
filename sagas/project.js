@@ -59,6 +59,9 @@ import {
   UNFAVORITE_PROJECT_SUCCESS,
   UNFAVORITE_PROJECT_FAILURE,
   UNFAVORITE_PROJECT_REQUEST,
+  PROJECT_INFO_REQUEST,
+  PROJECT_INFO_SUCCESS,
+  PROJECT_INFO_FAILURE,
 
 } from '../reducers/project';
 import { CREATE_PROJECT, CREATE_POST } from '../reducers/modal';
@@ -522,6 +525,26 @@ function* loadProjects(action) {
   }
 }
 
+function loadProjectInfoAPI(data) {
+  return axios.get(`/project/info/${data}`);
+}
+
+function* loadProjectInfo(action) {
+  try {
+    const result = yield call(loadProjectInfoAPI, action.data);
+    yield put({
+      type: PROJECT_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (error) {
+    console.log(error);
+    yield put({
+      type: PROJECT_INFO_FAILURE,
+      error,
+    });
+  }
+}
+
 function* watchUnFavoriteProject() {
   yield takeLatest(UNFAVORITE_PROJECT_REQUEST, unFavoriteProject);
 }
@@ -586,8 +609,11 @@ function* watchLoadPosts() {
 function* watchLoadFavoriteProject() {
   yield throttle(3000, LOAD_FAVORITE_PROJECTS_REQUEST, loadFavoriteProjects);
 }
-function* watchLoadProject() {
+function* watchLoadProjects() {
   yield throttle(3000, LOAD_PROJECTS_REQUEST, loadProjects);
+}
+function* watchLoadProjectInfo() {
+  yield takeLatest(PROJECT_INFO_REQUEST, loadProjectInfo);
 }
 
 export default function* projectSaga() {
@@ -610,6 +636,7 @@ export default function* projectSaga() {
     fork(watchCreateTask),
     fork(watchProjectAdd),
     fork(watchLoadFavoriteProject),
-    fork(watchLoadProject),
+    fork(watchLoadProjects),
+    fork(watchLoadProjectInfo),
   ]);
 }

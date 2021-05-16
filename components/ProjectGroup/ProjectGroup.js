@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ const ProjectGroup = ({ projects, favoriteProjects }) => {
   console.log('projects', projects);
   console.log('favoriteProjects', favoriteProjects);
   const dispatch = useDispatch();
-  const clickFavorite = (e, projectId, title) => {
+  const clickFavorite = useCallback((e, projectId, title) => {
     e.preventDefault();
     console.log(projectId);
     dispatch({
@@ -36,15 +36,15 @@ const ProjectGroup = ({ projects, favoriteProjects }) => {
       data: { projectId },
       title,
     });
-  };
-  const clickUnFavorite = (e, projectId, title) => {
+  }, []);
+  const clickUnFavorite = useCallback((e, projectId, title) => {
     e.preventDefault();
     dispatch({
       type: UNFAVORITE_PROJECT_REQUEST,
       data: { projectId },
       title,
     });
-  };
+  }, []);
   return (
     <ProjectWrap>
       {/* <ProjectButtonArea>

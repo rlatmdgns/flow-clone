@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -27,25 +27,25 @@ const CreatePostForm = ({ editMode }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [submitType, setSubmitType] = useState(CREATE_TASK_REQUEST);
 
-  const tabHandler = (i) => {
+  const tabHandler = useCallback((i) => {
     const TYPE = {
       0: CREATE_TASK_REQUEST,
     };
     setActiveTab(i);
     setSubmitType(TYPE.i);
-  };
-  const popupCloseHandle = () => {
+  }, []);
+  const popupCloseHandle = useCallback(() => {
     dispatch({
       type: CREATE_POST,
       data: false,
     });
-  };
-  const editCloseHandle = () => {
+  }, []);
+  const editCloseHandle = useCallback(() => {
     dispatch({
       type: EDIT_MODE,
       data: false,
     });
-  };
+  }, []);
   const CreateTitle = [
     // '글',
     '업무',

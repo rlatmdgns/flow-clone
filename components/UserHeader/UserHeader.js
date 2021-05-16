@@ -1,32 +1,31 @@
-import React, {useEffect} from 'react';
-import { useRouter } from 'next/router'
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import {UserHeaderWrap, PageTitle} from './styles';
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { UserHeaderWrap, PageTitle } from './styles';
 import { CHANGE_PAGE_TITLE } from '../../reducers/user';
-
 
 const UserHeader = () => {
   const dispatch = useDispatch();
-  const pageTitle = useSelector( state => state.user.currentPage);
+  const pageTitle = useSelector((state) => state.user.currentPage);
   const router = useRouter();
-  useEffect(()=>{
+  useEffect(() => {
     const pathName = router.pathname;
-    let pageTitle = ""
+    let pageTitle = '';
     switch (pathName) {
-      case "/main":
-        pageTitle = "프로젝트 홈";
+      case '/main':
+        pageTitle = '프로젝트 홈';
         break;
-      case "/task":
-        pageTitle = "모든 업무";
+      case '/task':
+        pageTitle = '모든 업무';
         break;
       default:
         break;
     }
     dispatch({
-      type:CHANGE_PAGE_TITLE,
+      type: CHANGE_PAGE_TITLE,
       data: pageTitle,
-    })
+    });
   }, []);
   return (
     <UserHeaderWrap>
@@ -35,4 +34,4 @@ const UserHeader = () => {
   );
 };
 
-export {UserHeader};
+export { UserHeader };

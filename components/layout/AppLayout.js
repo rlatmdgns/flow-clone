@@ -47,25 +47,6 @@ const AppLayout = ({ children }) => {
           <Content>{children}</Content>
         </Container>
       </BodyWrap>
-      {/* {(function () {
-
-      }())} */}
-      {/* {(() => {
-        if (createProject) {
-          return (
-            <Modal visible={createProject}>
-              <ProjectMakeForm />
-            </Modal>
-          );
-        }
-        if (createPost || editMode.state) {
-          return (
-            <Modal visible>
-              <CreatePostForm editMode={editMode} />
-            </Modal>
-          );
-        }
-      })()} */}
     </Wrap>
   );
 };

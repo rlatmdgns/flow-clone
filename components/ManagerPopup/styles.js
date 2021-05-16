@@ -28,10 +28,23 @@ export const PopupManager = styled.ul`
 `;
 
 export const Manager = styled.div`
+    padding:10px;
     color: #999;
     font-weight: bold;
-
      &:hover{
       background: #f8f8ff;
      }
+     label{
+       display:block;
+       cursor:pointer;
+     }
+`;
+
+export const Button = styled.button`
+margin-top:10px;
+width:100%;
+padding:6px 0;
+border-radius:4px;
+background: #6449fc;
+color:#fff;
 `;

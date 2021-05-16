@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,61 +18,61 @@ const LeftMenu = () => {
       img: '/images/icons/icon_home.png',
       hover: '/images/icons/icon_home2.png',
     },
-    {
-      title: '모든 업무',
-      link: '/task',
-      img: '/images/icons/icon_task.png',
-      hover: '/images/icons/icon_task2.png',
-    },
-    {
-      title: '모든 일정',
-      link: '/',
-      img: '/images/icons/icon_schedule.png',
-      hover: '/images/icons/icon_schedule2.png',
-    },
-    {
-      title: '모든 파일',
-      link: '/',
-      img: '/images/icons/icon_file.png',
-      hover: '/images/icons/icon_file2.png',
-    },
-    {
-      title: '내가 담은 글',
-      link: '/',
-      img: '/images/icons/icon_bookmark.png',
-      hover: '/images/icons/icon_bookmark2.png',
-    },
-    {
-      title: '내가 쓴 글',
-      link: '/',
-      img: '/images/icons/icon_my_write.png',
-      hover: '/images/icons/icon_my_write2.png',
-    },
-    {
-      title: '나를 지정한 글',
-      link: '/',
-      img: '/images/icons/icon_mention.png',
-      hover: '/images/icons/icon_mention2.png',
-    },
-    {
-      title: '주제별 프로젝트',
-      link: '/',
-      img: '/images/icons/icon_search.png',
-      hover: '/images/icons/icon_search2.png',
-    },
+    // {
+    //   title: '모든 업무',
+    //   link: '/task',
+    //   img: '/images/icons/icon_task.png',
+    //   hover: '/images/icons/icon_task2.png',
+    // },
+    // {
+    //   title: '모든 일정',
+    //   link: '/',
+    //   img: '/images/icons/icon_schedule.png',
+    //   hover: '/images/icons/icon_schedule2.png',
+    // },
+    // {
+    //   title: '모든 파일',
+    //   link: '/',
+    //   img: '/images/icons/icon_file.png',
+    //   hover: '/images/icons/icon_file2.png',
+    // },
+    // {
+    //   title: '내가 담은 글',
+    //   link: '/',
+    //   img: '/images/icons/icon_bookmark.png',
+    //   hover: '/images/icons/icon_bookmark2.png',
+    // },
+    // {
+    //   title: '내가 쓴 글',
+    //   link: '/',
+    //   img: '/images/icons/icon_my_write.png',
+    //   hover: '/images/icons/icon_my_write2.png',
+    // },
+    // {
+    //   title: '나를 지정한 글',
+    //   link: '/',
+    //   img: '/images/icons/icon_mention.png',
+    //   hover: '/images/icons/icon_mention2.png',
+    // },
+    // {
+    //   title: '주제별 프로젝트',
+    //   link: '/',
+    //   img: '/images/icons/icon_search.png',
+    //   hover: '/images/icons/icon_search2.png',
+    // },
   ];
-  const createProjectModal = () => {
+  const createProjectModal = useCallback(() => {
     dispatch({
       type: CREATE_PROJECT,
       data: true,
     });
-  };
-  const popupCloseHandle = () => {
+  }, []);
+  const popupCloseHandle = useCallback(() => {
     dispatch({
       type: CREATE_PROJECT,
       data: false,
     });
-  };
+  }, []);
   return (
     <LeftMenuWrap>
       <Logo>

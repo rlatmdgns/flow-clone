@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const Input = styled.div`
-  width: calc(100% - 52px);
+  width: ${(props) => (props.edit
+    ? '100%'
+    : 'calc(100%  - 52px)')};
   padding: 14px 50px 14px 20px;
   min-height: 44px;
   float: left;

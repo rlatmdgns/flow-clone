@@ -71,7 +71,10 @@ const CommentContent = ({ reply, postId }) => {
               projectId={id}
               editModeEnd={editModeEnd}
             />
-            <p>취소하려면 Esc 키를 누르세요.</p>
+            <div>
+              <p>취소하려면 Esc 키를 누르세요.</p>
+            </div>
+
           </>
         ) : (
           <CommentText contentEditable="false" dangerouslySetInnerHTML={createMarkup()} />

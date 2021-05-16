@@ -10,6 +10,9 @@ export const initialState = {
   projectAddLoading: false,
   projectAddDone: false,
   projectAddError: null,
+  projectInfoLoading: false,
+  projectInfoDone: false,
+  projectInfoError: null,
   loadProjectsLoading: false,
   loadProjectsDone: false,
   loadProjectsError: null,
@@ -59,6 +62,7 @@ export const initialState = {
   projects: [],
   projectPosts: [],
   projectParticipants: [],
+  projectInfo: {},
   members: [],
   hasNext: false,
 };
@@ -139,6 +143,10 @@ export const LOAD_FAVORITE_PROJECTS_FAILURE = 'LOAD_FAVORITE_PROJECTS_FAILURE';
 export const LOAD_PROJECTS_REQUEST = 'LOAD_PROJECTS_REQUEST';
 export const LOAD_PROJECTS_SUCCESS = 'LOAD_PROJECTS_SUCCESS';
 export const LOAD_PROJECTS_FAILURE = 'LOAD_PROJECTS_FAILURE';
+
+export const PROJECT_INFO_REQUEST = 'PROJECT_INFO_REQUEST';
+export const PROJECT_INFO_SUCCESS = 'PROJECT_INFO_SUCCESS';
+export const PROJECT_INFO_FAILURE = 'PROJECT_INFO_FAILURE';
 
 const reducer = (state = initialState, action) => produce(state, (draft) => {
   switch (action.type) {
@@ -410,6 +418,20 @@ const reducer = (state = initialState, action) => produce(state, (draft) => {
     case LOAD_FAVORITE_PROJECTS_FAILURE:
       draft.favoriteProjectLoading = false;
       draft.favoriteProjectError = action.error;
+      break;
+    case PROJECT_INFO_REQUEST:
+      draft.projectInfoLoading = true;
+      draft.projectInfoError = null;
+      draft.projectInfoDone = false;
+      break;
+    case PROJECT_INFO_SUCCESS:
+      draft.projectInfoLoading = false;
+      draft.projectInfo = action.data;
+      draft.projectInfoDone = true;
+      break;
+    case PROJECT_INFO_FAILURE:
+      draft.projectInfoLoading = false;
+      draft.projectInfoError = action.error;
       break;
     case LOAD_PROJECTS_REQUEST:
       draft.loadProjectsLoading = true;

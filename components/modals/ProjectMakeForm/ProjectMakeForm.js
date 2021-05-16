@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,14 +26,14 @@ const ProjectMakeForm = ({ popupCloseHandle }) => {
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
 
-  const titleChange = (e) => {
+  const titleChange = useCallback((e) => {
     setTitle(e.target.value);
-  };
-  const explainChange = (e) => {
+  }, []);
+  const explainChange = useCallback((e) => {
     setExPlain(e.target.value);
-  };
+  }, []);
 
-  const createProject = () => {
+  const createProject = useCallback(() => {
     if (title === '') {
       return alert('제목을 입력해주세요;');
     }
@@ -45,7 +45,7 @@ const ProjectMakeForm = ({ popupCloseHandle }) => {
         userId: me.id,
       },
     });
-  };
+  }, []);
 
   return (
     <ProjectFormPopup>

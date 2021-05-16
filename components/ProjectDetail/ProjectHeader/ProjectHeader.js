@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -27,19 +27,20 @@ const ProjectHeader = () => {
   const dispatch = useDispatch();
   const [memberPopup, setMemberPopup] = useState(false);
   const { me } = useSelector((state) => state.user);
-  const { members, inviteMemberDone } = useSelector((state) => state.project);
+  const { members, inviteMemberDone, projectInfo } = useSelector((state) => state.project);
+  console.log('projectInfo', projectInfo);
   useEffect(() => {
     if (inviteMemberDone) {
       setMemberPopup(false);
     }
   }, [inviteMemberDone]);
-  const getMemberHandle = () => {
+  const getMemberHandle = useCallback(() => {
     dispatch({
       type: LOAD_MEMBERS_REQUEST,
     });
     setMemberPopup(true);
-  };
-  const projectInvite = (inviteeId) => {
+  }, []);
+  const projectInvite = useCallback((inviteeId) => {
     dispatch({
       type: INVITE_MEMBER_REQUEST,
       data: {
@@ -48,10 +49,10 @@ const ProjectHeader = () => {
         inviterId: me.id,
       },
     });
-  };
-  const closeMemberPopup = () => {
+  }, []);
+  const closeMemberPopup = useCallback(() => {
     setMemberPopup(false);
-  };
+  }, []);
   return (
     <DetailHeader>
       <DetailHeaderTop>
@@ -60,9 +61,9 @@ const ProjectHeader = () => {
           <DetailTitleArea>
             {/* <FavoriteButton>즐겨찾기</FavoriteButton> */}
             {/* <SetButton>프로젝트 설정</SetButton> */}
-            <DetailTitle>프로젝트 제목제목</DetailTitle>
+            <DetailTitle>{projectInfo.title}</DetailTitle>
           </DetailTitleArea>
-          <DetailDescription>프로젝트 설명 글</DetailDescription>
+          <DetailDescription>{projectInfo.explain}</DetailDescription>
         </DetailHeaderInner>
         <InviteButton onClick={getMemberHandle}>프로젝트 초대</InviteButton>
         <Modal visible={memberPopup} popupCloseHandle={closeMemberPopup} dimd={false}>

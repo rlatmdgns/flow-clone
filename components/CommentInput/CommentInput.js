@@ -6,12 +6,13 @@ import { ADD_REPLY_REQUEST, EDIT_REPLY_REQUEST } from '../../reducers/project';
 import { Input } from './styles';
 
 const CommentInput = ({ edit, replyId, postId, projectId, editModeEnd }) => {
+  console.log(edit);
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { addReplyDone } = useSelector((state) => state.project);
   const ref = useRef();
-
   useEffect(() => {
+    edit && ref.current.focus();
     if (addReplyDone) {
       ref.current.innerHTML = '';
     }
@@ -75,6 +76,7 @@ const CommentInput = ({ edit, replyId, postId, projectId, editModeEnd }) => {
   };
   return (
     <Input
+      edit={edit}
       contentEditable="true"
       ref={ref}
       placeholder="댓글을 입력하세요(Enter는 입력, shift or ctrl + Enter는 줄바꿈)"

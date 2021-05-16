@@ -16,6 +16,9 @@ import {
   TaskList,
   TaskItemTitle,
   TaskListCell,
+  AddManaberButton,
+  ManagerItem,
+  DeleteManagerButton,
 } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 import { useSelector } from 'react-redux';
@@ -23,6 +26,7 @@ import Progress from '../Progress';
 import ManagerPopup from '../ManagerPopup/ManagerPopup';
 import { LOAD_PARTICIPANTS_REQUEST } from '../../reducers/project';
 import { POPUP_MANAGER } from '../../reducers/modal';
+import { Manager } from '../ManagerPopup/styles';
 
 const CreateTask = ({ submitType }) => {
   const dispatch = useDispatch();
@@ -118,9 +122,9 @@ const CreateTask = ({ submitType }) => {
         <TaskListCell>
           <div>
             {taskManagers.map((v)=>{
-              return <span key={v.id} >{v.name}<button type="button" onClick={()=> deleteManager(v.id)}>[삭제]</button></span>
+              return <ManagerItem key={v.id} >{v.name}<DeleteManagerButton type="button" onClick={()=> deleteManager(v.id)}>x</DeleteManagerButton></ManagerItem>
             })}
-            <button type="button" onClick={onManager}>담당자 추가</button>
+            <AddManaberButton type="button" onClick={onManager}>담당자 추가</AddManaberButton>
             {popupManager && <ManagerPopup addManager={addManager} taskManagers={taskManagers}/>}
           </div>
         </TaskListCell>
@@ -138,9 +142,9 @@ const CreateTask = ({ submitType }) => {
             onChange={(date) => setStartDate(moment(date[0]).format('YYYY-MM-DDTHH:mm:ss'))}
           />
           {startDate && (
-            <button type="button" onClick={startDateClear}>
-              지우기
-            </button>
+            <DeleteManagerButton type="button" onClick={startDateClear}>
+              x
+            </DeleteManagerButton>
           )}
         </TaskListCell>
         <TaskItemTitle>마감일시</TaskItemTitle>
@@ -155,9 +159,9 @@ const CreateTask = ({ submitType }) => {
             onChange={(date) => setEndDate(moment(date[0]).format('YYYY-MM-DDTHH:mm:ss'))}
           />
           {endDate && (
-            <button type="button" onClick={endDateClear}>
-              지우기
-            </button>
+            <DeleteManagerButton type="button" onClick={endDateClear}>
+              x
+            </DeleteManagerButton>
           )}
         </TaskListCell>
       </TaskList>

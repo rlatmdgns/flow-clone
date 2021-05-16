@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { TaskList, TaskItemTitle, TaskListCell } from './styles';
+import { TaskList, TaskItemTitle, TaskListCell, AddManaberButton, ManagerItem, DeleteManagerButton } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 import { PROGRESS_CHANGE_REQUEST, STATE_CHANGE_REQUEST } from '../../reducers/project';
 import Progress from '../Progress';
 
 const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progress }) => {
   const dispatch = useDispatch();
-  const stateHandler = (status) => {
+  const stateHandler = useCallback((status) => {
     dispatch({
       type: STATE_CHANGE_REQUEST,
       data: { postId, status },
     });
-  };
-  const progressHandler = (progress) => {
+  }, []);
+  const progressHandler = useCallback((progress) => {
     dispatch({
       type: PROGRESS_CHANGE_REQUEST,
       data: { postId, progress },
     });
-  };
+  }, []);
   return (
     <>
       <TaskList>
@@ -29,15 +29,20 @@ const TaskListGroup = ({ postId, managers, startDate, endDate, taskStatus, progr
           <TaskStateGroup taskStatus={taskStatus} stateHandler={stateHandler} />
         </TaskListCell>
       </TaskList>
+      {managers.length > 0 && (
       <TaskList>
         <TaskItemTitle>담당자</TaskItemTitle>
         <TaskListCell>
           {managers.map((manager) => (
-            <span key={manager.id}>{manager.name}</span>
+            <ManagerItem key={manager.id}>
+              {manager.name}
+              {/* <DeleteManagerButton>x</DeleteManagerButton> */}
+            </ManagerItem>
           ))}
-          <button type="button">담당자 추가</button>
+          {/* <AddManaberButton type="button">담당자 추가</AddManaberButton> */}
         </TaskListCell>
       </TaskList>
+      )}
       <TaskList>
         {startDate && (
           <>

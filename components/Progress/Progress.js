@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { ProgressWrap, ProgressBar, ProgressGraph, Data } from './styles';
 
@@ -11,9 +11,9 @@ const Progress = ({ progress, progressHandler }) => {
     80,
     100,
   ];
-  const onClick = (data) => {
+  const onClick = useCallback((data) => {
     progressHandler(data);
-  };
+  }, []);
   return (
     <ProgressWrap>
       <ProgressBar>

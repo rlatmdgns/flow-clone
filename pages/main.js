@@ -18,12 +18,7 @@ const Main = () => {
   const [pageNum, setPageNum] = useState(2);
   const { me } = useSelector((state) => state.user);
   const { projects, favoriteProjects, loadProjectsLoading, hasNext } = useSelector((state) => state.project);
-  // useEffect(() => {
-  //   if (!(me && me.id)) {
-  //     alert('재 로그인 해주세요.');
-  //     Router.push('/');
-  //   }
-  // }, [me && me.id]);
+
   useEffect(() => {
     function onScroll() {
       let count = pageNum;

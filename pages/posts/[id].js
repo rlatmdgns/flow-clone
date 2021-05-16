@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../../components/layout/AppLayout';
 import ProjectDetail from '../../components/ProjectDetail';
 import wrapper from '../../store/confiureStore';
-import { LOAD_POSTS_REQUEST } from '../../reducers/project';
+import { LOAD_POSTS_REQUEST, PROJECT_INFO_REQUEST } from '../../reducers/project';
 import { MY_INFO_REQUEST } from '../../reducers/user';
 
 const posts = () => {
@@ -30,6 +30,10 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   }
   context.store.dispatch({
     type: MY_INFO_REQUEST,
+  });
+  context.store.dispatch({
+    type: PROJECT_INFO_REQUEST,
+    data: id,
   });
   context.store.dispatch({
     type: LOAD_POSTS_REQUEST,

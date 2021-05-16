@@ -68,24 +68,24 @@ const PostCard = ({ post }) => {
       data: { state: true, postId: post.id },
     });
   }, []);
-  const onClickDelete = () => {
+  const onClickDelete = useCallback(() => {
     dispatch({
       type: DELETE_POST_REQUEST,
       data: { postId: post.id, userId: me.id },
     });
-  };
-  const onClickLike = () => {
+  }, []);
+  const onClickLike = useCallback(() => {
     dispatch({
       type: LIKE_POST_REQUEST,
       data: { projectId: id, postId: post.id, userId: me.id },
     });
-  };
-  const onClickUnLike = () => {
+  }, []);
+  const onClickUnLike = useCallback(() => {
     dispatch({
       type: UNLIKE_POST_REQUEST,
       data: { projectId: id, postId: post.id, userId: me.id },
     });
-  };
+  }, []);
   const liked = post.likes.find((user) => user.userId === me.id);
   // useEffect(() => {
   //   if (addReplyDone) {

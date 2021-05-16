@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
@@ -16,14 +16,15 @@ const LoginFrom = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  const passwordHandler = (e) => {
+  const passwordHandler = useCallback((e) => {
     setPassword(e.target.value);
-  };
-  const emailHandler = (e) => {
+  }, []);
+  const emailHandler = useCallback((e) => {
     setId(e.target.value);
-  };
+  }, []);
 
-  const test = () => {
+  const onSubmitForm = () => {
+    console.log(111);
     const idRegex = /^[0-9a-z]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!idRegex.test(id)) {
@@ -50,13 +51,13 @@ const LoginFrom = () => {
         <img src="/images/flowLogo.png" width="140px" height="41px" alt="flow" />
         <LoginTitle>로그인</LoginTitle>
         <LoginInputBox>
-          <LoginInput type="text" title="아이디 입력" onChange={emailHandler} />
+          <LoginInput type="text" title="아이디 입력" onChange={emailHandler} required />
         </LoginInputBox>
         <LoginInputBox>
-          <LoginInput type="password" title="비밀번호 입력" onChange={passwordHandler} />
+          <LoginInput type="password" title="비밀번호 입력" onChange={passwordHandler} required />
         </LoginInputBox>
         <LoginMessage>ssssss</LoginMessage>
-        <LoginButton type="button" onClick={test}>로그인</LoginButton>
+        <LoginButton type="button" onClick={onSubmitForm}>로그인</LoginButton>
         <Link href="/signup">
           <a>회원가입</a>
         </Link>

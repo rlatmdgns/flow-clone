@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -39,9 +39,9 @@ const TaskStateGroup = ({ stateHandler, taskStatus }) => {
     3: 'COMPLETE',
     4: 'HOLD',
   };
-  const onClick = (i) => {
+  const onClick = useCallback((i) => {
     stateHandler(state[i]);
-  };
+  }, []);
   return (
     taskType.map((v, i) => {
       if (state[i] === taskStatus) {
