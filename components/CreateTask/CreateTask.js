@@ -27,12 +27,15 @@ import ManagerPopup from '../ManagerPopup/ManagerPopup';
 import { LOAD_PARTICIPANTS_REQUEST } from '../../reducers/project';
 import { POPUP_MANAGER } from '../../reducers/modal';
 import { Manager } from '../ManagerPopup/styles';
+import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 const CreateTask = ({ submitType }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { me } = useSelector((state) => state.user);
   const { popupManager } = useSelector((state) => state.modal);
+  const { createPostDone } = useSelector((state) => state.project);
   const { id } = router.query;
   const [title, onChangeTitle] = useInput('');
   const [taskManagers, setTaskManagers] = useState([]);
@@ -44,17 +47,27 @@ const CreateTask = ({ submitType }) => {
     editable: false,
   });
   const [progress, setProgress] = useState(0);
-
-  const startDateClear = () => {
+  useEffect(()=>{
+    if(createPostDone){
+      setTaskManagers([])
+      setTaskState('REQUEST');
+      setStartDate(null)
+      setContent({
+        html: ``,
+        editable: false,
+      })
+    }
+  },[createPostDone])
+  const startDateClear = useCallback(() => {
     setStartDate('');
-  };
-  const endDateClear = () => {
+  },[]);
+  const endDateClear =useCallback(() => {
     setEndDate('');
-  };
-  const stateHandler = (type) => {
+  },[]);
+  const stateHandler = useCallback((type) => {
     setTaskState(type);
-  };
-  const onManager = () => {
+  },[]);
+  const onManager = useCallback(() => {
     dispatch({
       type: POPUP_MANAGER,
       data: true,
@@ -63,26 +76,32 @@ const CreateTask = ({ submitType }) => {
       type: LOAD_PARTICIPANTS_REQUEST,
       data: id,
     });
-  };
-  const addManager = (data) => {
+  },[]);
+  const addManager = useCallback((data) => {
     setTaskManagers(data)
     dispatch({
       type: POPUP_MANAGER,
       data: false,
     });
-  }
-  const deleteManager = (id) => {
+  },[])
+  const deleteManager = useCallback((id) => {
     setTaskManagers(taskManagers.filter((v)=>
       v.id !== id
     ))
-  }
-  const onChangeContent = (e) => {
+  },[])
+  const onChangeContent = useCallback((e) => {
     setContent({ html: e.target.value });
-  };
-  const progressHandler = (data) => {
+  },[]);
+  const progressHandler = useCallback((data) => {
     setProgress(data);
-  };
-  const submitHandler = () => {
+  },[]);
+  useEffect(()=>{
+    if(startDate > endDate){
+      alert('시작일시는 마감일시보다 이후 날짜로 설정할 수 없습니다.')
+      setStartDate('')
+    }
+  },[startDate, endDate])
+  const submitHandler = useCallback(() => {
     dispatch({
       type: submitType,
       data: {
@@ -101,7 +120,7 @@ const CreateTask = ({ submitType }) => {
       writerName:me.name,
       writerId: me.id,
     });
-  };
+  },[title,taskState,startDate,endDate,taskManagers,progress,content]);
   return (
     <div>
       <TitleInput

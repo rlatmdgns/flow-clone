@@ -468,10 +468,6 @@ function* projectAdd(action) {
       type: PROJECT_ADD_SUCCESS,
       data: { id: result.data.projectId, title: action.data.title },
     });
-    yield put({
-      type: CREATE_PROJECT,
-      data: false,
-    });
   } catch (error) {
     console.log(error);
     yield put({

@@ -11,23 +11,25 @@ const LoginFrom = () => {
   useEffect(() => {
     if (loginDone) {
       Router.push('/main');
+    } else if (loginError) {
+      alert(loginError);
     }
-  }, [loginDone]);
+  }, [loginDone, loginError]);
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   const passwordHandler = useCallback((e) => {
     setPassword(e.target.value);
-  }, []);
+  }, [password]);
   const emailHandler = useCallback((e) => {
     setId(e.target.value);
-  }, []);
+  }, [id]);
 
-  const onSubmitForm = () => {
-    console.log(111);
+  const onSubmitForm = useCallback(() => {
     const idRegex = /^[0-9a-z]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!idRegex.test(id)) {
+      console.log(id);
       setId('');
       return;
     }
@@ -42,7 +44,7 @@ const LoginFrom = () => {
         password,
       },
     });
-  };
+  }, [id, password]);
 
   return (
     <Form>

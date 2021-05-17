@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import Flatpickr from 'react-flatpickr';
@@ -18,7 +18,8 @@ import {
   TaskListCell,
   AddManaberButton,
   ManagerItem,
-  DeleteManagerButton
+  DeleteManagerButton,
+  ResetButton
 } from './styles';
 import TaskStateGroup from '../TaskStateGroup';
 import ManagerPopup from '../ManagerPopup/ManagerPopup';
@@ -26,6 +27,7 @@ import { useSelector } from 'react-redux';
 import { EDIT_TASK_REQUEST, LOAD_PARTICIPANTS_REQUEST } from '../../reducers/project';
 import Progress from '../Progress';
 import { POPUP_MANAGER } from '../../reducers/modal';
+import { useCallback } from 'react';
 
 const EditTask = ({ editMode, editCloseHandle }) => {
   const dispatch = useDispatch();
@@ -45,17 +47,22 @@ const EditTask = ({ editMode, editCloseHandle }) => {
     editable: false,
   });
   const [progress, setProgress] = useState(editPost.contents.progress);
-
-  const startDateClear = () => {
+  useEffect(()=>{
+    if(startDate > endDate){
+      alert('시작일시는 마감일시보다 이후 날짜로 설정할 수 없습니다.')
+      setStartDate('')
+    }
+  },[startDate, endDate])
+  const startDateClear = useCallback(() => {
     setStartDate('');
-  };
-  const endDateClear = () => {
+  },[]);
+  const endDateClear = useCallback(() => {
     setEndDate('');
-  };
-  const stateHandler = (type) => {
+  },[]);
+  const stateHandler = useCallback((type) => {
     setTaskState(type);
-  };
-  const onManager = () => {
+  },[]);
+  const onManager = useCallback(() => {
     dispatch({
       type: POPUP_MANAGER,
       data: true,
@@ -64,24 +71,24 @@ const EditTask = ({ editMode, editCloseHandle }) => {
       type: LOAD_PARTICIPANTS_REQUEST,
       data: id,
     });
-  };
-  const addManager = (data) => {
+  },[]);
+  const addManager = useCallback((data) => {
     setTaskManagers(data);
     dispatch({
       type: POPUP_MANAGER,
       data: false,
     });
-  };
-  const deleteManager = (id) => {
+  },[]);
+  const deleteManager = useCallback((id) => {
     setTaskManagers(taskManagers.filter((v) => v.id !== id));
-  };
-  const onChangeContent = (e) => {
+  },[]);
+  const onChangeContent =useCallback((e) => {
     setContent({ html: e.target.value });
-  };
-  const progressHandler = (data) => {
+  },[]);
+  const progressHandler = useCallback((data) => {
     setProgress(data);
-  };
-  const onClickEdit = () => {
+  },[]);
+  const onClickEdit = useCallback(() => {
     dispatch({
       type: EDIT_TASK_REQUEST,
       data: {
@@ -98,7 +105,7 @@ const EditTask = ({ editMode, editCloseHandle }) => {
         context: content.html,
       },
     });
-  };
+  },[title,taskState,startDate,endDate,taskManagers,progress,content]);
   return (
     <div>
       <TitleInput
@@ -186,9 +193,9 @@ const EditTask = ({ editMode, editCloseHandle }) => {
         />
       </TextEditable>
       <Footer>
-        <CreateButton type="button" onClick={editCloseHandle}>
-          취소ㄹ
-        </CreateButton>
+        <ResetButton type="button" onClick={editCloseHandle}>
+          취소
+        </ResetButton>
         <CreateButton type="button" onClick={onClickEdit}>
           수정
         </CreateButton>

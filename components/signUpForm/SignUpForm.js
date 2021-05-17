@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { SignUpContent, Form, SignUpTitle, FormTitle, SignUpText, Label, Blind, InputBox, Input, Termcheck, SignUpButton } from './styles';
@@ -42,7 +42,7 @@ const SignUpForm = () => {
     setTerm(e.target.checked);
   };
 
-  const onSubmit = () => {
+  const onSubmit = useCallback(() => {
     const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
     const idRegex = /^[0-9a-z]+$/;
     // const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g;
@@ -71,7 +71,7 @@ const SignUpForm = () => {
       type: SIGN_UP_REQUEST,
       data: { id, password, name },
     });
-  };
+  }, [name, id, password, term]);
 
   return (
     <SignUpContent>

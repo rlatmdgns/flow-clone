@@ -44,6 +44,7 @@ export const TextEditable = styled.div`
 `;
 export const Footer = styled.div`
   display: flex;
+  justify-content: flex-end;
   padding: 20px 0;
   border-top: 1px solid #eee;
 `;
@@ -52,7 +53,6 @@ export const CreateButton = styled.button`
   position: relative;
   height: 36px;
   padding: 0 47px;
-  margin-left: auto;
   background: #6449fc;
   border-radius: 4px;
   font-size: 13px;
@@ -113,4 +113,14 @@ export const DeleteManagerButton = styled.button`
     color:#fff;
     background: #6449fc;
   }
+`;
+export const ResetButton = styled.button`
+  height: 36px;
+  padding: 0 47px;
+  margin-right:20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #333;
+  text-align: center;
 `;

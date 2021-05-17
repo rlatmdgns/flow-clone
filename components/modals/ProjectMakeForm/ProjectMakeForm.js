@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -22,16 +22,26 @@ import { CREATE_PROJECT } from '../../../reducers/modal';
 
 const ProjectMakeForm = ({ popupCloseHandle }) => {
   const { me } = useSelector((state) => state.user);
+  const { projectAddDone } = useSelector((state) => state.project);
   const [explain, setExPlain] = useState('');
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (projectAddDone) {
+      setTitle('');
+      setExPlain('');
+      dispatch({
+        type: CREATE_PROJECT,
+        data: false,
+      });
+    }
+  }, [projectAddDone]);
   const titleChange = useCallback((e) => {
     setTitle(e.target.value);
-  }, []);
+  }, [title]);
   const explainChange = useCallback((e) => {
     setExPlain(e.target.value);
-  }, []);
+  }, [explain]);
 
   const createProject = useCallback(() => {
     if (title === '') {
@@ -45,7 +55,7 @@ const ProjectMakeForm = ({ popupCloseHandle }) => {
         userId: me.id,
       },
     });
-  }, []);
+  }, [explain, title]);
 
   return (
     <ProjectFormPopup>
@@ -77,7 +87,7 @@ const ProjectMakeForm = ({ popupCloseHandle }) => {
         </SetArea> */}
       </Content>
       <SubmitButton type="button" onClick={createProject}>
-        적용하기
+        만들기
       </SubmitButton>
     </ProjectFormPopup>
   );

@@ -25,12 +25,9 @@ import {
 import { FAVORITE_PROJECT_REQUEST, UNFAVORITE_PROJECT_REQUEST } from '../../reducers/project';
 
 const ProjectGroup = ({ projects, favoriteProjects }) => {
-  console.log('projects', projects);
-  console.log('favoriteProjects', favoriteProjects);
   const dispatch = useDispatch();
   const clickFavorite = useCallback((e, projectId, title) => {
     e.preventDefault();
-    console.log(projectId);
     dispatch({
       type: FAVORITE_PROJECT_REQUEST,
       data: { projectId },
@@ -88,7 +85,7 @@ const ProjectGroup = ({ projects, favoriteProjects }) => {
       <div>
         <ProjectTitle>참여중</ProjectTitle>
         <ProjectList>
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <li key={project.id}>
               <Link href="/posts/[id]" as={`/posts/${project.id}`}>
                 <a>
