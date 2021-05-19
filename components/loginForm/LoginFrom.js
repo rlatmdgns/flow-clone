@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
-import { Form, Blind, Fieldset, LoginTitle, LoginInputBox, LoginInput, LoginMessage, LoginButton } from './styles';
+import { Form, Blind, Fieldset, LoginTitle, LoginInputBox, LoginInput, LoginMessage, LoginButton, SignUpLink } from './styles';
 import { LOGIN_REQUEST } from '../../reducers/user';
 
 const LoginFrom = () => {
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
   const { loginDone, loginError, loginLoading } = useSelector((state) => state.user);
   useEffect(() => {
@@ -31,11 +32,11 @@ const LoginFrom = () => {
     if (!idRegex.test(id)) {
       console.log(id);
       setId('');
-      return;
+      setError('아이디 또는 비밀번호가 잘못되었습니다.');
     }
     if (!passwordRegex.test(password)) {
       setPassword('');
-      return;
+      setError('아이디 또는 비밀번호가 잘못되었습니다.');
     }
     dispatch({
       type: LOGIN_REQUEST,
@@ -53,16 +54,18 @@ const LoginFrom = () => {
         <img src="/images/flowLogo.png" width="140px" height="41px" alt="flow" />
         <LoginTitle>로그인</LoginTitle>
         <LoginInputBox>
-          <LoginInput type="text" title="아이디 입력" onChange={emailHandler} required />
+          <LoginInput type="text" title="아이디 입력" onChange={emailHandler} value={id} required />
         </LoginInputBox>
         <LoginInputBox>
-          <LoginInput type="password" title="비밀번호 입력" onChange={passwordHandler} required />
+          <LoginInput type="password" title="비밀번호 입력" onChange={passwordHandler} value={password} required />
         </LoginInputBox>
-        <LoginMessage>ssssss</LoginMessage>
+        <LoginMessage>{error}</LoginMessage>
         <LoginButton type="button" onClick={onSubmitForm}>로그인</LoginButton>
-        <Link href="/signup">
-          <a>회원가입</a>
-        </Link>
+        <SignUpLink>
+          <Link href="/signup">
+            <a>회원가입</a>
+          </Link>
+        </SignUpLink>
       </Fieldset>
     </Form>
   );

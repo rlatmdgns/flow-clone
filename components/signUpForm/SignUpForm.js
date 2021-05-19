@@ -10,7 +10,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     if (signUpDone) {
-      Router.replace('/');
+      Router.push('/');
     }
   }, [signUpDone]);
 
@@ -45,21 +45,24 @@ const SignUpForm = () => {
   const onSubmit = useCallback(() => {
     const nameRegex = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
     const idRegex = /^[0-9a-z]+$/;
-    // const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/g;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!nameRegex.test(name)) {
+      alert('이름을 입력해주세요.');
       setName('');
       return;
     }
     if (!idRegex.test(id)) {
+      alert('아이디를 입력해주세요.');
       setId('');
       return;
     }
     if (!passwordRegex.test(password)) {
+      alert('비밀번호를 입력해주세요.');
       setPassword('');
       return;
     }
     if (password !== passwordCheck) {
+      alert('비밀번호가 동일하지 않습니다.');
       setPasswordCheck('');
       return;
     }
