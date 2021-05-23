@@ -1,5 +1,5 @@
 # Flow
-
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/29652201/119252934-c01f8f80-bbe9-11eb-8119-1f88b2c92f49.gif)
 ## 프로젝트 소개
 
 **[플로우](https://flow.team/index.act)**는 마드라체크라는 기업에서 만든 **"프로젝트관리 중심"**의 업무관리 협업툴입니다.
@@ -64,4 +64,3 @@ Next.js 프레임워크를 사용하면 react를 node환경에서 사용할 수 
 - 댓글 등록, 수정, 삭제
 - React Router를 이용한 페이지 이동 기능
 - axios를 통한 백엔드와 통신
-
