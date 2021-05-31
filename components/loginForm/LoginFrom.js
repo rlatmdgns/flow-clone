@@ -46,7 +46,7 @@ const LoginFrom = () => {
         password,
       },
     });
-  }, [);
+  }, []);
 
   return (
     <Form>
