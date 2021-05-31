@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import { ModalWrapper } from './styles';
 
 const Modal = ({ children, visible, popupCloseHandle, dimd }) => {
-  console.log(visible);
   const modalEl = useRef(); //
   const [isBrowser, setIsBrowser] = useState(false);
 
@@ -13,14 +12,12 @@ const Modal = ({ children, visible, popupCloseHandle, dimd }) => {
   }, []);
 
   const modalClose = (e) => {
-    console.log(modalEl.current);
     if (modalEl.current === e.target) {
       popupCloseHandle();
     }
   };
   const keyPress = useCallback((e) => {
     if (e.key === 'Escape' && !visible) {
-      console.log(e.key);
       popupCloseHandle();
     }
   }, [visible]);

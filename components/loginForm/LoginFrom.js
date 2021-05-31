@@ -9,6 +9,7 @@ const LoginFrom = () => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const { loginDone, loginError, loginLoading } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (loginDone) {
       Router.push('/main');
@@ -16,21 +17,21 @@ const LoginFrom = () => {
       alert(loginError);
     }
   }, [loginDone, loginError]);
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
   const passwordHandler = useCallback((e) => {
     setPassword(e.target.value);
-  }, [password]);
+  }, []);
   const emailHandler = useCallback((e) => {
     setId(e.target.value);
-  }, [id]);
+  }, []);
 
   const onSubmitForm = useCallback(() => {
     const idRegex = /^[0-9a-z]+$/;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     if (!idRegex.test(id)) {
-      console.log(id);
       setId('');
       setError('아이디 또는 비밀번호가 잘못되었습니다.');
     }
@@ -45,7 +46,7 @@ const LoginFrom = () => {
         password,
       },
     });
-  }, [id, password]);
+  }, [);
 
   return (
     <Form>

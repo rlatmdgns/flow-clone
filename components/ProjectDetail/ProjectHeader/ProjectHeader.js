@@ -28,7 +28,6 @@ const ProjectHeader = () => {
   const [memberPopup, setMemberPopup] = useState(false);
   const { me } = useSelector((state) => state.user);
   const { members, inviteMemberDone, projectInfo } = useSelector((state) => state.project);
-  console.log('projectInfo', projectInfo);
   useEffect(() => {
     if (inviteMemberDone) {
       setMemberPopup(false);

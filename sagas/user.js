@@ -19,13 +19,11 @@ function signUpAPI(data) {
 
 function* signUp(action) {
   try {
-    const result = yield call(signUpAPI, action.data);
-    console.log('result', result);
+    yield call(signUpAPI, action.data);
     yield put({
       type: SIGN_UP_SUCCESS,
     });
   } catch (error) {
-    console.log('error', error);
     yield put({
       type: SIGN_UP_FAILURE,
       error: error.response.data,
@@ -49,7 +47,6 @@ function* login(action) {
     document.cookie = `token=${token}`;
     document.cookie = `userId=${action.data.username}`;
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOGIN_FAILURE,
       error: error.response.data,
@@ -68,7 +65,6 @@ function* user() {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: MY_INFO_FAILURE,
       error: error.response.data,

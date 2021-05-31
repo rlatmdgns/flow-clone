@@ -6,10 +6,6 @@ import { GlobalStyle } from '../styles/global-styles';
 
 const App = ({ Component, pageProps }) => (
   <>
-    <Head>
-      <meta charSet="utf-8" />
-      <title>flow</title>
-    </Head>
     <GlobalStyle />
     <Component {...pageProps} />
   </>

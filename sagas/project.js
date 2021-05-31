@@ -73,15 +73,13 @@ function unFavoriteProjectAPI(data) {
 
 function* unFavoriteProject(action) {
   try {
-    const result = yield call(unFavoriteProjectAPI, action.data);
-    console.log(action.data);
+    yield call(unFavoriteProjectAPI, action.data);
     yield put({
       type: UNFAVORITE_PROJECT_SUCCESS,
       data: action.data,
       title: action.title,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: UNFAVORITE_PROJECT_FAILURE,
       error,
@@ -101,7 +99,6 @@ function* favoriteProject(action) {
       title: action.title,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: FAVORITE_PROJECT_FAILURE,
       error,
@@ -115,13 +112,11 @@ function inviteMemberAPI(data) {
 
 function* inviteMember(action) {
   try {
-    const result = yield call(inviteMemberAPI, action.data);
-    console.log(result.data);
+    yield call(inviteMemberAPI, action.data);
     yield put({
       type: INVITE_MEMBER_SUCCESS,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: INVITE_MEMBER_FAILURE,
       error,
@@ -135,8 +130,7 @@ function deleteReplyAPI(data) {
 
 function* deleteReply(action) {
   try {
-    const result = yield call(deleteReplyAPI, action.data);
-    console.log(result.data);
+    yield call(deleteReplyAPI, action.data);
     yield put({
       type: DELETE_REPLY_SUCCESS,
       data: {
@@ -145,7 +139,6 @@ function* deleteReply(action) {
       },
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: DELETE_REPLY_FAILURE,
       error,
@@ -158,8 +151,7 @@ function editReplyAPI(data) {
 
 function* editReply(action) {
   try {
-    const result = yield call(editReplyAPI, action.data);
-    console.log('result 댓수정', result.data);
+    yield call(editReplyAPI, action.data);
     yield put({
       type: EDIT_REPLY_SUCCESS,
       data: {
@@ -170,7 +162,6 @@ function* editReply(action) {
       postId: action.postId,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: EDIT_REPLY_FAILURE,
       error,
@@ -184,7 +175,6 @@ function addReplyAPI(data) {
 function* addReply(action) {
   try {
     const result = yield call(addReplyAPI, action.data);
-    console.log('result 댓글', result.data);
 
     yield put({
       type: ADD_REPLY_SUCCESS,
@@ -198,7 +188,6 @@ function* addReply(action) {
       postId: action.data.postId,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: ADD_REPLY_FAILURE,
       error,
@@ -213,13 +202,11 @@ function loadMembersAPI() {
 function* loadMembers(action) {
   try {
     const result = yield call(loadMembersAPI, action.data);
-    console.log(result.data);
     yield put({
       type: LOAD_MEMBERS_SUCCESS,
       data: result.data.membersInfo,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOAD_MEMBERS_FAILURE,
       error,
@@ -239,7 +226,6 @@ function* loadParticipants(action) {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOAD_PARTICIPANTS_FAILURE,
       error,
@@ -263,7 +249,6 @@ function* loadPosts(action) {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOAD_POSTS_FAILURE,
       error,
@@ -283,7 +268,6 @@ function* likePost(action) {
       data: action.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LIKE_POST_FAILURE,
       error,
@@ -303,7 +287,6 @@ function* unlikePost(action) {
       data: action.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: UNLIKE_POST_FAILURE,
       error,
@@ -323,7 +306,6 @@ function* stateChange(action) {
       data: action.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: STATE_CHANGE_FAILURE,
       error,
@@ -343,7 +325,6 @@ function* progressChange(action) {
       data: action.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: PROGRESS_CHANGE_FAILURE,
       error,
@@ -358,8 +339,6 @@ function createTaskAPI(data) {
 function* createTask(action) {
   try {
     const result = yield call(createTaskAPI, action.data);
-    console.log(action.data.managers, 'SAdsaadsadsasdasda');
-    console.log(result.data, '업무등록');
     yield put({
       type: CREATE_TASK_SUCCESS,
       data: {
@@ -389,7 +368,6 @@ function* createTask(action) {
       data: false,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: CREATE_TASK_FAILURE,
       error,
@@ -427,7 +405,6 @@ function* editTask(action) {
       data: false,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: EDIT_TASK_FAILURE,
       error,
@@ -449,7 +426,6 @@ function* deletePost(action) {
       data: { postId: action.data.postId, userId: action.data.userId },
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: DELETE_POST_FAILURE,
       error,
@@ -469,7 +445,6 @@ function* projectAdd(action) {
       data: { id: result.data.projectId, title: action.data.title },
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: PROJECT_ADD_FAILURE,
       error,
@@ -490,7 +465,6 @@ function* loadFavoriteProjects(action) {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOAD_FAVORITE_PROJECTS_FAILURE,
       error,
@@ -507,13 +481,11 @@ function loadProjectsAPI(data) {
 function* loadProjects(action) {
   try {
     const result = yield call(loadProjectsAPI, action.data);
-    console.log('hasNext', result.data.hasNext);
     yield put({
       type: LOAD_PROJECTS_SUCCESS,
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: LOAD_PROJECTS_FAILURE,
       error,
@@ -533,7 +505,6 @@ function* loadProjectInfo(action) {
       data: result.data,
     });
   } catch (error) {
-    console.log(error);
     yield put({
       type: PROJECT_INFO_FAILURE,
       error,

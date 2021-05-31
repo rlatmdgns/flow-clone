@@ -6,7 +6,6 @@ import { ADD_REPLY_REQUEST, EDIT_REPLY_REQUEST } from '../../reducers/project';
 import { Input } from './styles';
 
 const CommentInput = ({ edit, replyId, postId, projectId, editModeEnd }) => {
-  console.log(edit);
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { addReplyDone } = useSelector((state) => state.project);
@@ -69,7 +68,6 @@ const CommentInput = ({ edit, replyId, postId, projectId, editModeEnd }) => {
       }
     } else if (edit) {
       if (e.keyCode === 27) {
-        console.log(111);
         editModeEnd();
       }
     }

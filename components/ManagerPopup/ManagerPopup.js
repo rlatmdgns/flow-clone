@@ -7,7 +7,6 @@ const ManagerPopup = ({ addManager, taskManagers }) => {
   const { projectParticipants } = useSelector((state) => state.project);
   const [managers, setManagers] = useState(taskManagers);
   const checkHandler = (checked, manager) => {
-    console.log(checked);
     if (checked) {
       setManagers([...managers, manager]);
     } else {
@@ -17,8 +16,6 @@ const ManagerPopup = ({ addManager, taskManagers }) => {
       )));
     }
   };
-  console.log(managers, 'manager');
-  console.log();
   return (
     <PopupManagerWrap>
       <PopupManager>
