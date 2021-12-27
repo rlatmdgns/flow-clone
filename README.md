@@ -1,10 +1,9 @@
 # Flow
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/29652201/119252934-c01f8f80-bbe9-11eb-8119-1f88b2c92f49.gif)
 ## 프로젝트 소개
-
 **[플로우](https://flow.team/index.act)**는 마드라체크라는 기업에서 만든 **"프로젝트관리 중심"**의 업무관리 협업툴입니다.
-
 최근 동향을 살피고 커뮤니티가 활발한 리액트를 사용 해보고 싶어서 개인프로젝트를 하게되었습니다.
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/29652201/119252934-c01f8f80-bbe9-11eb-8119-1f88b2c92f49.gif)
 
 
 ## 프로젝트 목표
